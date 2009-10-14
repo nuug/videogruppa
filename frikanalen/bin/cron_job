@@ -1,0 +1,1 @@
+0 * * * * /data/video/frikanalen/bin/update_frikanalen-cron.sh >> /home/jarle/script/update_frikanalen.log 2>&1

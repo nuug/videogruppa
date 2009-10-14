@@ -1,1 +1,3 @@
 0 * * * * /data/video/frikanalen/bin/update_frikanalen-cron.sh >> /home/jarle/script/update_frikanalen.log 2>&1
+*/5 * * * * svn up /data/video/frikanalen/bin > /dev/null 2>&1
+*/5 * * * * svn up /data/video/frikanalen/cgi-bin > /dev/null 2>&1

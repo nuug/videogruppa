@@ -15,6 +15,7 @@ use warnings;
 use XML::Simple;
 use Data::Dumper;
 use LWP::UserAgent;
+use Date::Parse;
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 
@@ -49,13 +50,19 @@ sub process_event {
     my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
     my $videoId = $eventref->{'contentId'};
     if ($videoId) {
+        my $pageurl = "$baseurl/fetchvideo.cgi?videoId=$videoId";
+        my $ogvurl  = "$baseurl/${videoId}.ogv";
+
         my $title = $eventref->{'title'};
         my $start = $eventref->{'start'};
         my $stop = $eventref->{'stop'};
-        my $url=
-            "$baseurl/fetchvideo.cgi?videoId=$videoId";
-        my $ogvurl=
-            "$baseurl/${videoId}.ogv";
+
+        my $starttime = str2time($start);
+        my $stoptime = str2time($stop);
+
+        # Skip entries from the past
+        return if ($stoptime < time());
+
         print "# [$start -> $stop] $title\n";
         print "$ogvurl\n";
     } else {
@@ -63,10 +70,6 @@ sub process_event {
     }
 }
 
-
-#&printheader;
-#&printbody;
-#&printfooter;
 exit 0;
 
 ###########################################

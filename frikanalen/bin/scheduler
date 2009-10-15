@@ -1,0 +1,87 @@
+#!/usr/bin/perl -w
+
+# Author: Petter Reinholdtsen
+# Date: 2009-10-15
+# License: GNU General Public license v2 or later
+#
+# Generer detaljert tidsplan for streaming basert p� EPG-fil hentet
+# fra frikanalen.
+#
+# http://wiki.nuug.no/grupper/video/pubfrikanalen
+
+use strict;
+use warnings;
+
+use XML::Simple;
+use Data::Dumper;
+use LWP::UserAgent;
+# SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
+use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
+
+binmode STDOUT, ":utf8";
+
+my $listref = get_epglist();
+
+my %events = ();
+for my $url (@{$listref}) {
+#    print "Loading '$url'\n";
+    my $ua = new LWP::UserAgent;
+    my $req = new HTTP::Request GET => $url;
+    my $res = $ua->request($req);
+    my $epgref = XMLin($res->content);
+#    print Dumper($epgref);
+    for my $event (@{$epgref->{event}}) {
+#        print Dumper($event);
+        $events{$event->{start}} = $event;
+    }
+}
+
+for my $key (sort keys %events) {
+    process_event($events{$key});
+}
+
+sub process_event {
+    my $eventref = shift;
+#    print Dumper($eventref);
+
+# EPG contentId = fetchvideo.cgi videoId
+# http://www.nuug.no/pub/video/frikanalen/fetchvideo.cgi?videoId=4449
+    my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
+    my $videoId = $eventref->{'contentId'};
+    if ($videoId) {
+        my $title = $eventref->{'title'};
+        my $start = $eventref->{'start'};
+        my $stop = $eventref->{'stop'};
+        my $url=
+            "$baseurl/fetchvideo.cgi?videoId=$videoId";
+        my $ogvurl=
+            "$baseurl/${videoId}.ogv";
+        print "# [$start -> $stop] $title\n";
+        print "$ogvurl\n";
+    } else {
+#        print Dumper($eventref);
+    }
+}
+
+
+#&printheader;
+#&printbody;
+#&printfooter;
+exit 0;
+
+###########################################
+
+sub get_epglist {
+    my $soap = new SOAP::Lite
+        -> uri('http://tempuri.org')
+        -> proxy('http://communitysite1.frikanalen.tv/CommunitySite/EpgWebService.asmx');
+    my $res;
+    my $obj = $soap->GetEpgUrls;
+    unless ($obj->fault) {
+        return $obj->result->{string};
+    } else {
+#        print Dumper($obj);
+        print $obj->fault->{faultstring}, "\n";
+        return undef;
+    }
+}

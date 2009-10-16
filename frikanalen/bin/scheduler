@@ -37,12 +37,23 @@ for my $url (@{$listref}) {
     }
 }
 
+my $vlc = vlc_start();
+
 for my $key (sort keys %events) {
-    process_event($events{$key});
+    my $starttime = str2time($key);
+    my $now = time();
+    # Skip entries from the past
+    if ($starttime >= $now) {
+        my $wait = $starttime - $now;
+        my $title = $events{$key}->{'title'};
+        print "Waiting $wait seconds to start $title\n";
+        sleep $wait;
+        process_event($vlc, $events{$key});
+    }
 }
 
 sub process_event {
-    my $eventref = shift;
+    my ($vlc, $eventref) = @_;
 #    print Dumper($eventref);
 
 # EPG contentId = fetchvideo.cgi videoId
@@ -65,6 +76,8 @@ sub process_event {
 
         print "# [$start -> $stop] $title\n";
         print "$ogvurl\n";
+        vlc_play($vlc, $ogvurl);
+        sleep 10;
     } else {
 #        print Dumper($eventref);
     }
@@ -87,4 +100,37 @@ sub get_epglist {
         print $obj->fault->{faultstring}, "\n";
         return undef;
     }
+}
+
+
+# Starting a VLC client/server with HTTP interface.  The telnet
+# interface could be an alternative, but it only support streaming, so
+# it is very good for initial testing.
+# http://wiki.videolan.org/Documentation:Streaming_HowTo/VLM
+sub vlc_start {
+    my $vlc = {};
+    my $pid = fork();
+    if (not defined $pid) {
+        return undef;
+    } elsif (0 == $pid){
+#    system("vlc", "--extraintf", "telnet", "--telnet-password", "secret");
+        exec("vlc", "--extraintf", "http");
+        exit 0;
+    } else {
+        $vlc->{url} = "http://localhost:8080/";
+        $vlc->{pid} = $pid;
+        sleep 5; # Give VLC some time to start
+        return $vlc;
+    }
+}
+
+sub vlc_play {
+    my ($vlc, $file) = @_;
+
+    $file =~ s#/#%2F#g;
+
+    my $ua = new LWP::UserAgent;
+    my $req = new HTTP::Request GET => $vlc->{url} .
+        "requests/status.xml?command=in_play&input=$file";
+    my $res = $ua->request($req);
 }

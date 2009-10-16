@@ -23,38 +23,71 @@ binmode STDOUT, ":utf8";
 
 my $listref = get_epglist();
 
-my %events = ();
+my @events = ();
 for my $url (@{$listref}) {
 #    print "Loading '$url'\n";
     my $ua = new LWP::UserAgent;
     my $req = new HTTP::Request GET => $url;
     my $res = $ua->request($req);
     my $epgref = XMLin($res->content);
-#    print Dumper($epgref);
     for my $event (@{$epgref->{event}}) {
 #        print Dumper($event);
-        $events{$event->{start}} = $event;
+
+        # Why do this test fail to keep entries with no start entry
+        # from the @events array.
+        if (defined $event->{'start'}) {
+            push @events, $event;
+        } else {
+            print "D: ", Dumper($event);
+        }
     }
 }
 
 my $vlc = vlc_start();
-
-for my $key (sort keys %events) {
+@events = sort start_order @events;
+my $seq = -1;
+while (++$seq < scalar @events) {
+    my $event = $events[$seq];
     my $now = time();
-    my $starttime = str2time($key);
-    my $stoptime = str2time($events{$key}->{stop});
+    my $start = $event->{'start'};
+    my $starttime = str2time($start);
+    my $stoptime = str2time($event->{stop});
+
     # Skip entries from the past
     if ($starttime >= $now) {
         my $wait = $starttime - $now;
-        my $title = $events{$key}->{'title'};
-        print "Waiting $wait seconds to start '$title' $key\n";
+        my $title = $event->{'title'};
+        print "Waiting $wait seconds to start '$title' $start\n";
+        show_program($seq);
         sleep $wait;
-        process_event($vlc, $events{$key});
+        process_event($vlc, $event);
     } elsif ($stoptime >= $now && $starttime <= $now) {
         # If some program is already running, just start it to get
         # something showing.
-        process_event($vlc, $events{$key});
+        process_event($vlc, $event);
     }
+}
+
+sub show_program {
+    my $start = shift;
+    my $seq = 0;
+    while ($seq < 5) {
+        my $event = $events[$start + $seq];
+        my $title = $event->{'title'};
+        my $start = $event->{'start'};
+        print "  $start $title\n";
+        $seq++;
+    }
+}
+
+sub start_order {
+    my ($a, $b) = @_;
+
+    # Try to figure out why some entries have no start entry, and why
+    # the test above do not keep these from showing up here.
+    print "A: ", Dumper($a) unless defined $a->{'start'};
+    print "B: ", Dumper($b) unless defined $b->{'start'};
+    return ($a->{'start'} || "") cmp ($b->{'start'} || "")
 }
 
 sub process_event {

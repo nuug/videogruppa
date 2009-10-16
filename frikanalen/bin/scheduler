@@ -85,8 +85,8 @@ sub start_order {
 
     # Try to figure out why some entries have no start entry, and why
     # the test above do not keep these from showing up here.
-    print "A: ", Dumper($a) unless defined $a->{'start'};
-    print "B: ", Dumper($b) unless defined $b->{'start'};
+#    print "A: ", Dumper($a) unless defined $a->{'start'};
+#    print "B: ", Dumper($b) unless defined $b->{'start'};
     return ($a->{'start'} || "") cmp ($b->{'start'} || "")
 }
 

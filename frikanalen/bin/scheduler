@@ -78,7 +78,15 @@ sub process_event {
 
         print "# [$start -> $stop] $title\n";
         print "$ogvurl\n";
-        vlc_play($vlc, $ogvurl);
+
+        my $ua = new LWP::UserAgent;
+        my $req = new HTTP::Request HEAD => $ogvurl;
+        my $res = $ua->request($req);
+        if ($res->is_success) {
+            vlc_play($vlc, $ogvurl);
+        } else {
+            print "error: Missing $ogvurl\n";
+        }
     } else {
 #        print Dumper($eventref);
     }

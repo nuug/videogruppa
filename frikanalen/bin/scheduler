@@ -40,14 +40,19 @@ for my $url (@{$listref}) {
 my $vlc = vlc_start();
 
 for my $key (sort keys %events) {
-    my $starttime = str2time($key);
     my $now = time();
+    my $starttime = str2time($key);
+    my $stoptime = str2time($events{$key}->{stop});
     # Skip entries from the past
     if ($starttime >= $now) {
         my $wait = $starttime - $now;
         my $title = $events{$key}->{'title'};
-        print "Waiting $wait seconds to start $title\n";
+        print "Waiting $wait seconds to start '$title' $key\n";
         sleep $wait;
+        process_event($vlc, $events{$key});
+    } elsif ($stoptime >= $now && $starttime <= $now) {
+        # If some program is already running, just start it to get
+        # something showing.
         process_event($vlc, $events{$key});
     }
 }
@@ -71,13 +76,9 @@ sub process_event {
         my $starttime = str2time($start);
         my $stoptime = str2time($stop);
 
-        # Skip entries from the past
-        return if ($stoptime < time());
-
         print "# [$start -> $stop] $title\n";
         print "$ogvurl\n";
         vlc_play($vlc, $ogvurl);
-        sleep 10;
     } else {
 #        print Dumper($eventref);
     }

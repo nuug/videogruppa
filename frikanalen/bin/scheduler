@@ -32,6 +32,16 @@ for my $url (@{$listref}) {
     my $epgref = XMLin($res->content);
     for my $event (@{$epgref->{event}}) {
 #        print Dumper($event);
+        my $now = time();
+
+        my $start = $event->{'start'};
+        my $starttime = str2time($start);
+        my $stop = $event->{'stop'};
+        my $stoptime = str2time($stop);
+
+        # Ignore if more than two days ahead, or stopped in the past
+        next if $starttime > $now + 2 * 24 * 60 * 60;
+        next if $stoptime < $now;
 
         # Why do this test fail to keep entries with no start entry
         # from the @events array.
@@ -63,7 +73,7 @@ for my $url (@{$listref}) {
 my $vlc = vlc_start();
 
 # Stop vlc on exit
-$SIG{EXIT} = sub { kill $vlc->{pid}; };
+$SIG{EXIT} = sub { my $pid = $vlc->{pid}; print "Killing $pid\n"; kill $pid; };
 
 @events = sort start_order @events;
 my $seq = 0;
@@ -129,7 +139,7 @@ sub process_event {
 
         print "# [$start -> $stop] $title\n";
         print "$ogvurl\n";
-
+        vlc_play($vlc, $ogvurl);
     } else {
 #        print Dumper($eventref);
     }
@@ -181,8 +191,12 @@ sub vlc_play {
 
     $file =~ s#/#%2F#g;
 
+    my $url = $vlc->{url} . "requests/status.xml?command=in_play&input=$file";
+    print "Visiting '$url'\n";
     my $ua = new LWP::UserAgent;
-    my $req = new HTTP::Request GET => $vlc->{url} .
-        "requests/status.xml?command=in_play&input=$file";
+    my $req = new HTTP::Request GET => $url;
     my $res = $ua->request($req);
+    unless ($res->is_success) {
+        print "Failed to contact VLC\n";
+    }
 }

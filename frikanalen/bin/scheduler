@@ -35,10 +35,26 @@ for my $url (@{$listref}) {
 
         # Why do this test fail to keep entries with no start entry
         # from the @events array.
-        if (defined $event->{'start'}) {
-            push @events, $event;
+        if ($event->{'start'} && $event->{'contentId'}) {
+
+# EPG contentId = fetchvideo.cgi videoId
+# http://www.nuug.no/pub/video/frikanalen/fetchvideo.cgi?videoId=4449
+            my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
+            my $videoId = $event->{'contentId'};
+            my $ogvurl = "$baseurl/${videoId}.ogv";
+            $event->{'ogvurl'}  = $ogvurl;
+            $event->{'pageurl'} = "$baseurl/fetchvideo.cgi?videoId=$videoId";
+
+            my $ua = new LWP::UserAgent;
+            my $req = new HTTP::Request HEAD => $ogvurl;
+            my $res = $ua->request($req);
+            if ($res->is_success) {
+                push @events, $event;
+            } else {
+                print "error: Missing $ogvurl, not scheduling\n";
+            }
         } else {
-            print "D: ", Dumper($event);
+            print "Empty event: ", Dumper($event);
         }
     }
 }
@@ -94,14 +110,10 @@ sub process_event {
     my ($vlc, $eventref) = @_;
 #    print Dumper($eventref);
 
-# EPG contentId = fetchvideo.cgi videoId
-# http://www.nuug.no/pub/video/frikanalen/fetchvideo.cgi?videoId=4449
-    my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
     my $videoId = $eventref->{'contentId'};
     if ($videoId) {
-        my $pageurl = "$baseurl/fetchvideo.cgi?videoId=$videoId";
-        my $ogvurl  = "$baseurl/${videoId}.ogv";
-
+        my $pageurl = $eventref->{'pageurl'};
+        my $ogvurl  = $eventref->{'ogvurl'};
         my $title = $eventref->{'title'};
         my $start = $eventref->{'start'};
         my $stop = $eventref->{'stop'};
@@ -112,14 +124,6 @@ sub process_event {
         print "# [$start -> $stop] $title\n";
         print "$ogvurl\n";
 
-        my $ua = new LWP::UserAgent;
-        my $req = new HTTP::Request HEAD => $ogvurl;
-        my $res = $ua->request($req);
-        if ($res->is_success) {
-            vlc_play($vlc, $ogvurl);
-        } else {
-            print "error: Missing $ogvurl\n";
-        }
     } else {
 #        print Dumper($eventref);
     }

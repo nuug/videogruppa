@@ -51,7 +51,8 @@ for my $url (@{$listref}) {
             if ($res->is_success) {
                 push @events, $event;
             } else {
-                print "error: Missing $ogvurl, not scheduling\n";
+                my $title = $event->{'title'};
+                print "error: Missing $ogvurl ($title), not scheduling\n";
             }
         } else {
             print "Empty event: ", Dumper($event);
@@ -60,9 +61,13 @@ for my $url (@{$listref}) {
 }
 
 my $vlc = vlc_start();
+
+# Stop vlc on exit
+$SIG{EXIT} = sub { kill $vlc->{pid}; };
+
 @events = sort start_order @events;
-my $seq = -1;
-while (++$seq < scalar @events) {
+my $seq = 0;
+while ($seq < scalar @events) {
     my $event = $events[$seq];
     my $now = time();
     my $start = $event->{'start'};
@@ -82,6 +87,7 @@ while (++$seq < scalar @events) {
         # something showing.
         process_event($vlc, $event);
     }
+    $seq++;
 }
 
 sub show_program {

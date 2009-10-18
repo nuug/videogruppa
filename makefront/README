@@ -1,0 +1,37 @@
+== Intro-scriptet makefront ==
+Makefront, et simpelt lite bash-script som skal lage intro til foredrag holdt av NUUG, skrevet av en som egentlig ikke kan bash-scripting, på besøk hjemme hos oklien en sein lørdagskveld, sluppet med CC-BY-SA-lisens.
+
+Kildefilene cc-by-sa.png, NUUG-logo-2-150.png og NUUG-vid_bg.png er med for å gjøre endringer lettere senere. Det regnes med at man har lyst til å endre på elementer i fremtiden.
+
+attachment:NUUG-vid_front_thumb.png
+
+== Bruk ==
+Kjør makefront.sh med de tre medfølgende bildene i samme mappe, og skriv inn informasjonen som blir forespurt. Dette spytter ut bildet NUUG-vid_front<TALL>.png. Kjøres scriptet igjen og <TALL> økes til neste ledige. Det du skriver er det som kommer på bildet, enkelt og greit.
+
+== To do ==
+ * Konvertering av png til DV.
+ * Lage mulighet for parametre fra kommandolinjen.
+ {{{
+ echo -e "Lille Trille\nFalltekniker i praksis\n14. januar 2009\nHiO"|sh makefront.sh
+ evnt. http://tldp.org/LDP/abs/html/string-manipulation.html#GETOPTSIMPLE
+}}}
+ 
+== Plassering av elemtenter ==
+Her forklares hvordan man regner ut plasseringen av et bilde. Delvis fordi jeg syntes matte er artig og delvis fordi jeg vil dele dette med andre dersom de ikke vet det fra før av.
+
+Logoen er plassert på midten høydevis og på midten av en tredeling breddevis. Grunnen til at dette er 52 + 167:
+
+NUUG-vid_bg.png sin bredde (1250) delt på tre (416.666..) også, for å finne midten, delt på 2 (208.333..) minus bredden til NUUG-logo-2-150.png (313) delt på to (156,5) er 51. Altså (1250/3)/2-313/2 = 51.83333=52
+
+NUUG-vid_bg.png sin høyde (938) delt på 2 (469) minus høyden til NUUG-logo-2-150.png (604) delt på 2 (302). Altså 938/2-604/2 = 167
+
+CC-BY-SA-logoen er vurdert estetisk høydevis og plassert på delingen av to tredelinger breddevis. Bredden av NUUG-vid_bg.png (1250) delt på 3 (416.666..) ganget med 2 (833,333..) minus bredden til cc-by-sa.png (403) delt på 2 (201.5) er . Altså (1250/3)*2-403/2 = 631.833.. = 632.
+
+== Filer ==
+ * [attachment:makefront.sh attachment:makefront.sh]
+ * [attachment:NUUG-logo-2-150.png attachment:NUUG-logo-2-150.png]
+ * [attachment:NUUG-vid_bg.png attachment:NUUG-vid_bg.png]
+ * [attachment:cc-by-sa.png attachment:cc-by-sa.png]
+ * [attachment:README attachment:README]
+ * [attachment:NUUG-vid_front.png attachment:NUUG-vid_front.png] - '''kun eksempel'''
+

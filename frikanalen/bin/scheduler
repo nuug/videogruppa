@@ -16,6 +16,8 @@ use XML::Simple;
 use Data::Dumper;
 use LWP::UserAgent;
 use Date::Parse;
+use GD;
+use POSIX;
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 
@@ -89,7 +91,7 @@ while ($seq < scalar @events) {
         my $wait = $starttime - $now;
         my $title = $event->{'title'};
         print "Waiting $wait seconds to start '$title' $start\n";
-        show_program($seq);
+        show_program($vlc, $seq);
         sleep $wait;
         process_event($vlc, $event);
     } elsif ($stoptime >= $now && $starttime <= $now) {
@@ -101,14 +103,57 @@ while ($seq < scalar @events) {
 }
 
 sub show_program {
-    my $start = shift;
+    my ($vlc, $startseq) = @_;
+
+    my $im = new GD::Image(720,576); # PAL
+    my $white = $im->colorAllocate(255,255,255);
+    my $black = $im->colorAllocate(  0,  0,  0);
+    my $fontsize = 20;
+    my $left = 0;
+    my $font = "/usr/share/fonts/truetype/msttcorefonts/arial.ttf";
+    $im->fill(50,50,$white);
+    my @bounds =
+        $im->stringFT($black,$font,$fontsize*2,$left,30,50,"Frikanalen");
+
+    $bounds[1] += 100; # Move rest of the text down on the screen
+
     my $seq = 0;
+    my $date = "";
     while ($seq < 5) {
-        my $event = $events[$start + $seq];
+        my $event = $events[$startseq + $seq];
         my $title = $event->{'title'};
         my $start = $event->{'start'};
-        print "  $start $title\n";
+        my $starttime = str2time($start);
+        my $timestring = strftime("%H:%M", localtime($starttime));
+        my $datestring = strftime("%Y-%m-%d", localtime($starttime));
+        if ($date ne $datestring) {
+            my $infostring = "$datestring";
+            print "  $infostring\n";
+            @bounds = $im->stringFT($black,$font,$fontsize,$left,
+                                    150, $bounds[1] + $fontsize * 2, "$infostring");
+            $date = $datestring;
+        }
+        my $infostring = "$timestring - $title";
+        print "  $infostring\n";
+        @bounds = $im->stringFT($black,$font,$fontsize,$left,
+                                150, $bounds[1] + $fontsize * 2, "$infostring");
         $seq++;
+    }
+
+    if (open(PNG, ">", "test.png")) {
+        print "Generate pause screen DV\n";
+        print PNG $im->png;
+        close(PNG);
+        my $len = 10 * 25; # 10 seconds in frames (25 frames/second)
+        # use image2raw from package smilutils
+        system("image2raw -r $len test.png > test.dv");
+        # Generate Ogg Theora, VLC do not understand raw DV
+
+        system("ffmpeg2theora --width 384 --height 288 -o test.ogv test.dv");
+        print "Done generating pause screen DV\n";
+        vlc_play($vlc, "test.ogv");
+    } else {
+        print "Unable to save test.png\n";
     }
 }
 

@@ -151,7 +151,7 @@ sub show_program {
 
         system("ffmpeg2theora --width 384 --height 288 -o test.ogv test.dv");
         print "Done generating pause screen DV\n";
-        vlc_play($vlc, "test.ogv");
+#        vlc_play($vlc, "test.ogv");
     } else {
         print "Unable to save test.png\n";
     }

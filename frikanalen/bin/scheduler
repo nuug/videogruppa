@@ -123,7 +123,7 @@ while ($seq < scalar @events) {
     $seq++;
 }
 
-print Dumper(Event::all_watchers());
+#print Dumper(Event::all_watchers());
 
 Event::loop();
 
@@ -232,9 +232,12 @@ sub generate_program {
         system("image2raw -r $len test.png > test.dv");
         # Generate Ogg Theora, VLC do not understand raw DV
 
-        system("ffmpeg2theora --width 384 --height 288 -o test.ogv test.dv");
+        my $resultfile = "test.ogv";
+        system("ffmpeg2theora --width 384 --height 288 -o $resultfile test.dv");
+        unlink "test.png";
+        unlink "test.dv";
         print "Done generating pause screen DV\n";
-        return "test.ogv";
+        return $resultfile;
     } else {
         print "Unable to save test.png\n";
     }
@@ -312,10 +315,19 @@ sub vlc_play {
     unless (lwp_get($url)) {
         print "Failed to contact VLC\n";
     }
-    if ($loop) {
+    if ($loop && !$vlc->{loop}) {
         my $url = $vlc->{url} . "requests/status.xml?command=pl_repeat";
+        $vlc->{loop} = 1;
         unless (lwp_get($url)) {
             print "Failed to contact VLC\n";
         }
+
+    } else {
+        my $url = $vlc->{url} . "requests/status.xml?command=pl_repeat";
+        $vlc->{loop} = 0;
+        unless (lwp_get($url)) {
+            print "Failed to contact VLC\n";
+        }
+
     }
 }

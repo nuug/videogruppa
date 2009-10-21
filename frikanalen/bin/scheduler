@@ -8,6 +8,12 @@
 # fra frikanalen.
 #
 # http://wiki.nuug.no/grupper/video/pubfrikanalen
+#
+# Avhengig av følgende pakker (på Debian):
+#  libgd-gd2-perl
+#  smilutils
+#  ffmpeg2theora
+#  libevent-perl
 
 use strict;
 use warnings;
@@ -19,7 +25,8 @@ use Date::Parse;
 use GD;
 use POSIX;
 use Event;
-# SOAP:Lite mÃ¥ modifiseres til Ã¥ gjÃ¸re ting pÃ¥ MS mÃ¥ten :-/
+
+# SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 
 binmode STDOUT, ":utf8";
@@ -75,7 +82,7 @@ for my $url (@{$listref}) {
     }
 }
 
-$Event::DebugLevel = 2;
+#$Event::DebugLevel = 2;
 
 # Stop vlc on exit
 $Event::DIED = sub { my $pid = $vlc->{pid};

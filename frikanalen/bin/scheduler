@@ -65,7 +65,7 @@ for my $url (@{$listref}) {
                 push @events, $event;
             } else {
                 my $title = $event->{'title'};
-                print "error: Missing $ogvurl ($title), not scheduling\n";
+                print "error: Missing $ogvurl ($title), not scheduling at $start\n";
             }
         } else {
             print "Empty event: ", Dumper($event);
@@ -94,7 +94,10 @@ my $seq = 0;
     my $now = time();
     my $programogv = generate_program($vlc, $seq);
     Event->timer(at => $now,
-                 data => {seq => $seq},
+                 data => {
+                     seq => $seq,
+                     name => "Initial pause screen",
+                 },
                  cb => sub {
                      my $event = shift;
                      my $seq = $event->w->data()->{seq};
@@ -120,7 +123,7 @@ while ($seq < scalar @events) {
     $seq++;
 }
 
-#print Dumper(Event::all_watchers());
+print Dumper(Event::all_watchers());
 
 Event::loop();
 
@@ -135,8 +138,10 @@ sub short_time {
 sub schedule_video {
     my ($vlc, $seq, $starttime, $stoptime) = @_;
     Event->timer(at => $starttime,
-                 data => {eventref => $events[$seq],
-                          seq => $seq},
+                 data => {
+                     eventref => $events[$seq],
+                     seq => $seq
+                 },
                  cb => sub {
                      my $event = shift;
                      my $data = $event->w->data();
@@ -157,8 +162,10 @@ sub schedule_video {
     # this pause screen when the movie should stop.
     my $stopstring = strftime("%H:%M", localtime($stoptime));
     Event->timer(at => $stoptime - 30,
-                 data => {seq => $seq,
-                          name => "Pause starting $stopstring"},
+                 data => {
+                     seq => $seq,
+                     name => "Pause starting $stopstring",
+                 },
                  cb => sub {
                      my $event = shift;
                      my $seq = $event->w->data()->{seq};

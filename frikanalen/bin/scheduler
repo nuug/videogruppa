@@ -75,10 +75,6 @@ for my $url (@{$listref}) {
 
 my $vlc = vlc_start();
 
-#Event->idle(desc => "Report next event",
-#            min => 10,
-#            cb => sub { } );
-
 $Event::DebugLevel = 2;
 
 # Stop vlc on exit

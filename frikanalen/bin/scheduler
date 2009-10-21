@@ -220,7 +220,7 @@ sub generate_program {
     }
 
     if (open(PNG, ">", "test.png")) {
-        print "Generate pause screen DV ($seq)\n";
+        print "Generate pause screen DV ($startseq)\n";
         print PNG $im->png;
         close(PNG);
         my $len = 10 * 25; # 10 seconds in frames (25 frames/second)

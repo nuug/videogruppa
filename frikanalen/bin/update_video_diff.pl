@@ -6,7 +6,7 @@
 
 # Script for å sync'e over nye ogv filer fra frikanalen
 # Avhenger av meta.xml produsert av update_meta_xml.pl
-# 
+#
 # http://wiki.nuug.no/grupper/video/pubfrikanalen
 
 use Data::Dumper;
@@ -28,21 +28,21 @@ sub get_new_vids {
     $metaid =~ /id_(.+)/;
     $file_id = $1;
     print "Checking if $file_id is already here\n" if $ARGV[0] eq "debug";
-    # Uncomment this line if you want to refresh _all_ thumbs.	
-    	#&get_thumb($meta->{$metaid}->{'ImageUri'},$file_id);
+    # Uncomment this line if you want to refresh _all_ thumbs.
+        #&get_thumb($meta->{$metaid}->{'ImageUri'},$file_id);
     $exists = 'false';
     foreach my $local_file (@localvideos) {
       $local_file =~ s/.ogv//;
       if ($file_id eq $local_file) {
-	$exists = 'true';
-	print "$file_id is here\n" if  $ARGV[0] eq "debug";
+        $exists = 'true';
+        print "$file_id is here\n" if  $ARGV[0] eq "debug";
       }
-    } 
+    }
     if ($exists ne 'true') {
       print "Fetching video $file_id \n" if $ARGV[0] eq "debug";
       if  ($meta->{$metaid}->{'VideoOgvUri'} =~ /^http:/) {
-	&get_http_vid($meta->{$metaid}->{'VideoOgvUri'},$file_id);
-	&get_thumb($meta->{$metaid}->{'ImageUri'},$file_id);
+        &get_http_vid($meta->{$metaid}->{'VideoOgvUri'},$file_id);
+        &get_thumb($meta->{$metaid}->{'ImageUri'},$file_id);
       }
     }
   }
@@ -50,8 +50,7 @@ sub get_new_vids {
 
 
 sub get_thumb {
-  my $url = $_[0];
-  my $file_id = $_[1];
+  my ($url, $file_id) = @_;
   # foreach my $metaid (keys %$meta) {
     print "Fetching thumbnail for video $file_id\n";
     `/usr/local/bin/wget --quiet -O - $url |convert - -scale 25%  $localvideo_dir/thumbs/$file_id.jpg`;
@@ -60,8 +59,7 @@ sub get_thumb {
 
 
 sub get_http_vid {
-  my $url = $_[0];
-  my $file_id = $_[1];
+  my ($url, $file_id) = @_;
   my $r = 1;
   print "Fetching  video $file_id\n";
   while ($r != 0 ) {
@@ -70,8 +68,7 @@ sub get_http_vid {
 }
 
 sub get_mms_vid {
-  my $url = $_[0];
-  my $file_id = $_[1];
+  my ($url, $file_id) = @_;
   my $r = 1;
   print "Fetching  video $file_id\n";
   while ($r != 0 ) {

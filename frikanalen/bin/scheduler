@@ -25,6 +25,7 @@ use Date::Parse;
 use GD;
 use POSIX;
 use Event;
+use File::Temp;
 
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
@@ -228,23 +229,28 @@ sub generate_program {
         $seq++;
     }
 
-    if (open(PNG, ">", "test.png")) {
+    my $png = new File::Temp( UNLINK => 0, SUFFIX => '.png' );
+    if ($png) {
         print "Generate pause screen DV ($startseq)\n";
-        print PNG $im->png;
-        close(PNG);
+        print $png $im->png;
+        my $tmppng = $png->filename();
+        close($png);
+
         my $len = 10 * 25; # 10 seconds in frames (25 frames/second)
         # use image2raw from package smilutils
-        system("image2raw -r $len test.png > test.dv");
+        my $tmpdv = "temp.dv";
+
+        system("image2raw -r $len $tmppng > $tmpdv");
         # Generate Ogg Theora, VLC do not understand raw DV
 
         my $resultfile = "test.ogv";
-        system("ffmpeg2theora --width 384 --height 288 -o $resultfile test.dv");
-        unlink "test.png";
-        unlink "test.dv";
+        system("ffmpeg2theora --width 384 --height 288 -o $resultfile $tmpdv");
+        unlink $tmppng;
+        unlink $tmpdv;
         print "Done generating pause screen DV\n";
         return $resultfile;
     } else {
-        print "Unable to save test.png\n";
+        print "Unable to save temporary PNG file\n";
     }
 }
 

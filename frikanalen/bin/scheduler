@@ -18,6 +18,7 @@ use LWP::UserAgent;
 use Date::Parse;
 use GD;
 use POSIX;
+use Event;
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 
@@ -74,11 +75,33 @@ for my $url (@{$listref}) {
 
 my $vlc = vlc_start();
 
+#Event->idle(desc => "Report next event",
+#            min => 10,
+#            cb => sub { } );
+
+$Event::DebugLevel = 2;
+
 # Stop vlc on exit
-$SIG{EXIT} = sub { my $pid = $vlc->{pid}; print "Killing $pid\n"; kill $pid; };
+$Event::DIED = sub { my $pid = $vlc->{pid};
+                     print "Killing $pid\n"; kill $pid; };
 
 @events = sort start_order @events;
 my $seq = 0;
+
+# Pause program.  Generate pause screen outside event loop to make
+# sure it start imediately.
+{
+    my $now = time();
+    my $programogv = generate_program($vlc, $seq);
+    Event->timer(at => $now,
+                 data => {seq => $seq},
+                 cb => sub {
+                     my $event = shift;
+                     my $seq = $event->w->data()->{seq};
+                     vlc_play($vlc, $programogv, 1);
+                 });
+}
+
 while ($seq < scalar @events) {
     my $event = $events[$seq];
     my $now = time();
@@ -88,21 +111,67 @@ while ($seq < scalar @events) {
 
     # Skip entries from the past
     if ($starttime >= $now) {
-        my $wait = $starttime - $now;
-        my $title = $event->{'title'};
-        print "Waiting $wait seconds to start '$title' $start\n";
-        show_program($vlc, $seq);
-        sleep $wait;
-        process_event($vlc, $event);
+        schedule_video($vlc, $seq, $starttime, $stoptime);
     } elsif ($stoptime >= $now && $starttime <= $now) {
         # If some program is already running, just start it to get
         # something showing.
-        process_event($vlc, $event);
+        schedule_video($vlc, $seq, $now, $stoptime);
     }
     $seq++;
 }
 
-sub show_program {
+#print Dumper(Event::all_watchers());
+
+Event::loop();
+
+exit 0;
+
+sub short_time {
+    my $timestring = shift;
+    my $timestamp = str2time($timestring);
+    return strftime("%H:%M", localtime($timestamp));
+}
+
+sub schedule_video {
+    my ($vlc, $seq, $starttime, $stoptime) = @_;
+    Event->timer(at => $starttime,
+                 data => {eventref => $events[$seq],
+                          seq => $seq},
+                 cb => sub {
+                     my $event = shift;
+                     my $data = $event->w->data();
+                     my $eventref = $data->{eventref};
+                     my $seq = $data->{seq};
+                     my $title = $eventref->{'title'};
+                     my $ogvurl  = $eventref->{'ogvurl'};
+
+                     my $startstring = short_time($eventref->{'start'});
+                     my $stopstring = short_time($eventref->{'stop'});
+                     print "Playing '$title' $startstring-$stopstring\n";
+
+                     vlc_play($vlc, $ogvurl);
+
+                 });
+
+    # Generate pause screen 30 seconds before the movie stop, and play
+    # this pause screen when the movie should stop.
+    my $stopstring = strftime("%H:%M", localtime($stoptime));
+    Event->timer(at => $stoptime - 30,
+                 data => {seq => $seq,
+                          name => "Pause starting $stopstring"},
+                 cb => sub {
+                     my $event = shift;
+                     my $seq = $event->w->data()->{seq};
+                     print "Generate pause screen for $seq\n";
+                     my $programogv = generate_program($vlc, $seq);
+                     Event->timer(at => $stoptime,
+                                  cb => sub {
+                                      vlc_play($vlc, $programogv, 1);
+                                  });
+                 } );
+}
+
+sub generate_program {
     my ($vlc, $startseq) = @_;
 
     my $im = new GD::Image(720,576); # PAL
@@ -110,7 +179,7 @@ sub show_program {
     my $black = $im->colorAllocate(  0,  0,  0);
     my $fontsize = 20;
     my $left = 0;
-    my $font = "/usr/share/fonts/truetype/msttcorefonts/arial.ttf";
+    my $font = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
     $im->fill(50,50,$white);
     my @bounds =
         $im->stringFT($black,$font,$fontsize*2,$left,30,50,"Frikanalen");
@@ -123,25 +192,28 @@ sub show_program {
         my $event = $events[$startseq + $seq];
         my $title = $event->{'title'};
         my $start = $event->{'start'};
+        my $stop = $event->{'stop'};
         my $starttime = str2time($start);
-        my $timestring = strftime("%H:%M", localtime($starttime));
+        my $stoptime = str2time($stop);
+        my $startstring = strftime("%H:%M", localtime($starttime));
+        my $stopstring = strftime("%H:%M", localtime($stoptime));
         my $datestring = strftime("%Y-%m-%d", localtime($starttime));
         if ($date ne $datestring) {
             my $infostring = "$datestring";
             print "  $infostring\n";
             @bounds = $im->stringFT($black,$font,$fontsize,$left,
-                                    150, $bounds[1] + $fontsize * 2, "$infostring");
+                                    90, $bounds[1] + $fontsize * 2, "$infostring");
             $date = $datestring;
         }
-        my $infostring = "$timestring - $title";
+        my $infostring = "$startstring-$stopstring - $title";
         print "  $infostring\n";
         @bounds = $im->stringFT($black,$font,$fontsize,$left,
-                                150, $bounds[1] + $fontsize * 2, "$infostring");
+                                100, $bounds[1] + $fontsize * 2, "$infostring");
         $seq++;
     }
 
     if (open(PNG, ">", "test.png")) {
-        print "Generate pause screen DV\n";
+        print "Generate pause screen DV ($seq)\n";
         print PNG $im->png;
         close(PNG);
         my $len = 10 * 25; # 10 seconds in frames (25 frames/second)
@@ -151,7 +223,7 @@ sub show_program {
 
         system("ffmpeg2theora --width 384 --height 288 -o test.ogv test.dv");
         print "Done generating pause screen DV\n";
-#        vlc_play($vlc, "test.ogv");
+        return "test.ogv";
     } else {
         print "Unable to save test.png\n";
     }
@@ -166,31 +238,6 @@ sub start_order {
 #    print "B: ", Dumper($b) unless defined $b->{'start'};
     return ($a->{'start'} || "") cmp ($b->{'start'} || "")
 }
-
-sub process_event {
-    my ($vlc, $eventref) = @_;
-#    print Dumper($eventref);
-
-    my $videoId = $eventref->{'contentId'};
-    if ($videoId) {
-        my $pageurl = $eventref->{'pageurl'};
-        my $ogvurl  = $eventref->{'ogvurl'};
-        my $title = $eventref->{'title'};
-        my $start = $eventref->{'start'};
-        my $stop = $eventref->{'stop'};
-
-        my $starttime = str2time($start);
-        my $stoptime = str2time($stop);
-
-        print "# [$start -> $stop] $title\n";
-        print "$ogvurl\n";
-        vlc_play($vlc, $ogvurl);
-    } else {
-#        print Dumper($eventref);
-    }
-}
-
-exit 0;
 
 ###########################################
 
@@ -231,17 +278,33 @@ sub vlc_start {
     }
 }
 
-sub vlc_play {
-    my ($vlc, $file) = @_;
-
-    $file =~ s#/#%2F#g;
-
-    my $url = $vlc->{url} . "requests/status.xml?command=in_play&input=$file";
+sub lwp_get {
+    my $url = shift;
     print "Visiting '$url'\n";
     my $ua = new LWP::UserAgent;
     my $req = new HTTP::Request GET => $url;
     my $res = $ua->request($req);
-    unless ($res->is_success) {
+    return ($res->is_success);
+}
+
+sub vlc_play {
+    my ($vlc, $file, $loop) = @_;
+
+    $file =~ s#/#%2F#g;
+
+
+    my $url = $vlc->{url} . "requests/status.xml?command=pl_empty";
+    unless (lwp_get($url)) {
         print "Failed to contact VLC\n";
+    }
+    $url = $vlc->{url} . "requests/status.xml?command=in_play&input=$file";
+    unless (lwp_get($url)) {
+        print "Failed to contact VLC\n";
+    }
+    if ($loop) {
+        my $url = $vlc->{url} . "requests/status.xml?command=pl_repeat";
+        unless (lwp_get($url)) {
+            print "Failed to contact VLC\n";
+        }
     }
 }

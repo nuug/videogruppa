@@ -15,6 +15,9 @@
 #  ffmpeg2theora
 #  libevent-perl
 
+# TrueType font name/path used by GD to draw text
+my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
+
 use strict;
 use warnings;
 
@@ -195,10 +198,9 @@ sub generate_program {
     my $fontsize = 20;
     my $left = 0;
     my $futurelines = 9;
-    my $font = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
     $im->fill(50,50,$white);
     my @bounds =
-        $im->stringFT($black,$font,$fontsize*2,$left,30,50,"Frikanalen");
+        $im->stringFT($black,$gdfont,$fontsize*2,$left,30,50,"Frikanalen");
 
     $bounds[1] += 80; # Move rest of the text down on the screen
 
@@ -217,14 +219,14 @@ sub generate_program {
         if ($date ne $datestring) {
             my $infostring = "$datestring";
             print "  $infostring\n";
-            @bounds = $im->stringFT($black,$font,$fontsize,$left,
+            @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,
                                     90, $bounds[1] + $fontsize * 2, "$infostring");
             $date = $datestring;
             $futurelines -= 1;
         }
         my $infostring = "$startstring-$stopstring - $title";
         print "  $infostring\n";
-        @bounds = $im->stringFT($black,$font,$fontsize,$left,
+        @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,
                                 100, $bounds[1] + $fontsize * 2, "$infostring");
         $seq++;
     }
@@ -298,7 +300,7 @@ sub vlc_start {
     } else {
         $vlc->{url} = "http://localhost:8080/";
         $vlc->{pid} = $pid;
-        sleep 5; # Give VLC some time to start
+#        sleep 5; # Give VLC some time to start
         return $vlc;
     }
 }

@@ -166,7 +166,7 @@ sub schedule_video {
     Event->timer(at => $stoptime - 30,
                  data => {
                      vlc => $vlc,
-                     seq => $seq,
+                     seq => $seq + 1,
                      name => "Pause starting $stopstring",
                  },
                  cb => sub {

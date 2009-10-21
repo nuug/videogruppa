@@ -140,6 +140,7 @@ sub schedule_video {
     Event->timer(at => $starttime,
                  data => {
                      eventref => $events[$seq],
+                     vlc => $vlc,
                      seq => $seq
                  },
                  cb => sub {
@@ -149,6 +150,7 @@ sub schedule_video {
                      my $seq = $data->{seq};
                      my $title = $eventref->{'title'};
                      my $ogvurl  = $eventref->{'ogvurl'};
+                     my $vlc = $event->w->data()->{vlc};
 
                      my $startstring = short_time($eventref->{'start'});
                      my $stopstring = short_time($eventref->{'stop'});
@@ -163,12 +165,14 @@ sub schedule_video {
     my $stopstring = strftime("%H:%M", localtime($stoptime));
     Event->timer(at => $stoptime - 30,
                  data => {
+                     vlc => $vlc,
                      seq => $seq,
                      name => "Pause starting $stopstring",
                  },
                  cb => sub {
                      my $event = shift;
                      my $seq = $event->w->data()->{seq};
+                     my $vlc = $event->w->data()->{vlc};
                      print "Generate pause screen for $seq\n";
                      my $programogv = generate_program($vlc, $seq);
                      Event->timer(at => $stoptime,

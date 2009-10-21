@@ -24,6 +24,8 @@ use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 
 binmode STDOUT, ":utf8";
 
+my $vlc = vlc_start();
+
 my $listref = get_epglist();
 
 my @events = ();
@@ -72,8 +74,6 @@ for my $url (@{$listref}) {
         }
     }
 }
-
-my $vlc = vlc_start();
 
 $Event::DebugLevel = 2;
 
@@ -186,16 +186,17 @@ sub generate_program {
     my $black = $im->colorAllocate(  0,  0,  0);
     my $fontsize = 20;
     my $left = 0;
+    my $futurelines = 9;
     my $font = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
     $im->fill(50,50,$white);
     my @bounds =
         $im->stringFT($black,$font,$fontsize*2,$left,30,50,"Frikanalen");
 
-    $bounds[1] += 100; # Move rest of the text down on the screen
+    $bounds[1] += 80; # Move rest of the text down on the screen
 
     my $seq = 0;
     my $date = "";
-    while ($seq < 5) {
+    while ($seq < $futurelines) {
         my $event = $events[$startseq + $seq];
         my $title = $event->{'title'};
         my $start = $event->{'start'};
@@ -211,6 +212,7 @@ sub generate_program {
             @bounds = $im->stringFT($black,$font,$fontsize,$left,
                                     90, $bounds[1] + $fontsize * 2, "$infostring");
             $date = $datestring;
+            $futurelines -= 1;
         }
         my $infostring = "$startstring-$stopstring - $title";
         print "  $infostring\n";

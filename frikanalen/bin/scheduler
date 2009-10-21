@@ -273,7 +273,7 @@ sub get_epglist {
 
 # Starting a VLC client/server with HTTP interface.  The telnet
 # interface could be an alternative, but it only support streaming, so
-# it is very good for initial testing.
+# it is not very good for initial testing.
 # http://wiki.videolan.org/Documentation:Streaming_HowTo/VLM
 sub vlc_start {
     my $vlc = {};

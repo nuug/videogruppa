@@ -12,14 +12,11 @@
 use Data::Dumper;
 use XML::Simple;
 my $localvideo_dir = '/data/video/frikanalen';
+my $localthumbs_dir = '/data/video/frikanalen/thumbs';
 my $meta = XMLin("$localvideo_dir/meta.xml");
 
 # Make sure convert is in the path
 $ENV{PATH} = $ENV{PATH} . ":/usr/local/bin";
-
-opendir LOCALVIDEO_DIR, $localvideo_dir or die "Can't open directory $localvideo_dir: $!\n";
-@localvideos = grep /^.+\.ogv/, readdir(LOCALVIDEO_DIR);
-closedir HOST_DIR;
 
 &get_new_vids;
 
@@ -33,19 +30,16 @@ sub get_new_vids {
     # Uncomment this line if you want to refresh _all_ thumbs.
         #&get_thumb($meta->{$metaid}->{'ImageUri'},$file_id);
     $exists = 'false';
-    foreach my $local_file (@localvideos) {
-      $local_file =~ s/.ogv//;
-      if ($file_id eq $local_file) {
-        $exists = 'true';
-        print "$file_id is here\n" if  $ARGV[0] eq "debug";
-      }
-    }
-    if ($exists ne 'true') {
+    unless ( -f "$localvideo_dir/$file_id.ogv") {
       print "Fetching video $file_id \n" if $ARGV[0] eq "debug";
       if  ($meta->{$metaid}->{'VideoOgvUri'} =~ /^http:/) {
         &get_http_vid($meta->{$metaid}->{'VideoOgvUri'},$file_id);
-        &get_thumb($meta->{$metaid}->{'ImageUri'},$file_id);
       }
+    } else {
+      print "$file_id is here\n" if  $ARGV[0] eq "debug";
+    }
+    unless ( -f "$localthumbs_dir/$file_id.jpg") {
+      get_thumb($meta->{$metaid}->{'ImageUri'},$file_id);
     }
   }
 }
@@ -55,7 +49,7 @@ sub get_thumb {
   my ($url, $file_id) = @_;
   # foreach my $metaid (keys %$meta) {
     print "Fetching thumbnail for video $file_id\n";
-    `/usr/local/bin/wget --quiet -O - $url |convert - -scale 25%  $localvideo_dir/thumbs/$file_id.jpg`;
+    `/usr/local/bin/wget --quiet -O - $url |convert - -scale 25%  $localthumbs_dir/$file_id.jpg`;
     # }
 }
 

@@ -14,6 +14,8 @@ use XML::Simple;
 my $localvideo_dir = '/data/video/frikanalen';
 my $meta = XMLin("$localvideo_dir/meta.xml");
 
+# Make sure convert is in the path
+$ENV{PATH} = $ENV{PATH} . ":/usr/local/bin";
 
 opendir LOCALVIDEO_DIR, $localvideo_dir or die "Can't open directory $localvideo_dir: $!\n";
 @localvideos = grep /^.+\.ogv/, readdir(LOCALVIDEO_DIR);

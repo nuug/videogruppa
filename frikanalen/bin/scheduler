@@ -310,7 +310,7 @@ sub vlc_start {
 
         # Only work if 'vlc -l | grep access_output_shout' list
         # support for streaming to an icecast server.
-        push(@vlcargs, "--sout='#duplicate{dst=display,dst=\"transcode{vcodec=theo,vb=256,acodec=vorb,ab=64,vfilter=canvas{width=320,height=240,canvas-aspect=4:3}}:standard{mux=ogg,dst=source:$icecastpasswd\@$icecastserver/live.ogv,access=shout}\"}'");
+#        push(@vlcargs, "--sout='#duplicate{dst=display,dst=\"transcode{vcodec=theo,vb=256,acodec=vorb,ab=64,vfilter=canvas{width=320,height=240,canvas-aspect=4:3}}:standard{mux=ogg,dst=source:$icecastpasswd\@$icecastserver/live.ogv,access=shout}\"}'");
 
         print "starting VLC: vlc ". join(" ", @vlcargs) . "\n";
         exec("vlc", @vlcargs);

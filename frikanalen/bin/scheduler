@@ -14,6 +14,12 @@
 #  smilutils
 #  ffmpeg2theora
 #  libevent-perl
+#  libxml-simple-perl
+#  libtimedate-perl
+#  libwww-perl
+#  vlc
+#  libsoap-lite-perl
+#  ttf-liberation
 
 # TrueType font name/path used by GD to draw text
 my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
@@ -37,9 +43,15 @@ use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 
 my $vlc = vlc_start();
 
-my $listref = get_epglist();
+# Stop vlc on exit
+$Event::DIED = sub { my $pid = $vlc->{pid};
+                     print "Killing $pid\n"; kill $pid; };
+
+#$Event::DebugLevel = 2;
 
 my @events = ();
+
+my $listref = get_epglist();
 for my $url (@{$listref}) {
 #    print "Loading '$url'\n";
     my $ua = new LWP::UserAgent;
@@ -85,12 +97,6 @@ for my $url (@{$listref}) {
         }
     }
 }
-
-#$Event::DebugLevel = 2;
-
-# Stop vlc on exit
-$Event::DIED = sub { my $pid = $vlc->{pid};
-                     print "Killing $pid\n"; kill $pid; };
 
 @events = sort start_order @events;
 my $seq = 0;
@@ -295,7 +301,19 @@ sub vlc_start {
         return undef;
     } elsif (0 == $pid){
 #    system("vlc", "--extraintf", "telnet", "--telnet-password", "secret");
-        exec("vlc", "--extraintf", "http");
+        my @vlcargs;
+        push(@vlcargs, "--extraintf", "http");
+
+        # Icecast server
+        my $icecastserver = "voip.nuug.no:8000";
+        my $icecastpasswd = "secret";
+
+        # Only work if 'vlc -l | grep access_output_shout' list
+        # support for streaming to an icecast server.
+        push(@vlcargs, "--sout='#duplicate{dst=display,dst=\"transcode{vcodec=theo,vb=256,acodec=vorb,ab=64,vfilter=canvas{width=320,height=240,canvas-aspect=4:3}}:standard{mux=ogg,dst=source:$icecastpasswd\@$icecastserver/live.ogv,access=shout}\"}'");
+
+        print "starting VLC: vlc ". join(" ", @vlcargs) . "\n";
+        exec("vlc", @vlcargs);
         exit 0;
     } else {
         $vlc->{url} = "http://localhost:8080/";

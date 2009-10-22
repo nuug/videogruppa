@@ -33,7 +33,7 @@ use File::Temp;
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 
-binmode STDOUT, ":utf8";
+#binmode STDOUT, ":utf8";
 
 my $vlc = vlc_start();
 

@@ -196,6 +196,9 @@ sub schedule_video {
                      my $programogv = generate_program($vlc, $seq);
                      Event->timer(at => $stoptime,
                                   cb => sub {
+                                      my $nowstring = strftime("%H:%M:%S", localtime(time()));
+                                      my $str = strftime("%H:%M:%S", localtime($stoptime));
+                                      print "Starting pause screen $str (now $nowstring)\n";
                                       vlc_play($vlc, $programogv, 1);
                                   });
                  } );
@@ -229,12 +232,15 @@ sub generate_program {
         my $stopstring = strftime("%H:%M", localtime($stoptime));
         my $datestring = strftime("%Y-%m-%d", localtime($starttime));
         if ($date ne $datestring) {
+            $futurelines -= 1;
+            # Stop here if there are too few lines left on the screen
+            next if $seq == $futurelines;
+
             my $infostring = "$datestring";
             print "  $infostring\n";
             @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,
                                     90, $bounds[1] + $fontsize * 2, "$infostring");
             $date = $datestring;
-            $futurelines -= 1;
         }
         my $infostring = "$startstring-$stopstring - $title";
         print "  $infostring\n";

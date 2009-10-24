@@ -144,8 +144,13 @@ exit 0;
 
 sub short_time {
     my $timestring = shift;
+    my $showseconds = shift;
     my $timestamp = str2time($timestring);
-    return strftime("%H:%M", localtime($timestamp));
+    if ($showseconds) {
+        return strftime("%H:%M:%S", localtime($timestamp));
+    } else {
+        return strftime("%H:%M", localtime($timestamp));
+    }
 }
 
 sub schedule_video {
@@ -165,9 +170,10 @@ sub schedule_video {
                      my $ogvurl  = $eventref->{'ogvurl'};
                      my $vlc = $event->w->data()->{vlc};
 
-                     my $startstring = short_time($eventref->{'start'});
-                     my $stopstring = short_time($eventref->{'stop'});
-                     print "Playing '$title' $startstring-$stopstring\n";
+                     my $startstring = short_time($eventref->{'start'}, 1);
+                     my $stopstring = short_time($eventref->{'stop'}, 1);
+                     my $nowstring = strftime("%H:%M:%S", localtime(time()));
+                     print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
 
                      vlc_play($vlc, $ogvurl);
 

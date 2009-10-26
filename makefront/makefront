@@ -1,0 +1,96 @@
+#!/usr/bin/perl
+#
+# Generate NUUG video front picture.  Based on CC-BY-SA 3.0 licensed
+# bourne shell script makefront av Hans-Petter "Atluxity" Fjeld.
+# Rewritten by Petter Reinholdtsen as perl to handle title splitting
+# and handle command line arguments.
+
+use warnings;
+use strict;
+
+use Getopt::Std;
+use Text::Wrap qw($columns);
+
+print "Startet Makefront, laget for NUUG 2009.\n";
+
+my $filename = "test.png";
+my $count = 0;
+do {
+    $filename="NUUG-vid_front${count}.png";
+    $count++;
+} until ! -e $filename;
+
+print "Output til filen ${filename}...\n";
+
+#Starte med å putte NUUG-logoen på video-bakgrunnen.
+`composite -geometry +52+167 NUUG-logo-2-150.png NUUG-vid_bg.png $filename`;
+
+print "Laget trinn 1 av 3...\n";
+
+#Putte CC-BY-SA-logoen pÃ¥ der igjen
+`composite -geometry +632+770 cc-by-sa.png $filename $filename`;
+
+print "Laget trinn 2 av 3...\n";
+
+
+#Spør om input til variabler
+my $presenter =
+    prompt(undef,
+           "Skriv inn navnet på foredragsholder (maks 25 tegn):\n");
+my $title =
+    prompt(undef,
+           "Skriv inn tittelen til foredraget (maks 25 tegn):\n");
+my $time =
+    prompt(undef,
+           "Skriv inn tid for foredraget: (`date +%d.\ %B\ %Y`):\n");
+
+unless ($time) {
+    $time=`date +%d.\ %B\ %Y`;
+}
+
+my $place =
+    prompt(undef, "Skriv inn sted for foredraget:\n");
+
+my $timeplace;
+unless ($place) {
+    $timeplace=$time;
+} else {
+    $timeplace = "$time - $place";
+}
+
+$columns = 25;
+$title = Text::Wrap::wrap("", "", $title);
+
+#Sette tekst på bildet
+print "Setter teksten på bildet...\n";
+my @cmd = ("convert", $filename,
+           "-fill", "white",
+           "-pointsize", "72",
+           "-draw", "text 400,167 '${presenter}'",
+           "-draw", "text 400,267 '${title}'",
+           "-pointsize", "40",
+           "-draw", "text 400,567 '${timeplace}'",
+           $filename);
+system(@cmd);
+
+print "Laget trinn 3 av 3 ($filename opprettet).\n";
+
+# Convert to PAL size
+#convert -size 720x576
+#  NUUG-vid_front${count}.png NUUG-vid_front${count}-pal.png
+
+print "Makefront avslutter\n";
+
+exit 0;
+
+
+sub prompt {
+    my ($curval, $prompt) = @_;
+    unless ($curval) {
+        print $prompt;
+        my $retval = <>;
+        chomp $retval;
+        return $retval;
+    }
+    return $curval;
+}

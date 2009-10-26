@@ -30,6 +30,10 @@ print "Output til filen ${filename}...\n";
 #Starte med å putte NUUG-logoen på video-bakgrunnen.
 `composite -geometry +52+167 NUUG-logo-2-150.png NUUG-vid_bg.png $filename`;
 
+# Deretter URL under denne
+`convert $filename -fill white -pointsize 50 -draw "text 52,840 'http://www.nuug.no/'" $filename`;
+
+
 print "Laget trinn 1 av 3...\n";
 
 #Putte CC-BY-SA-logoen pÃ¥ der igjen
@@ -83,6 +87,8 @@ print "Laget trinn 3 av 3 ($filename opprettet).\n";
 # Convert to PAL size
 #convert -size 720x576
 #  NUUG-vid_front${count}.png NUUG-vid_front${count}-pal.png
+# Generate 10 second DV file
+#image2raw -r 250 NUUG-vid_front${count}-pal.png > NUUG-vid_front${count}-pal.dv
 
 print "Makefront avslutter\n";
 

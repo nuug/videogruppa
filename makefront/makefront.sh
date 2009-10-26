@@ -1,6 +1,9 @@
 #!/bin/bash
-LANG=nb_NO
 
+set -e
+
+LANG=nb_NO
+export LANG
 
 # Makefront av Hans-Petter "Atluxity" Fjeld <atluxity@gmail.com>
 # CC-BY-SA 3.0
@@ -27,10 +30,10 @@ echo "Laget trinn 2 av 3..."
 #timeplace="Tid og sted"
 
 #Spør om input til variabler
-echo "Skriv inn navnet på foredragsholder: "
+echo "Skriv inn navnet på foredragsholder (maks 25 tegn): "
 read presenter
 
-echo "Skriv inn tittelen til foredraget: "
+echo "Skriv inn tittelen til foredraget (maks 25 tegn): "
 read title
 
 echo "Skriv inn tid for foredraget: (`date +%d.\ %B\ %Y`)"
@@ -50,7 +53,8 @@ fi
 #Sette tekst på bildet
 echo "Setter teksten på bildet..."
 convert NUUG-vid_front${count}.png -pointsize 72 -fill white -draw "text 400,167 '${presenter}'" -draw "text 400,267 '${title}'" -pointsize 40 -draw "text 400,567 '${timeplace}'" NUUG-vid_front${count}.png
-echo "Laget trinn 3 av 3."
+echo "Laget trinn 3 av 3 (NUUG-vid_front${count}.png opprettet)."
 
 echo "Makefront avslutter"
-exit
+
+exit 0

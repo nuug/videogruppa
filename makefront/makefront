@@ -13,13 +13,18 @@ use Text::Wrap qw($columns);
 
 print "Startet Makefront, laget for NUUG 2009.\n";
 
-my $filename = "test.png";
-my $count = 0;
-do {
-    $filename="NUUG-vid_front${count}.png";
-    $count++;
-} until ! -e $filename;
+use vars qw($presenter $title $time $place %opts);
 
+getopts("o:p:t:w:l:", \%opts);
+
+my $filename = $opts{'o'};
+unless ($filename) {
+    my $count = 0;
+    do {
+        $filename="NUUG-vid_front${count}.png";
+        $count++;
+    } until ! -e $filename;
+}
 print "Output til filen ${filename}...\n";
 
 #Starte med å putte NUUG-logoen på video-bakgrunnen.
@@ -34,22 +39,22 @@ print "Laget trinn 2 av 3...\n";
 
 
 #Spør om input til variabler
-my $presenter =
-    prompt(undef,
+$presenter =
+    prompt($opts{'p'},
            "Skriv inn navnet på foredragsholder (maks 25 tegn):\n");
-my $title =
-    prompt(undef,
+$title =
+    prompt($opts{'t'},
            "Skriv inn tittelen til foredraget (maks 25 tegn):\n");
-my $time =
-    prompt(undef,
+$time =
+    prompt($opts{'w'},
            "Skriv inn tid for foredraget: (`date +%d.\ %B\ %Y`):\n");
+$place =
+    prompt($opts{'l'},
+           "Skriv inn sted for foredraget:\n");
 
 unless ($time) {
     $time=`date +%d.\ %B\ %Y`;
 }
-
-my $place =
-    prompt(undef, "Skriv inn sted for foredraget:\n");
 
 my $timeplace;
 unless ($place) {

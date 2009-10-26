@@ -34,12 +34,12 @@ print "Output til filen ${filename}...\n";
 `convert $filename -fill white -pointsize 50 -draw "text 52,840 'http://www.nuug.no/'" $filename`;
 
 
-print "Laget trinn 1 av 3...\n";
+print "Laget trinn 1 av 4...\n";
 
 #Putte CC-BY-SA-logoen pÃ¥ der igjen
 `composite -geometry +632+770 cc-by-sa.png $filename $filename`;
 
-print "Laget trinn 2 av 3...\n";
+print "Laget trinn 2 av 4...\n";
 
 
 #Spør om input til variabler
@@ -82,13 +82,19 @@ my @cmd = ("convert", $filename,
            $filename);
 system(@cmd);
 
-print "Laget trinn 3 av 3 ($filename opprettet).\n";
+print "Laget trinn 3 av 4 ($filename opprettet).\n";
 
 # Convert to PAL size
-#convert -size 720x576
-#  NUUG-vid_front${count}.png NUUG-vid_front${count}-pal.png
+my $palfilename = $filename;
+$palfilename =~ s/\.png/-pal.png/;
+`convert -geometry 720x576! $filename $palfilename`;
+
 # Generate 10 second DV file
-#image2raw -r 250 NUUG-vid_front${count}-pal.png > NUUG-vid_front${count}-pal.dv
+my $dvfilename = $palfilename;
+$dvfilename =~ s/\.png/.dv/;
+
+`image2raw -r 250 $palfilename > $dvfilename`;
+print "Laget trinn 4 av 4 ($dvfilename opprettet).\n";
 
 print "Makefront avslutter\n";
 

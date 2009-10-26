@@ -52,8 +52,14 @@ fi
 
 #Sette tekst på bildet
 echo "Setter teksten på bildet..."
-convert NUUG-vid_front${count}.png -pointsize 72 -fill white -draw "text 400,167 '${presenter}'" -draw "text 400,267 '${title}'" -pointsize 40 -draw "text 400,567 '${timeplace}'" NUUG-vid_front${count}.png
+convert NUUG-vid_front${count}.png -pointsize 72 -fill white \
+  -draw "text 400,167 '${presenter}'" -draw "text 400,267 '${title}'" \
+  -pointsize 40 -draw "text 400,567 '${timeplace}'" NUUG-vid_front${count}.png
 echo "Laget trinn 3 av 3 (NUUG-vid_front${count}.png opprettet)."
+
+# Convert to PAL size
+#convert -size 720x576 \
+#  NUUG-vid_front${count}.png NUUG-vid_front${count}-pal.png
 
 echo "Makefront avslutter"
 

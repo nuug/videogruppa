@@ -13,15 +13,22 @@ use Text::Wrap qw($columns);
 
 print "Startet Makefront, laget for NUUG 2009.\n";
 
-use vars qw($presenter $title $time $place %opts);
+use vars qw($type $presenter $title $time $place $editor %opts);
 
-getopts("o:p:t:w:l:", \%opts);
+getopts("o:p:t:w:l:e:", \%opts);
+
+if ($opts{e}) {
+    $editor = $opts{e};
+    $type = "back";
+} else {
+    $type = "front";
+}
 
 my $filename = $opts{'o'};
 unless ($filename) {
     my $count = 0;
     do {
-        $filename="NUUG-vid_front${count}.png";
+        $filename="NUUG-vid_${type}${count}.png";
         $count++;
     } until ! -e $filename;
 }
@@ -41,6 +48,15 @@ print "Laget trinn 1 av 4...\n";
 
 print "Laget trinn 2 av 4...\n";
 
+if ($editor) {
+    my @cmd = ("convert", $filename,
+               "-fill", "white",
+               "-pointsize", "40",
+               "-draw", "text 400,367 'Redaktør\n$editor'",
+               "-draw", "text 400,667 'Epostadresse\nsekretariat\@nuug.no'",
+               $filename);
+    system(@cmd);
+} else {
 
 #Spør om input til variabler
 $presenter =
@@ -81,6 +97,7 @@ my @cmd = ("convert", $filename,
            "-draw", "text 400,567 '${timeplace}'",
            $filename);
 system(@cmd);
+}
 
 print "Laget trinn 3 av 4 ($filename opprettet).\n";
 

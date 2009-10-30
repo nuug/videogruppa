@@ -1,0 +1,630 @@
+﻿1
+00:00:00,000 --> 00:00:03,500
+Damer og herrer, vi har noen store tenkere med oss.
+
+2
+00:00:03,750 --> 00:00:08,950
+Vi har et sjarmerende publikum, vi har mat, vi har en åpen internettforbinnelse.
+
+3
+00:00:08,964 --> 00:00:11,688
+Beklager, men to av tre er jo ikke så ille
+
+4
+00:00:11,960 --> 00:00:14,524
+Jeg kommer til å være sermonimester i kveld
+
+5
+00:00:14,644 --> 00:00:16,440
+Mitt navn er Håkond Wium Lie
+
+6
+00:00:16,690 --> 00:00:20,640
+Jeg kommer ikke til å si så mye, men jeg skal prøve å
+få til alle talerne i riktig rekkefølge.
+
+7
+00:00:20,890 --> 00:00:22,104
+Og si riktige navn
+
+8
+00:00:21,854 --> 00:00:26,812
+Det eneste jeg har fått lov til å si om selve prisene er at
+
+9
+00:00:26,812 --> 00:00:30,192
+Obama kommer ikke til å få noe her i kveld.
+
+10
+00:00:30,442 --> 00:00:34,756
+Vi fortsetter på norsk for en del av programmet
+
+11
+00:00:35,006 --> 00:00:38,448
+og når Jimmy Wales skal prate får han selvsagt lov til
+
+12
+00:00:38,448 --> 00:00:42,198
+å snakke sin samiske dialekt.
+
+13
+00:00:41,856 --> 00:00:48,753
+Den første ut er Høgskolen i Oslo, prorektor Per Arne Olsen.
+
+14
+00:01:23,923 --> 00:01:28,538
+Og en spesiell velkomst til Jimmy Wales, grunnleggeren av Wikipedia
+
+15
+00:22:42,930 --> 00:22:46,368
+Den neste taleren i kveld trenger knapt noen introduksjon
+
+16
+00:22:46,368 --> 00:22:51,984
+navnet hans er sterkt assosiert med prosjektet han grunnla for noen år siden.
+
+17
+00:22:52,234 --> 00:22:58,272
+og som han fremdeles bidrar til, fremdeles sterkt promoterer, reiser verden rundt.
+
+18
+00:22:58,272 --> 00:23:03,192
+Han har et travelt skjema i Norge denne uken
+
+19
+00:23:03,442 --> 00:23:06,984
+og vi er fornøyde med at han kunne komme hit i kveld.
+
+20
+00:23:06,984 --> 00:23:11,313
+Før jeg slipper han til på scenen vil jeg gjerne dele en liten historie med dere
+
+21
+00:23:11,563 --> 00:23:15,063
+Når jeg kom til CERN, tidlig på 90-tallet, for å jobbe med dette verdensvev-prosjektet
+
+22
+00:23:16,592 --> 00:23:22,632
+Tim Berners-Lee hadde startet et virituelt biblioteket-prosjekt som han promoterte.
+
+23
+00:23:22,872 --> 00:23:28,372
+Tim fant ikke bare opp de tekniske protokollene, HTTP, HTLM osv.
+
+24
+00:23:28,622 --> 00:23:32,122
+Han ville også gjøre prosjekter med innhold
+
+25
+00:23:32,612 --> 00:23:40,416
+Nå skjedde det slik at Tim måtte konsentrere seg på å gjøre
+det tekniske og å starte de tekniske organisasjonene.
+
+26
+00:23:40,666 --> 00:23:51,072
+Men det prosjektet fortalte meg at webben virkelig er laget for noe slikt,
+sammarbeid hvor alle kan bidra.
+
+27
+00:23:51,072 --> 00:23:57,120
+Og heldigvis skjedde ikke det virtuelle biblioteket til Tim,
+det var egentlig ikke så veldig bra.
+
+28
+00:23:57,370 --> 00:23:59,064
+Wikipedia er mye bedre.
+
+29
+00:23:59,064 --> 00:24:01,752
+Gi en varm velkomst til Jimmy Wales.
+
+30
+00:24:09,672 --> 00:24:15,840
+Takk, det er hyggelig å være her i kveld for friprog-prisen.
+
+31
+00:24:17,448 --> 00:24:23,552
+Jeg forstår ikke norsk, så jeg skjønte ikke så veldig mye av hva som har skjedd.
+
+32
+00:24:25,152 --> 00:24:37,320
+Men jeg tenkte at siden fredprisen gikk til Obama,
+fordi han kanskje kunne ordne litt fred.
+
+33
+00:24:37,570 --> 00:24:40,876
+Jeg tenkte vi kanskje burde gi friprog-prisen til
+
+34
+00:24:41,078 --> 00:24:44,578
+Bill Gates, ettersom han kunne jo finne på å lage noe bra fri programvare.
+
+35
+00:24:49,584 --> 00:24:52,392
+Men kanskje vi burde være litt mer tradisjonelle i kveld
+
+36
+00:24:52,642 --> 00:24:59,260
+Mange journalister, jeg tror jeg har sagt dette 4-5 ganger i kveld,
+
+37
+00:24:59,510 --> 00:25:03,672
+spør "Hvordan fikk du ideen til Wikipedia?"
+
+38
+00:25:03,922 --> 00:25:06,744
+for mange virker det ganske utenkelig.
+
+39
+00:25:06,994 --> 00:25:10,494
+Og det jeg svarer er at jeg fikk ideen fra fri programvare-bevegelsen
+
+40
+00:25:13,272 --> 00:25:16,632
+Det er ganske interesant å ta et skritt tilbake å tenke på
+
+41
+00:25:16,882 --> 00:25:20,616
+fri programvare i programvare-verden,
+
+42
+00:25:20,866 --> 00:25:25,080
+og ikke bare tenke på det fra et teknologisk synspunkt
+
+43
+00:25:25,080 --> 00:25:31,872
+men mer fra et sosialt synspunkt, det er et ganske radikalt konsept
+
+44
+00:25:32,122 --> 00:25:39,340
+og det er noe jeg tror fortsatt har en enorm styrke bak seg
+
+45
+00:25:39,590 --> 00:25:44,160
+og enorm sjanse til å forandre på verden i virkelig positive og fantastiske måter
+
+46
+00:25:46,968 --> 00:25:48,984
+Tilbake i de tidligere dagene av Internet
+
+47
+00:25:49,234 --> 00:25:53,952
+jeg husker at den første gangen jeg brukte Unix, når jeg gikk på skolen,
+
+48
+00:25:54,202 --> 00:25:58,660
+Jeg åpnet Emacs og brukte det som en tekstbehandler
+
+49
+00:25:58,910 --> 00:26:01,680
+og jeg klarte å trykke noen rare tastekombinasjoner
+
+50
+00:26:01,930 --> 00:26:05,430
+og jeg så dette merkelige Emacs-manifestet
+
+51
+00:26:05,680 --> 00:26:10,720
+som for meg hørtes interesant ut og kult, men også litt tullete
+
+52
+00:26:09,430 --> 00:26:13,728
+og jeg, som mange andre, var skeptisk først
+
+53
+00:26:13,978 --> 00:26:16,656
+jeg lurte på "hvordan kan dette fungere", den eneste modellen jeg
+
+54
+00:26:16,656 --> 00:26:19,632
+var klar over for distribusjon av programvare var
+
+55
+00:26:19,882 --> 00:26:23,976
+at man lagde den, solgte den og hele den propertiære modellen.
+
+56
+00:26:24,226 --> 00:26:27,726
+Jeg tenkte at dette kan jo være artig for ett par hobbyister
+
+57
+00:26:27,976 --> 00:26:30,988
+men nå ser vi jo at dette er blitt en dominant måte å distribuere programvare,
+
+58
+00:26:30,988 --> 00:26:32,712
+spesielt over Internet.
+
+59
+00:26:32,712 --> 00:26:35,240
+Og noe av den viktigste programvaren blir distribuert på denne måten.
+
+60
+00:26:35,490 --> 00:26:38,990
+Og det er mange av prinsippene bak det som er viktige
+
+61
+00:26:39,240 --> 00:26:42,740
+prinsippene som åpenhet, deling
+
+62
+00:26:42,990 --> 00:26:45,072
+prinsippene om generell sosial rettferdighet.
+
+63
+00:26:45,312 --> 00:26:48,720
+Tanken om at folk kan arbeide sammen på en positiv måte om det
+
+64
+00:26:49,072 --> 00:26:53,480
+settes opp sosiale normer og rammeverk av regler som gjør det mulig for folk
+
+65
+00:26:53,480 --> 00:26:55,610
+å dele sitt arbeid på en flott måte.
+
+66
+00:26:56,524 --> 00:26:59,360
+Selvsagt har dette hatt en stor påvirkning i programvareverdenen,
+
+67
+00:26:59,610 --> 00:27:05,832
+men det er viktig å forstå at det er den samme
+filosofien som ligger bak sukseen til Wikipedia.
+
+68
+00:27:06,000 --> 00:27:11,016
+og jeg håper at mitt arbeid og Wikipedia-samfunnets arbeid hjelper til med å endre
+
+69
+00:27:11,266 --> 00:27:18,456
+hva folk mener om mange ting, at folk kan gjøre godsinnet arbeid
+
+70
+00:27:18,456 --> 00:27:24,072
+og de kan gjøre det enten på av veledige grunner,
+
+71
+00:27:24,072 --> 00:27:26,592
+eller de kan gjøre det av karieregrunner, forretningsgrunner
+
+72
+00:27:26,592 --> 00:27:30,342
+men at vi faktisk kan bevege oss frem i samfunnet
+
+73
+00:27:30,592 --> 00:27:34,092
+med ideen om at deling er en fundamental del av det vi gjør.
+
+74
+00:27:35,880 --> 00:27:39,720
+Jeg takker for at dere har meg her i kveld, og jeg tror
+
+75
+00:27:39,720 --> 00:27:41,592
+det er på tide å dele ut prisen.
+
+76
+00:27:53,640 --> 00:27:57,504
+Før vi faktisk gir ut prisen vil jurylederen Dag Asheim
+
+77
+00:33:02,376 --> 00:33:04,680
+Dette forventet jeg ikke.
+
+78
+00:33:04,930 --> 00:33:08,180
+Jeg kan gjøre dette på engelsk eller norsk.
+
+79
+00:33:08,180 --> 00:33:10,392
+Jeg forventet denne årlige middagsinvitasjonen
+
+80
+00:33:10,392 --> 00:33:13,800
+og jeg så frem til en middag med hyggelige folk
+
+81
+00:33:13,800 --> 00:33:16,372
+For øyeblikket jobber jeg ikke lenger i Norge,
+
+82
+00:33:16,372 --> 00:33:20,140
+jeg har blitt en del av Intels open source techology center i London.
+
+83
+00:33:20,140 --> 00:33:29,400
+Jeg jobber med på noen av tingen som lager en ny brukeropplevelse for netbooks,
+
+84
+00:33:29,650 --> 00:33:36,216
+en ny opplevelse av hvordan man bruker en pc for folk som ikke er teknologiske,
+
+85
+00:33:36,466 --> 00:33:40,344
+ikke er hackere, ikke kommandolinjemennersker. Og vi har en del designere der
+
+86
+00:33:40,594 --> 00:33:46,416
+og vi gjør det med en ny type grafikkort-drevet brukerverktøy kalt Clutter.
+
+87
+00:33:46,666 --> 00:33:50,664
+Jeg jobber også med andre ting der som er åpen kildekode og fri programvare
+
+88
+00:33:51,744 --> 00:33:58,128
+Det er virkelig morro å motta denne for alle de forskjellige tingene jeg har gjort
+
+89
+00:33:58,378 --> 00:34:04,596
+for å prøve å skjønne hva som kan gjøres, og finne ut
+hvor fri programvare kan ta oss og hva som er mulig.
+
+90
+00:34:05,808 --> 00:34:08,520
+Tusen takk
+
+91
+00:34:08,770 --> 00:34:17,169
+Heldigvis, dersom du bor i England, så tar de imot disse veldig store sjekkene
+
+92
+00:34:18,672 --> 00:34:20,582
+Ja, jeg fikk faktisk en sjekkbok når jeg opprettet en bankkonto der
+
+93
+00:34:20,832 --> 00:34:24,332
+den ligger fortsatt gjemt bort i en skuff. Jeg har aldri skrevet en sjekk selv.
+
+94
+00:34:36,254 --> 00:34:40,272
+Takk. Det blir en fotosesjon etterpå også, så vi kan ta flere bilder da.
+
+95
+00:34:44,456 --> 00:34:49,139
+Jeg vet at Jimmy landet i Oslo i morges, og han er sikkert sliten.
+
+96
+00:34:49,410 --> 00:34:56,092
+Men jeg tror dette er en god mulighet til å stille noen spørsmål
+dersom noen i salen skulle ha noen spørsmål.
+
+97
+00:34:56,342 --> 00:35:04,680
+Vi hadde en sesjon før dette, på Litteraturhuset, hvor det var noen som fikk mulighet
+
+98
+00:35:04,680 --> 00:35:09,360
+men jeg tror det kan være flere som lurer på noe. Er det greit Jimmy?
+
+99
+00:35:09,360 --> 00:35:13,110
+Har vi noen spørsmål i salen? Ja, der bak?
+
+100
+00:36:11,256 --> 00:36:16,560
+Takk til deg. Vi har fortsatt tid til spørsmål, kanskje
+det er noen som har spørsmål til Jimmy Wales?
+
+101
+00:36:23,604 --> 00:36:26,496
+Det er ikke med vilje, beklager, hva er det jeg gjør galt?
+
+102
+00:36:26,746 --> 00:36:30,024
+Det er ikke rock and roll fra min.. Ok, ikke ta på mikrofonen.
+
+103
+00:36:30,274 --> 00:36:33,774
+Ok. Noen spørsmål? Ja, der bak.
+
+104
+00:36:48,903 --> 00:36:52,014
+<b>Jeg er ikke like høy som nordmenn, så jeg må..</b>
+
+105
+00:36:52,264 --> 00:36:59,171
+Jeg tror den fremtidige utviklingen av Wikipedia, når jeg tenker på det,
+
+106
+00:36:59,421 --> 00:37:05,240
+jeg er primært fokusert på utviklingen av Wikipedia på språk fra utviklingsland.
+
+107
+00:37:05,490 --> 00:37:08,352
+Det er mye spennende som skjer der
+
+108
+00:37:09,541 --> 00:37:13,944
+I form av at samfunnene begynner å ta form på en del steder.
+
+109
+00:37:14,194 --> 00:37:19,900
+For å gi ett eksempel; her i Norge, på bokmål,
+
+110
+00:37:20,150 --> 00:37:25,036
+er det nesten 250 000 artikler på Wikipedia,
+
+111
+00:37:26,400 --> 00:37:29,791
+selv om det bare har 4,8 millioner morsmålsbrukere.
+
+112
+00:37:30,041 --> 00:37:36,864
+Mens på hindi, det største språket i India, har over 280 millioner morsmålsbrukere,
+
+113
+00:37:36,864 --> 00:37:40,824
+men de har bare 50 000 artikler på sin språkversjon av Wikipedia,
+
+114
+00:37:40,824 --> 00:37:44,736
+men de vokser nå veldig raskt, det samfunnet har endelig fått fotfeste.
+
+115
+00:37:44,986 --> 00:37:48,486
+Når jeg tenker på Wikipedia i fremtiden,
+
+116
+00:37:48,736 --> 00:37:53,160
+for få år siden var rundt en tredjedel av Wikipedia engelsk
+
+117
+00:37:53,160 --> 00:37:58,440
+Nå er det mindre enn 20%, og i fremtiden vil det være mindre enn 10%.
+
+118
+00:37:58,440 --> 00:38:00,504
+Så det er en viktig ting
+
+119
+00:38:00,754 --> 00:38:07,584
+Men du spurte også om teknologien, jeg tror faktisk tekst er veldig
+
+120
+00:38:07,584 --> 00:38:09,552
+godt egnet til å skrive et encyclopedi.
+
+121
+00:38:09,802 --> 00:38:12,504
+Bilder er bra, jeg tror vi vil se mer video.
+
+122
+00:38:12,754 --> 00:38:18,340
+Og jeg er veldig spent på noe av arbeidet som Kaltura holder på med
+
+123
+00:38:18,840 --> 00:38:21,959
+med åpen videoredigering og åpen videostandard.
+
+124
+00:38:22,252 --> 00:38:27,292
+Jeg tror det er veldig veldig viktig, ikke bare for Wikipedia, men for mye.
+
+125
+00:38:27,292 --> 00:38:30,312
+En av tingene vi alltid har gjort i Wikipedia,
+
+126
+00:38:30,312 --> 00:38:34,280
+trofast mot våre fri programvare-røtter, er at vi på serverne våre
+
+127
+00:38:34,530 --> 00:38:39,816
+så kjører vi kun fri programvare, og vi bruker bare format som er brukbare av
+
+128
+00:38:40,066 --> 00:38:42,100
+fri programvare. Og det er veldig viktig for oss, fordi vi vil
+
+129
+00:38:42,350 --> 00:38:50,712
+dytte utviklingen av standardene videre. Dersom vi får folk til å tenke over
+
+130
+00:38:50,712 --> 00:38:52,992
+disse utfordringene, så tvinger det frem mye mer åpenhet.
+
+131
+00:38:54,872 --> 00:39:02,304
+I fremtiden tror jeg vi får se mer animerte illustrasjoner, interaktive illustrasjoner
+
+132
+00:39:02,554 --> 00:39:08,284
+for enkelte ting, det vil aldri bli en stor del av Wikipedia.
+Men det er absolutt enkelte ting som er mye lettere å forstå
+
+133
+00:39:08,534 --> 00:39:12,034
+dersom man har noe slags interaktivt verktøy. For eksempel
+en forbrenningsmotor
+
+134
+00:39:12,284 --> 00:39:17,768
+for å forstå hvordan den fungerer, om man kunne flytte delene opp og ned
+for å se det ville vært veldig kult.
+
+135
+00:39:18,018 --> 00:39:23,832
+Akkurat nå har vi mye slikt, men det vil nok bevege seg i den retningen til slutt
+
+136
+00:39:24,082 --> 00:39:27,582
+Jeg håper det besvarer spørsmålet ditt
+
+137
+00:39:27,832 --> 00:39:32,312
+Perfekt, takk. Min egen skamløse plugg her;
+Jeg kan nå si på vegne av Opera Software
+
+138
+00:39:32,312 --> 00:39:35,082
+Vi kommer til å legge til Ogg Theora video som en innebygget kodek
+
+139
+00:39:35,332 --> 00:39:39,556
+i våre produkter. Det har vært en hard kamp med advokatene internt,
+
+140
+00:39:39,806 --> 00:39:44,125
+men nå har vi klart å få det til. Så jeg håper virkelig vi kan jobbe sammen
+
+141
+00:39:44,375 --> 00:39:47,875
+å gjøre video til en førsteklasses innbygger i webben.
+
+142
+00:39:49,200 --> 00:39:52,644
+Vi har noen flere spørsmål, først en person på scenen. Dag?
+
+143
+00:39:54,652 --> 00:39:57,353
+Jeg tenkte kanskje jeg skulle spørre et litt ekkelt spørsmål
+
+144
+00:39:58,259 --> 00:40:00,726
+Vi liker litt drama her
+
+145
+00:40:00,976 --> 00:40:05,836
+Jeg har hørt rykter om at den engelskspråklige Wikipedia har sluttet å vokse,
+
+146
+00:40:05,836 --> 00:40:08,904
+ihvertfall vokser det ikke like fort som det har gjort tidligere,
+
+147
+00:40:09,154 --> 00:40:12,768
+så holder Wikipedia på å dø?
+
+148
+00:40:13,018 --> 00:40:16,518
+Ja, alt er slutt nå.
+
+149
+00:40:16,768 --> 00:40:24,024
+Nei, det stemmer at veksten av engelsk-språklig Wikipedia har sakket ned
+
+150
+00:40:24,024 --> 00:40:27,728
+og vi har ikke så mye informasjon enda, om hvorfor det er slik.
+
+151
+00:40:27,978 --> 00:40:32,380
+En av grunnen, som jeg tror det er, er en grunn som ikke plager meg
+eller bryr meg så mye.
+
+152
+00:40:32,630 --> 00:40:38,760
+Og det er at med 3 millioner artikler så er det ikke så mye igjen å skrive om
+
+153
+00:40:38,760 --> 00:40:44,856
+og faktisk, om man vil starte en ny artikkel så må det bli om noe ganske obskurt.
+
+154
+00:40:45,106 --> 00:40:48,606
+Og istedet for at
+

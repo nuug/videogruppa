@@ -4,7 +4,7 @@ Damer og herrer, vi har noen store tenkere med oss.
 
 2
 00:00:03,750 --> 00:00:08,950
-Vi har et sjarmerende publikum, vi har mat, vi har en åpen internettforbinnelse.
+Vi har et sjarmerende publikum, vi har mat, vi har en åpen Internett-forbindelse.
 
 3
 00:00:08,964 --> 00:00:11,688
@@ -12,7 +12,7 @@ Beklager, men to av tre er jo ikke så ille
 
 4
 00:00:11,960 --> 00:00:14,524
-Jeg kommer til å være sermonimester i kveld
+Jeg kommer til å være seremonimester i kveld
 
 5
 00:00:14,644 --> 00:00:16,440
@@ -85,7 +85,7 @@ Når jeg kom til CERN, tidlig på 90-tallet, for å jobbe med dette verdensvev-p
 
 22
 00:23:16,592 --> 00:23:22,632
-Tim Berners-Lee hadde startet et virituelt biblioteket-prosjekt som han promoterte.
+Tim Berners-Lee hadde startet et virtuelt biblioteket-prosjekt som han promoterte.
 
 23
 00:23:22,872 --> 00:23:28,372
@@ -103,7 +103,7 @@ det tekniske og å starte de tekniske organisasjonene.
 26
 00:23:40,666 --> 00:23:51,072
 Men det prosjektet fortalte meg at webben virkelig er laget for noe slikt,
-sammarbeid hvor alle kan bidra.
+samarbeid hvor alle kan bidra.
 
 27
 00:23:51,072 --> 00:23:57,120
@@ -128,7 +128,7 @@ Jeg forstår ikke norsk, så jeg skjønte ikke så veldig mye av hva som har skj
 
 32
 00:24:25,152 --> 00:24:37,320
-Men jeg tenkte at siden fredprisen gikk til Obama,
+Men jeg tenkte at siden fredsprisen gikk til Obama,
 fordi han kanskje kunne ordne litt fred.
 
 33
@@ -161,7 +161,7 @@ Og det jeg svarer er at jeg fikk ideen fra fri programvare-bevegelsen
 
 40
 00:25:13,272 --> 00:25:16,632
-Det er ganske interesant å ta et skritt tilbake å tenke på
+Det er ganske interessant å ta et skritt tilbake å tenke på
 
 41
 00:25:16,882 --> 00:25:20,616
@@ -205,7 +205,7 @@ og jeg så dette merkelige Emacs-manifestet
 
 51
 00:26:05,680 --> 00:26:10,720
-som for meg hørtes interesant ut og kult, men også litt tullete
+som for meg hørtes interessant ut og kult, men også litt tullete
 
 52
 00:26:09,430 --> 00:26:13,728
@@ -221,7 +221,7 @@ var klar over for distribusjon av programvare var
 
 55
 00:26:19,882 --> 00:26:23,976
-at man lagde den, solgte den og hele den propertiære modellen.
+at man lagde den, solgte den og hele den proprietære modellen.
 
 56
 00:26:24,226 --> 00:26:27,726
@@ -270,7 +270,7 @@ Selvsagt har dette hatt en stor påvirkning i programvareverdenen,
 67
 00:26:59,610 --> 00:27:05,832
 men det er viktig å forstå at det er den samme
-filosofien som ligger bak sukseen til Wikipedia.
+filosofien som ligger bak suksessen til Wikipedia.
 
 68
 00:27:06,000 --> 00:27:11,016
@@ -278,15 +278,15 @@ og jeg håper at mitt arbeid og Wikipedia-samfunnets arbeid hjelper til med å e
 
 69
 00:27:11,266 --> 00:27:18,456
-hva folk mener om mange ting, at folk kan gjøre godsinnet arbeid
+hva folk mener om mange ting, at folk kan gjøre godssinnet arbeid
 
 70
 00:27:18,456 --> 00:27:24,072
-og de kan gjøre det enten på av veledige grunner,
+og de kan gjøre det enten på av veldedige grunner,
 
 71
 00:27:24,072 --> 00:27:26,592
-eller de kan gjøre det av karieregrunner, forretningsgrunner
+eller de kan gjøre det av karrieregrunner, forretningsgrunner
 
 72
 00:27:26,592 --> 00:27:30,342
@@ -342,7 +342,7 @@ en ny opplevelse av hvordan man bruker en pc for folk som ikke er teknologiske,
 
 85
 00:33:36,466 --> 00:33:40,344
-ikke er hackere, ikke kommandolinjemennersker. Og vi har en del designere der
+ikke er hackere, ikke kommandolinjemennesker. Og vi har en del designere der
 
 86
 00:33:40,594 --> 00:33:46,416
@@ -354,7 +354,7 @@ Jeg jobber også med andre ting der som er åpen kildekode og fri programvare
 
 88
 00:33:51,744 --> 00:33:58,128
-Det er virkelig morro å motta denne for alle de forskjellige tingene jeg har gjort
+Det er virkelig moro å motta denne for alle de forskjellige tingene jeg har gjort
 
 89
 00:33:58,378 --> 00:34:04,596
@@ -421,7 +421,7 @@ Ok. Noen spørsmål? Ja, der bak.
 
 104
 00:36:48,903 --> 00:36:52,014
-<b>Jeg er ikke like høy som nordmenn, så jeg må..</b>
+Jeg er ikke like høy som nordmenn, så jeg må..
 
 105
 00:36:52,264 --> 00:36:59,171
@@ -622,9 +622,178 @@ Og det er at med 3 millioner artikler så er det ikke så mye igjen å skrive om
 
 153
 00:40:38,760 --> 00:40:44,856
-og faktisk, om man vil starte en ny artikkel så må det bli om noe ganske obskurt.
+og faktisk, om man vil starte en ny artikkel så må det bli om noe ganske obskurt,
 
 154
 00:40:45,106 --> 00:40:48,606
-Og istedet for at
+så da skjer det istedet mye arbeid med å forbedre de artiklene vi har.
+
+155
+00:40:48,856 --> 00:40:52,440
+Det syntes vi til en viss grad er OK, men vi har også noen beskymringer,
+
+156
+00:40:52,440 --> 00:40:58,992
+og er interessert i å studere videre i hvilken grad nettsamfunnet er blitt
+
+157
+00:40:59,242 --> 00:41:01,944
+lite velkomne til nye bidragsytere. Er det et problem?
+
+158
+00:41:02,194 --> 00:41:06,124
+Folk ser nøye på det, og det diskuteres i nettsamfunnet om det er tilfellet eller ikke
+
+159
+00:41:06,624 --> 00:41:09,444
+Det er ikke noe vi vil skal skje, men noe som selvfølgelig kan skje.
+
+160
+00:41:10,752 --> 00:41:12,432
+Det observerer vi.
+
+161
+00:41:14,520 --> 00:41:17,400
+Det er et veldig interessant spørsmål.
+
+162
+00:41:17,650 --> 00:41:21,964
+Forhåpentligvis, dersom det er et problem, så finner vi en måte å løse det på
+
+163
+00:41:23,120 --> 00:41:27,624
+Men jeg tror ikke det er noen stor krise,
+
+164
+00:41:28,124 --> 00:41:29,616
+enda ihvertfall.
+
+165
+00:41:31,464 --> 00:41:35,140
+Ok, veldig bra. Jeg tror vi har tid til ett par til. Petter først.
+
+166
+00:41:46,176 --> 00:41:49,584
+Vel, jeg vet ikke alle detaljene rundt det
+
+167
+00:41:51,796 --> 00:41:56,400
+Det vi alltid prøver å unngå er filformater som er patentbelastet
+
+168
+00:41:56,650 --> 00:42:02,040
+på en slik måte at det umulig å bruke Wikipedia med fri programvare.
+
+169
+00:42:02,290 --> 00:42:04,416
+Det er hovedprinsippet.
+
+170
+00:42:05,100 --> 00:42:10,980
+Det var en periode før gif-patentet gikk ut, hvor vi ikke tillot gif-filer
+
+171
+00:42:11,230 --> 00:42:14,730
+og så når patentet var løpt ut så tillot vi det.
+
+172
+00:42:14,980 --> 00:42:18,480
+Det ville vært veldig enkelt for oss å si at man kan bruke
+
+173
+00:42:18,730 --> 00:42:24,240
+hvilket som helst format de fleste kan lese, med sin proprietære programvare
+
+174
+00:42:24,490 --> 00:42:27,990
+Men vi ville veldig gjerne gjøre poenget tydelig at vi ville at Wikipedia skulle være fritt
+
+175
+00:42:28,240 --> 00:42:29,352
+i forståelsen til GNU.
+
+176
+00:42:29,760 --> 00:42:37,464
+Så om det er andre konkurrerende fri filformatet som ikke er patentbelastet,
+så burde vi støtte de også
+
+177
+00:42:37,714 --> 00:42:40,728
+Også er det selvsagt alltid debatter, burde vi
+
+178
+00:42:42,316 --> 00:42:47,256
+støtte dobbelformatering, burde vi kun tillate en fil i et patentbelastet format dersom
+
+179
+00:42:47,506 --> 00:42:51,000
+filen også finnes i et fritt format. Mange av de spørsmålene har blitt stilt
+
+180
+00:42:51,250 --> 00:42:56,452
+Foreløpig sier vi at bare frie filformater er det eneste vi tillater.
+
+181
+00:42:56,702 --> 00:42:59,472
+Det er ihvertfall grunnlinjen
+
+182
+00:43:01,512 --> 00:43:03,888
+Vi har ett spørsmål her først.
+
+183
+00:43:27,012 --> 00:43:31,144
+Den grunnleggende bakgrunnen til finansieringen er at den store hovedandelen
+
+184
+00:43:31,394 --> 00:43:34,894
+av pengene vi får er fra små donasjoner.
+
+185
+00:43:35,144 --> 00:43:38,472
+Vi har våre årlige innsamlinger, og folk gir
+
+186
+00:43:38,472 --> 00:43:39,576
+Unnskyld?
+
+187
+00:43:39,676 --> 00:43:41,064
+Akkurat som Obama
+
+188
+00:43:43,104 --> 00:43:45,744
+Folk donerer 30 dollar, i gjennomsnitt
+
+189
+00:43:45,744 --> 00:43:49,518
+Vi får noe finansiering fra veldedige organisasjoner
+
+190
+00:43:49,768 --> 00:43:53,268
+Vi fikk for eksempel en bevilgning fra Stanton Foundation for 900 000 dollar
+
+191
+00:43:54,888 --> 00:43:57,240
+til å ha et brukervennlighetsinitiativ
+
+192
+00:43:57,268 --> 00:44:00,768
+Så nå har vi folk som driver å jobber med brukere,
+
+193
+00:44:01,018 --> 00:44:04,518
+testing i fokusgrupper, utvikling for større brukervennlighet.
+
+194
+00:44:06,148 --> 00:44:09,648
+Også har vi også noen store givere.
+
+195
+00:44:09,898 --> 00:44:13,398
+Typisk noen som Vinod Khosla, og hans kone Neeru,
+
+196
+00:44:13,648 --> 00:44:17,148
+de ga 500 000 dollar. De tjente pengene ved at han
 

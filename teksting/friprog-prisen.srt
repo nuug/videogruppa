@@ -89,7 +89,7 @@ Tim Berners-Lee hadde startet et virtuelt biblioteket-prosjekt som han promotert
 
 23
 00:23:22,872 --> 00:23:28,372
-Tim fant ikke bare opp de tekniske protokollene, HTTP, HTLM osv.
+Tim fant ikke bare opp de tekniske protokollene, HTTP, HTML osv.
 
 24
 00:23:28,622 --> 00:23:32,122
@@ -630,7 +630,7 @@ så da skjer det istedet mye arbeid med å forbedre de artiklene vi har.
 
 155
 00:40:48,856 --> 00:40:52,440
-Det syntes vi til en viss grad er OK, men vi har også noen beskymringer,
+Det syntes vi til en viss grad er OK, men vi har også noen bekymringer,
 
 156
 00:40:52,440 --> 00:40:58,992
@@ -690,7 +690,7 @@ Det er hovedprinsippet.
 
 170
 00:42:05,100 --> 00:42:10,980
-Det var en periode før gif-patentet gikk ut, hvor vi ikke tillot gif-filer
+Det var en periode før GIF-patentet gikk ut, hvor vi ikke tillot GIF-filer
 
 171
 00:42:11,230 --> 00:42:14,730
@@ -719,7 +719,7 @@ så burde vi støtte de også
 
 177
 00:42:37,714 --> 00:42:40,728
-Også er det selvsagt alltid debatter, burde vi
+Også er det selvsagt alltid diskusjon, burde vi
 
 178
 00:42:42,316 --> 00:42:47,256
@@ -799,7 +799,7 @@ de ga 500 000 dollar. De tjente pengene ved at han
 
 197
 00:44:17,398 --> 00:44:19,944
-var en av grunnleggerne for Sun, og han er en risikokapitalist.
+var en av grunnleggerne for SUN, og han er en risikokapitalist.
 
 198
 00:44:20,372 --> 00:44:24,648
@@ -1024,7 +1024,7 @@ har en klar forståelse av hva det er de gir opp og hva de sier seg enige i,
 
 253
 00:49:25,390 --> 00:49:28,890
-så er det det viktigste. Utenfor det så kan vi  komme inn på
+så er det det viktigste. Utenfor det så kan vi komme inn på
 
 254
 00:49:29,140 --> 00:49:32,640
@@ -1072,11 +1072,11 @@ For de som ikke vet det, for en del av poenget hans er at mange ikke vet om det,
 
 265
 00:50:48,473 --> 00:50:51,973
-vi har et prosjekt som kalles "enkel engelsk-wikipedia".
+vi har et prosjekt som kalles "enkel engelsk-Wikipedia".
 
 266
 00:50:54,384 --> 00:50:58,320
-En av problemene som enkel-engelsk wikipedia alltid har møtt
+En av problemene som enkel-engelsk Wikipedia alltid har møtt
 
 267
 00:50:58,570 --> 00:51:02,070

@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Date:    2009-11-30
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Merge audio and video
+
+EXT=`echo "$2"|awk -F . '{print $NF}'`
+NAME=`basename $2 .$EXT`
+
+if [ -z "$2" ]; then
+	echo "Usage: $0 <audio-file> <video-file>"
+	exit 1
+fi
+
+ffmpeg -i $1 -i $2 -map 1:0 -map 0:0 -acodec copy -vcodec copy $NAME-new.$EXT 2> /dev/null

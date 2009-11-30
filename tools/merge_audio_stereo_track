@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# Date:    2009-11-30
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Merge audio stereo track from video
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+AFORMAT=`./audio_format $1`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+echo "Processing $1:"
+
+echo -n " * Extracting audio..."
+./extract_audio $1
+echo -e "OK"
+
+echo -n " * Splitting up audio..."
+./split_audio $NAME.$AFORMAT
+echo -e "OK"
+
+echo -n " * Merging new audio with video..."
+./merge_av $NAME-new.$AFORMAT $1
+echo -e "OK"
+
+rm $1 $NAME.$AFORMAT $NAME-new.$AFORMAT
+mv $NAME-new.$EXT $1

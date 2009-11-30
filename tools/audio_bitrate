@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Date:    2009-11-30
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Grabs audio bitrate from audio/video-file
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <audio/video-file>"
+	exit 1
+fi
+
+ffmpeg -i $1 2>&1 | grep Audio | cut -d "," -f 5 | cut -d " " -f 2

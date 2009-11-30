@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Date:    2009-11-30
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Grabs duration from audio/video-file
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <audio/video-file>"
+	exit 1
+fi
+
+ffmpeg -i $1 2>&1 | grep "Duration" | cut -d ' ' -f 4 | sed s/,// | cut -d "." -f1

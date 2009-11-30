@@ -4,16 +4,25 @@
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
-# Joins together two video-files
+# Joins together two or more video-files
 
 if [ -z "$3" ]; then
-        echo "Usage: $0 <video-file> <video-file> <new-file>"
+        echo "Usage: $0 <new-file> <video-file> <video-file> [<video-file>]"
         exit 1
 fi
 
+array=()
+
+for arg in $*; do
+	array[${#array[*]}]=$arg
+done
+
+# remove first entry
+unset array[0]
+
 # todo: Concatenating works with MPEG-1, MPEG-2 PS and DV
 if [ ! -f "$basename.dv" ] ; then
-	cat $1 $2 > $3
+	cat ${array[*]} > $1
 else
-	 mencoder -oac copy -ovc copy -idx -o $3 $1 $2
+	mencoder -oac copy -ovc copy -idx -o ${array[*]}
 fi

@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# Date:    2009-11-30
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Joins together two video-files
+
+if [ -z "$3" ]; then
+        echo "Usage: $0 <video-file> <video-file> <new-file>"
+        exit 1
+fi
+
+# todo: Concatenating works with MPEG-1, MPEG-2 PS and DV
+if [ ! -f "$basename.dv" ] ; then
+	cat $1 $2 > $3
+else
+	 mencoder -oac copy -ovc copy -idx -o $3 $1 $2
+fi

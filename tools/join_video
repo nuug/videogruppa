@@ -7,7 +7,7 @@
 # Joins together two or more video-files
 
 if [ -z "$3" ]; then
-        echo "Usage: $0 <new-file> <video-file> <video-file> [<video-file>]"
+        echo "Usage: $0 <new-file> <video-file> <video-file> [...]"
         exit 1
 fi
 

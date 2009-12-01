@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Date:    2009-11-30
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Cut video from x to y (seconds or hh:mm:ss).
+# Default duration, is the rest of the video.
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+
+if [ -z "$3" ]; then
+	echo "Usage: $0 <video-file> <new-video-file> <start-pos> [<duration>]"
+	exit 1
+fi
+
+if [ -z "$4" ]; then
+	DURATION=`./duration $1`
+	ffmpeg -i $1 -ss $3 -t $DURATION -vcodec copy -acodec copy $NAME-new.$EXT
+
+else
+	ffmpeg -i $1 -ss $3 -t $4 -vcodec copy -acodec copy $NAME-new.$EXT
+fi

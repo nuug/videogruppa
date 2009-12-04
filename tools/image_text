@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# Date:    2009-12-04
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Make a text-image (intro-outro)
+#
+# todo: sjekk hvor lang teksten er.. skaper problemer hvis blir for
+# lang. Bli kvitt counter.
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+
+FONT="/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf"
+SIZE=`./video_resolution $1`
+COUNTER=$2
+BGCOLOR=$3
+
+if [ -z "$4" ]; then
+	echo "Usage: $0 <video-file> <counter> <bg-color> <text1> [<text2>]"
+	exit 1
+fi
+
+if [ ! -f $FONT ]; then
+	echo "Font $FONT does not exists"
+	exit 1
+fi
+
+if [ $BGCOLOR == "white" ]; then
+	FGCOLOR="black"
+elif [ $BGCOLOR == "black" ]; then
+	FGCOLOR="white"
+else
+	echo "Only black or white is allowed"
+	exit 1
+fi
+
+if [ $# -gt 4 ]; then
+	convert -font $FONT -size $SIZE xc:$BGCOLOR \
+	-fill $FGCOLOR -gravity center -pointsize 50 -draw "text 0,0 '${4}'" \
+	-fill $FGCOLOR -gravity center -pointsize 30 -draw "text 0,60 '${5}'" \
+	-append $NAME-$COUNTER.png
+else
+	convert -font $FONT -size $SIZE xc:$BGCOLOR \
+	-fill $FGCOLOR -gravity center -pointsize 60 -draw "text 0,0 '${4}'" \
+	-append $NAME-$COUNTER.png
+fi

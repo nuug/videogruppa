@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# Date:    2009-12-04
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Show video standard
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+FPS=`./video_fps $1`
+RES=`./video_resolution $1`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+if [ "$FPS" == "25" ] ; then
+	if [ "$RES" == "720x576" ] ; then
+		echo "PAL"
+	else
+		echo "PAL(?)"
+	fi
+elif [ "$FPS" == "30" ] ; then # 29.97 ?
+	if [ "$RES" == "720x480" ] ; then
+		echo "NTCS"
+	else
+		echo "NTCS(?)"
+	fi	
+else
+	echo "Unkown video standard"
+fi

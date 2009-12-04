@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Date:    2009-12-04
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Show the pixel aspect ratio (PAR) for a video-file
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+PAR=`ffmpeg -i $1 2>&1 | grep Video | cut -d "," -f 5 | cut -d " " -f 3`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+if [ $EXT == "dv" ] ; then
+	if [ "$PAR" == "59:54" ] ; then
+		echo "4:3"
+	elif [ "$PAR" == "118:81" ] ; then
+		echo "16:9"
+	else
+		echo "Unkown pixel aspect ratio"
+	fi
+else
+	echo "Video format not supported"
+	exit 1
+fi

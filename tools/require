@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Date:    2009-12-04
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Check if a program is installed
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <program>"
+	exit 1
+fi
+
+type -P $1 &>/dev/null || { echo "Error: This script require $1, but it's not installed. Aborting." >&2; exit 1; }

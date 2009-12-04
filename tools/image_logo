@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Date:    2009-12-04
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Make a logo-image
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+
+SIZE=`./video_resolution $1`
+COUNTER=$2
+BGCOLOR=$3
+LOGO=$4
+
+if [ -z "$4" ]; then
+	echo "Usage: $0 <video-file> <counter> <bg-color> <logo-file>"
+	exit 1
+fi
+
+convert -size $SIZE xc:$BGCOLOR -append $BGCOLOR.png
+composite -gravity center $LOGO $BGCOLOR.png $NAME-$COUNTER.png
+rm $BGCOLOR.png

@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# Date:    2009-12-04
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Converts images* into video
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+WIDESCREEN=`./video_aspect_ratio $1`
+FRAMES=`./video_fps $1`
+ENDNAME=$2
+NTSC=`./video_standard $1`
+
+# smilutils
+./require image2raw
+
+if [ -z "$2" ]; then
+	echo "Usage: $0 <video-file> <end-name>"
+	exit 1
+fi
+
+if [ ! -f $1 ]; then
+	echo "File $1 does not exists"
+	exit 1
+fi
+
+if [ $EXT == "dv" ] ; then
+	if [ "$WIDESCREEN" == "4:3" ] ; then
+		if [ "$NTSC" == "NTSC" ] ; then
+			image2raw -n -r $FRAMES -a $NAME-*.png > $NAME-$ENDNAME.dv;
+		else
+			image2raw -r $FRAMES -a $NAME-*.png > $NAME-$ENDNAME.dv;
+		fi
+	elif [ "$WIDESCREEN" == "16:9" ] ; then
+		if [ "$NTSC" == "NTSC" ] ; then
+			image2raw -n -w -r $FRAMES -a $NAME-*.png > $NAME-$ENDNAME.dv;
+		else
+			image2raw -w -r $FRAMES -a $NAME-*.png > $NAME-$ENDNAME.dv;
+		fi
+	else
+		echo "Unkown aspect ratio"
+		exit 1
+	fi
+else
+	echo "Video format not supported"
+	exit 1
+fi

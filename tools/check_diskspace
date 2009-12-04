@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Date:    2009-12-04
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Check for free space needed to work with video-file
+
+DISK=`df \`pwd\` | tail -1 | awk '{print $4}'`
+FILE=`du $1 | awk '{print $1}'`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <file>"
+	exit 1
+fi
+
+if [ $DISK -le $FILE ]; then
+	echo "Error: Not enough disk space to continue! Aborting."
+	exit 1
+fi

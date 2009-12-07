@@ -12,8 +12,14 @@
 use strict;
 use warnings;
 use Text::CSV;
+use File::Basename;
 
-my $file = 'test.csv';
+if ($#ARGV != 0 ) {
+	print "usage: intro-outro <csv-file>\n";
+	exit;
+}
+my $file=$ARGV[0];
+
 my $csv = Text::CSV->new();
 my @takk;
 my @url;
@@ -50,71 +56,79 @@ while (<CSV>) {
 		my $license  = $columns[7];
 		my $takk     = $columns[8];
 
+		my $filenametmp = fileparse($filename, qr/\.\D.*/);
+
+		unless (-e $filename) {
+			print "File: $filename doesn't Exist!\n";
+			exit 1;
+		}
+
 		print "#$.. Filename: $filename\n";
 
 		print "\tIntro:\n";
-		print "\t\tSlide 1: Logo: $logo\n";
-		print "\t\tSlide 2: Name: $name\n";
-		print "\t\tSlide 2: Title: $title\n";
-		print "\t\tSlide 2: What: $what\n";
-		print "\t\tSlide 2: Date: $date\n";
-		print "\t\tSlide 2: Location: $location\n";
-		print "\t\tSlide 3: License: $license\n";
+		print "\t\tLogo: $logo\n";
+		print "\t\tName: $name\n";
+		print "\t\tTitle: $title\n";
+		print "\t\tWhat: $what\n";
+		print "\t\tDate: $date\n";
+		print "\t\tLocation: $location\n";
+		print "\t\tLicense: $license\n";
 
-		system("bash ./image_logo $filename.dv $counter white $logo"); $counter++;
-		system("bash ./image_logo $filename.dv $counter white $logo"); $counter++;
-		system("bash ./image_logo $filename.dv $counter white $logo"); $counter++;
+		system("bash ./image_logo $filename $counter white $logo"); $counter++;
+		system("bash ./image_logo $filename $counter white $logo"); $counter++;
+		system("bash ./image_logo $filename $counter white $logo"); $counter++;
 
-		system("bash ./image_text $filename.dv $counter white '$what' '$date - $location'"); $counter++;
-		system("bash ./image_text $filename.dv $counter white '$what' '$date - $location'"); $counter++;
-		system("bash ./image_text $filename.dv $counter white '$what' '$date - $location'"); $counter++;
+		system("bash ./image_text $filename $counter white '$what' '$date - $location'"); $counter++;
+		system("bash ./image_text $filename $counter white '$what' '$date - $location'"); $counter++;
+		system("bash ./image_text $filename $counter white '$what' '$date - $location'"); $counter++;
 
-		system("bash ./image_text $filename.dv $counter white '$title' '$name'"); $counter++;
-		system("bash ./image_text $filename.dv $counter white '$title' '$name'"); $counter++;
-		system("bash ./image_text $filename.dv $counter white '$title' '$name'"); $counter++;
+		system("bash ./image_text $filename $counter white '$title' '$name'"); $counter++;
+		system("bash ./image_text $filename $counter white '$title' '$name'"); $counter++;
+		system("bash ./image_text $filename $counter white '$title' '$name'"); $counter++;
 
-		system("cp $license.png $filename-$counter.png"); $counter++;
-		system("cp $license.png $filename-$counter.png"); $counter++;
-		system("cp $license.png $filename-$counter.png"); $counter++;
+		system("cp $license.png $filenametmp-$counter.png"); $counter++;
+		system("cp $license.png $filenametmp-$counter.png"); $counter++;
+		system("cp $license.png $filenametmp-$counter.png"); $counter++;
 
 		# .dv buh fix!
-		system("./image2video $filename.dv intro");
-		system("rm $filename-*.png");
+		system("./image2video $filename intro");
+		system("rm $filenametmp-*.png");
 		$counter="000";
 
 		print "\tOutro:\n";
 
-		system("bash ./image_text $filename.dv $counter black 'TAKK TIL'"); $counter++;
-		system("bash ./image_text $filename.dv $counter black 'TAKK TIL'"); $counter++;
-		system("bash ./image_text $filename.dv $counter black 'TAKK TIL'"); $counter++;
+		system("bash ./image_text $filename $counter black 'TAKK TIL'"); $counter++;
+		system("bash ./image_text $filename $counter black 'TAKK TIL'"); $counter++;
+		system("bash ./image_text $filename $counter black 'TAKK TIL'"); $counter++;
 
 		print "\t\tName: $name\n";
 		print "\t\tLocation: $location\n";
 
-		system("bash ./image_text $filename.dv $counter black '$name' Foredragsholder"); $counter++;
-		system("bash ./image_text $filename.dv $counter black '$location' Lokaler"); $counter++;
+		system("bash ./image_text $filename $counter black '$name' Foredragsholder"); $counter++;
+		system("bash ./image_text $filename $counter black '$location' Lokaler"); $counter++;
 
 		foreach (@takk) {
 			my $test = $columns[$_];
-			my @takk = split(/:/, $test);
-			my $hva = $takk[0];
-			my $hvem = $takk[1];
-		# if takk1 ""
-			print "\t\t$hvem - $hva\n";
-			system("bash ./image_text $filename.dv $counter black '$hvem' '$hva'"); $counter++;
+			if($test) {
+				my @takk = split(/:/, $test);
+				my $hva = $takk[0];
+				my $hvem = $takk[1];
+			# if takk1 ""
+				print "\t\tTakk: $hvem - $hva\n";
+				system("bash ./image_text $filename $counter black '$hvem' '$hva'"); $counter++;
+			}
 		}
 
 		foreach (@url) {
 			my $lenke = $columns[$_];
 			print "\t\tURL: $lenke\n";
-			system("bash ./image_text $filename.dv $counter black ' '"); $counter++;
-			system("bash ./image_text $filename.dv $counter black '$lenke'"); $counter++;
-			system("bash ./image_text $filename.dv $counter black '$lenke'"); $counter++;
+			system("bash ./image_text $filename $counter black ' '"); $counter++;
+			system("bash ./image_text $filename $counter black '$lenke'"); $counter++;
+			system("bash ./image_text $filename $counter black '$lenke'"); $counter++;
 		}
 
-		# .dv buh fix!
-		system("./image2video $filename.dv outro");
-		system("rm $filename-*.png");
+		system("./image2video $filename outro");
+		system("rm $filenametmp-*.png");
 
 	} else {
 		my $err = $csv->error_input;

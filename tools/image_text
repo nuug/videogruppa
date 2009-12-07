@@ -17,6 +17,41 @@ SIZE=`./video_resolution $1`
 COUNTER=$2
 BGCOLOR=$3
 
+# NEW ####
+COUNT1=`echo $4 | wc -c`
+COUNT2=`echo $5 | wc -c`
+
+SIZE1="0"
+SIZE2="0"
+
+if [ $COUNT1 -ge "30" ] ; then
+	SIZE1="30"
+	SIZE2=`echo $SIZE1-10|bc`
+elif [ $COUNT1 -ge "25" ] ; then
+	SIZE1="40"
+	SIZE2=`echo $SIZE1-10|bc`
+elif [ $COUNT1 -ge "20" ] ; then
+	SIZE1="50"
+	SIZE2=`echo $SIZE1-20|bc`
+else
+	SIZE1="60"
+	SIZE2=`echo $SIZE1-20|bc`
+fi
+
+
+#if [ $COUNT1 -ge "25" ] || [ $COUNT2 -ge "25" ] ; then
+#	echo "25 eller over"
+#echo "$1. count1: $COUNT1, count2: $COUNT2"
+#	SIZE1="40"
+#	SIZE2="20"
+#else
+#	echo "under 25"
+#echo "$1. count1: $COUNT1, count2: $COUNT2"
+#	SIZE1="60"
+#	SIZE2="40"
+#fi
+#########
+
 if [ -z "$4" ]; then
 	echo "Usage: $0 <video-file> <counter> <bg-color> <text1> [<text2>]"
 	exit 1
@@ -38,11 +73,11 @@ fi
 
 if [ $# -gt 4 ]; then
 	convert -font $FONT -size $SIZE xc:$BGCOLOR \
-	-fill $FGCOLOR -gravity center -pointsize 50 -draw "text 0,0 '${4}'" \
-	-fill $FGCOLOR -gravity center -pointsize 30 -draw "text 0,60 '${5}'" \
+	-fill $FGCOLOR -gravity center -pointsize $SIZE1 -draw "text 0,0 '${4}'" \
+	-fill $FGCOLOR -gravity center -pointsize $SIZE2 -draw "text 0,60 '${5}'" \
 	-append $NAME-$COUNTER.png
 else
 	convert -font $FONT -size $SIZE xc:$BGCOLOR \
-	-fill $FGCOLOR -gravity center -pointsize 60 -draw "text 0,0 '${4}'" \
+	-fill $FGCOLOR -gravity center -pointsize $SIZE1 -draw "text 0,0 '${4}'" \
 	-append $NAME-$COUNTER.png
 fi

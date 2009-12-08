@@ -1,0 +1,45 @@
+#!/bin/bash
+# ikke i svn
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+WHAT=`./csv $2 $1 what`
+DATE=`./csv $2 $1 date`
+LOCATION=`./csv $2 $1 location`
+TITLE=`./csv $2 $1 title`
+NAME=`./csv $2 $1 name`
+LICENSE=`./csv $2 $1 license`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file> [<csv-file>]"
+	exit 1
+fi
+
+if [ ! -f "$BASENAME.ogv" ] ; then
+	echo "Generating $BASENAME.ogv"
+
+	if [ $2 ]; then
+		ffmpeg2theora $1 -o $BASENAME.ogv \
+			--width 384 --height 288 \
+			--artist "$NAME" \
+			--title "$TITLE" \
+			--date "$DATE" \
+			--location "$LOCATION" \
+			--license "$LICENSE" \
+			> "$BASENAME.ogv-compresslog" 2>&1
+			
+#		--organization     # Name of organization (studio)
+#		--copyright        # Copyright
+#		--license $LICENSE \
+#		--contact          # Contact link
+
+	else
+		ffmpeg2theora $1 -o $BASENAME.ogv
+	#		--width 384 --height 288
+	#		> "$BASENAME.ogv-compresslog" 2>&1
+	fi
+else
+	echo "$BASENAME.ogv allready exist!"
+	exit 1
+fi

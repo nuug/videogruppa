@@ -1,0 +1,156 @@
+#!/usr/bin/perl
+#
+# Date:    -
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# ?
+#
+# libtext-csv-perl
+
+use strict;
+use warnings;
+use Text::CSV;
+
+if ($#ARGV != 2 ) {
+	print "usage: csv <csv-file> [<video-file> [<info>]]\n";
+	exit;
+}
+
+my $file=$ARGV[0];
+my $video=$ARGV[1];
+my $info=$ARGV[2];
+
+my @filename;
+my @logo;
+my @name;
+my @title;
+my @what;
+my @date;
+my @location;
+my @license;
+my @takk;
+my @url;
+
+my $csv = Text::CSV->new();
+open (CSV, "<:encoding(utf8)", "$file") or die "$file: $!";
+
+while (<CSV>) {
+	if ($csv->parse($_)) {
+		my @columns  = $csv->fields();
+
+		if ($. == 1) {
+				my $index;
+				foreach (@columns) {
+					if ($_ eq "Filename") {
+						push(@filename, $index);
+					} elsif ($_ eq "Title") {
+						push(@title, $index);
+					} elsif ($_ eq "Logo") {
+						push(@logo, $index);
+					} elsif ($_ eq "Name") {
+						push(@name, $index);
+					} elsif ($_ eq "Title") {
+						push(@title, $index);
+					} elsif ($_ eq "What") {
+						push(@what, $index);
+					} elsif ($_ eq "Date") {
+						push(@date, $index);
+					} elsif ($_ eq "Location") {
+						push(@location, $index);
+					} elsif ($_ eq "License") {
+						push(@license, $index);
+					} elsif ($_ eq "Takk") {
+						push(@takk, $index); 
+					} elsif ($_ eq "URL") {
+						push(@url, $index); 
+					}
+					$index++;
+				}
+		}
+
+		next if ($. == 1);
+
+#		my $filename = $columns[0];
+#		my $logo     = $columns[1];
+#		my $name     = $columns[2];
+#		my $title    = $columns[3];
+#		my $what     = $columns[4];
+#		my $date     = $columns[5];
+#		my $location = $columns[6];
+#		my $license  = $columns[7];
+#		my $takk     = $columns[8];
+
+#		my $filenametmp = fileparse($filename, qr/\.\D.*/);
+
+#		unless (-e $filename) {
+#			print "File: $filename doesn't Exist!\n";
+#			exit 1;
+#		}
+
+		
+		if ($info eq "filename") {
+#			foreach (@filename) {
+				print "$filename[2]";
+#			}
+		} elsif ($info eq "logo") {
+			foreach (@logo) {
+				print "$columns[$_]";
+			}
+		} elsif ($info eq "name") {
+			foreach (@name) {
+				print "$columns[$_]";
+			}
+		} elsif ($info eq "title") {
+			foreach (@title) {
+				print "$columns[$_]";
+			}
+		} elsif ($info eq "what") {
+			foreach (@what) {
+				print "$columns[$_]";
+			}
+		} elsif ($info eq "date") {
+			foreach (@date) {
+				print "$columns[$_]";
+			}
+		} elsif ($info eq "location") {
+			foreach (@location) {
+				print "$columns[$_]";
+			}
+		} elsif ($info eq "license") {
+			foreach (@license) {
+				print "$columns[$_]";
+			}
+		} elsif ($info eq "takk") {
+#			foreach (@takk) {
+#				print "$columns[$_]";
+#			}
+			foreach (@takk) {
+				my $test = $columns[$_];
+				if($test) {
+					my @takk = split(/:/, $test);
+					my $hva = $takk[0];
+					my $hvem = $takk[1];
+					print "$hvem - $hva\n";
+				}
+			}
+		} elsif ($info eq "url") {
+#			foreach (@url) {
+#				print "$columns[$_]";
+#			}
+			foreach (@url) {
+				my $lenke = $columns[$_];
+				print "$lenke\n";
+			}
+		
+		} else {
+			print "$info column doesn't exist\n";
+		}
+
+	} else {
+		my $err = $csv->error_input;
+		print "Failed to parse line #$..: $err";
+	}
+}
+
+close CSV;

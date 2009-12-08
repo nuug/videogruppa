@@ -1,0 +1,53 @@
+#!/bin/bash
+# ikke i svn
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+COUNT="10"
+
+LOGO=`./csv $2 $1 logo`
+WHAT=`./csv $2 $1 what`
+DATE=`./csv $2 $1 date`
+LOCATION=`./csv $2 $1 location`
+TITLE=`./csv $2 $1 title`
+NAME=`./csv $2 $1 name`
+LICENSE=`./csv $2 $1 license`
+
+if [ -z "$2" ]; then
+	echo "Usage: $0 <video-file> <csv-file>"
+	exit 1
+fi
+
+# LOGO
+./image_logo $1 intro-$COUNT white $LOGO
+COUNT=`expr $COUNT + 1`
+./image_logo $1 intro-$COUNT white $LOGO
+COUNT=`expr $COUNT + 1`
+./image_logo $1 intro-$COUNT white $LOGO
+COUNT=`expr $COUNT + 1`
+
+# SLIDE 1
+./image_text $1 intro-$COUNT white "$WHAT" "$DATE - $LOCATION"
+COUNT=`expr $COUNT + 1`
+./image_text $1 intro-$COUNT white "$WHAT" "$DATE - $LOCATION"
+COUNT=`expr $COUNT + 1`
+./image_text $1 intro-$COUNT white "$WHAT" "$DATE - $LOCATION"
+COUNT=`expr $COUNT + 1`
+
+# SLIDE 2
+./image_text $1 intro-$COUNT white "$TITLE" "$NAME"
+COUNT=`expr $COUNT + 1`
+./image_text $1 intro-$COUNT white "$TITLE" "$NAME"
+COUNT=`expr $COUNT + 1`
+./image_text $1 intro-$COUNT white "$TITLE" "$NAME"
+COUNT=`expr $COUNT + 1`
+
+# LICENSE
+cp $LICENSE.png $BASENAME-intro-$COUNT.png
+COUNT=`expr $COUNT + 1`
+cp $LICENSE.png $BASENAME-intro-$COUNT.png
+COUNT=`expr $COUNT + 1`
+cp $LICENSE.png $BASENAME-intro-$COUNT.png
+
+./image2video $1 intro
+rm $BASENAME-intro-*.png

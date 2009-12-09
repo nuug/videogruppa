@@ -1,5 +1,10 @@
 #!/bin/bash
-# ikke i svn
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Generate outro-file to a video
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 BASENAME=`basename $1 .$EXT`
@@ -7,6 +12,8 @@ COUNT=10
 
 NAME=`./csv $2 $1 name`
 LOCATION=`./csv $2 $1 location`
+TAKK=`./csv $2 $1 takk`
+URL=`./csv $2 $1 url`
 
 if [ -z "$1" ]; then
 	echo "Usage: $0 <video-file> <csv-file>"
@@ -24,9 +31,31 @@ COUNT=`expr $COUNT + 1`
 COUNT=`expr $COUNT + 1`
 ./image_text $1 outro-$COUNT black "$LOCATION" Lokaler
 COUNT=`expr $COUNT + 1`
-		
+
 # takk
+# quick hack
+oldIFS=$IFS
+IFS='
+'
+for i in $TAKK ; do
+	HVA=`echo "$i" | cut -d ":" -f 1`
+	HVEM=`echo "$i" | cut -d ":" -f 2`
+# echo "TAKK: $HVA - $HVEM"
+	./image_text $1 outro-$COUNT black "$HVEM" "$HVA"
+	COUNT=`expr $COUNT + 1`
+done
+IFS=$IFS
+
 # url
+for i in $URL ; do
+# echo "URL: $i"
+	./image_text $1 outro-$COUNT black " "
+	COUNT=`expr $COUNT + 1`
+	./image_text $1 outro-$COUNT black "$i"
+	COUNT=`expr $COUNT + 1`
+	./image_text $1 outro-$COUNT black "$i"
+	COUNT=`expr $COUNT + 1`
+done
 
 ./image2video $1 outro
 rm $BASENAME-outro*.png

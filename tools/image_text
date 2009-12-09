@@ -6,7 +6,6 @@
 #
 # Make a text-image (intro-outro)
 #
-# todo: sjekk hvor lang teksten er.. skaper problemer hvis blir for
 # lang. Bli kvitt counter.
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
@@ -26,15 +25,15 @@ SIZE2="0"
 if [ $COUNT1 -ge "30" ] ; then
 	SIZE1="30"
 	SIZE2=`echo $SIZE1-10|bc`
-	echo "Size1: $SIZE1 - Size2: $SIZE2"
+#	echo "Size1: $SIZE1 - Size2: $SIZE2"
 elif [ $COUNT1 -ge "25" ] ; then
 	SIZE1="40"
 	SIZE2=`echo $SIZE1-10|bc`
-	echo "Size1: $SIZE1 - Size2: $SIZE2"
+#	echo "Size1: $SIZE1 - Size2: $SIZE2"
 elif [ $COUNT1 -ge "20" ] ; then
 	SIZE1="50"
 	SIZE2=`echo $SIZE1-20|bc`
-	echo "Size1: $SIZE1 - Size2: $SIZE2"
+#	echo "Size1: $SIZE1 - Size2: $SIZE2"
 else
 	SIZE1="60"
 	if [ $COUNT2 -ge "25" ] ; then
@@ -43,7 +42,7 @@ else
 		SIZE2=`echo $SIZE1-20|bc`
 	fi
 
-	echo "Size1: $SIZE1 - Size2: $SIZE2"
+#	echo "Size1: $SIZE1 - Size2: $SIZE2"
 fi
 
 if [ -z "$4" ]; then

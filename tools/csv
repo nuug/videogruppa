@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 #
-# Date:    -
+# Date:    2009-12-10
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
-# ?
+# Parse csv-file for information
 #
-# libtext-csv-perl
+# needs: libtext-csv-perl
 
 use strict;
 use warnings;
@@ -21,14 +21,14 @@ my $file=$ARGV[0];
 my $video=$ARGV[1];
 my $info=$ARGV[2];
 
-my @filename;
-my @logo;
-my @name;
-my @title;
-my @what;
-my @date;
-my @location;
-my @license;
+my $filename;
+my $logo;
+my $name;
+my $title;
+my $what;
+my $date;
+my $location;
+my $license;
 my @takk;
 my @url;
 
@@ -43,23 +43,23 @@ while (<CSV>) {
 				my $index;
 				foreach (@columns) {
 					if ($_ eq "Filename") {
-						push(@filename, $index);
+						$filename=$index;
 					} elsif ($_ eq "Title") {
-						push(@title, $index);
+						$title=$index;
 					} elsif ($_ eq "Logo") {
-						push(@logo, $index);
+						$logo=$index;
 					} elsif ($_ eq "Name") {
-						push(@name, $index);
+						$name=$index;
 					} elsif ($_ eq "Title") {
-						push(@title, $index);
+						$title=$index;
 					} elsif ($_ eq "What") {
-						push(@what, $index);
+						$what=$index;
 					} elsif ($_ eq "Date") {
-						push(@date, $index);
+						$date=$index;
 					} elsif ($_ eq "Location") {
-						push(@location, $index);
+						$location=$index;
 					} elsif ($_ eq "License") {
-						push(@license, $index);
+						$license=$index;
 					} elsif ($_ eq "Takk") {
 						push(@takk, $index); 
 					} elsif ($_ eq "URL") {
@@ -69,84 +69,43 @@ while (<CSV>) {
 				}
 		}
 
-		next if ($. == 1);
+		next if ($.	 == 1);
 
-#		my $filename = $columns[0];
-#		my $logo     = $columns[1];
-#		my $name     = $columns[2];
-#		my $title    = $columns[3];
-#		my $what     = $columns[4];
-#		my $date     = $columns[5];
-#		my $location = $columns[6];
-#		my $license  = $columns[7];
-#		my $takk     = $columns[8];
-
-#		my $filenametmp = fileparse($filename, qr/\.\D.*/);
-
-#		unless (-e $filename) {
-#			print "File: $filename doesn't Exist!\n";
-#			exit 1;
-#		}
-
-		
-		if ($info eq "filename") {
-#			foreach (@filename) {
-				print "$filename[2]";
-#			}
-		} elsif ($info eq "logo") {
-			foreach (@logo) {
-				print "$columns[$_]";
-			}
-		} elsif ($info eq "name") {
-			foreach (@name) {
-				print "$columns[$_]";
-			}
-		} elsif ($info eq "title") {
-			foreach (@title) {
-				print "$columns[$_]";
-			}
-		} elsif ($info eq "what") {
-			foreach (@what) {
-				print "$columns[$_]";
-			}
-		} elsif ($info eq "date") {
-			foreach (@date) {
-				print "$columns[$_]";
-			}
-		} elsif ($info eq "location") {
-			foreach (@location) {
-				print "$columns[$_]";
-			}
-		} elsif ($info eq "license") {
-			foreach (@license) {
-				print "$columns[$_]";
-			}
-		} elsif ($info eq "takk") {
-#			foreach (@takk) {
-#				print "$columns[$_]";
-#			}
-			foreach (@takk) {
-				my $test = $columns[$_];
-				if($test) {
-					my @takk = split(/:/, $test);
-					my $hva = $takk[0];
-					my $hvem = $takk[1];
-					print "$hvem - $hva\n";
+		if ($video eq $columns[0]) {
+			if ($info eq "filename") {
+				print "$columns[0]"; #$filename]";
+			} elsif ($info eq "logo") {
+				print "$columns[$logo]";
+			} elsif ($info eq "name") {
+				print "$columns[$name]";
+			} elsif ($info eq "title") {
+				print "$columns[$title]";
+			} elsif ($info eq "what") {
+				print "$columns[$what]";
+			} elsif ($info eq "date") {
+				print "$columns[$date]";
+			} elsif ($info eq "location") {
+				print "$columns[$location]";
+			} elsif ($info eq "license") {
+				print "$columns[$license]";
+			} elsif ($info eq "takk") {
+				foreach (@takk) {
+					my $takk = $columns[$_];
+					if($takk) {
+						print "$takk\n";
+					}
 				}
+			} elsif ($info eq "url") {
+				foreach (@url) {
+					my $lenke = $columns[$_];
+					print "$lenke\n";
+				}
+			} else {
+				print "$info column doesn't exist\n";
 			}
-		} elsif ($info eq "url") {
-#			foreach (@url) {
-#				print "$columns[$_]";
-#			}
-			foreach (@url) {
-				my $lenke = $columns[$_];
-				print "$lenke\n";
-			}
-		
 		} else {
-			print "$info column doesn't exist\n";
+			print "$info row doesn't exist\n";
 		}
-
 	} else {
 		my $err = $csv->error_input;
 		print "Failed to parse line #$..: $err";

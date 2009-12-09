@@ -1,5 +1,10 @@
 #!/bin/bash
-# ikke i svn
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Generate intro-file to a video
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 BASENAME=`basename $1 .$EXT`

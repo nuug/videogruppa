@@ -9,14 +9,21 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
+echo "Checking diskspace..."
 ./check_diskspace $1
-./audio_channels_diff $1
-./intro $1 $2
-./outro $1 $2
-./join_video $NAME-new.$FORMAT $NAME-intro$FORMAT $1 $NAME-outro$FORMAT
+echo "Checking that both audio channeles is equal..."
+#./audio_channels_diff $1
+echo "Generating intro..."
+#./intro $1 $2
+echo "Generating outro..."
+#./outro $1 $2
+echo "Joining videoes..."
+#./join_video $NAME-new.$EXT $NAME-intro.$EXT $1 $NAME-outro.$EXT
 
-# todo: bli kvitt mv..
+#mv $1 $NAME-old.$EXT
+#mv $NAME-new.$EXT $1
+
+echo "Converting to theora..."
 ./convert2theora $1 $2
-mv $NAME-new.ogv $NAME.ogv
+echo "Converting to vorbis..."
 ./convert2vorbis $1 $2
-mv $NAME-new.ogg $NAME.ogg

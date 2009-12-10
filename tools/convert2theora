@@ -41,9 +41,9 @@ if [ ! -f "$BASENAME.ogv" ] ; then
 			--contact "$CONTACT" \
 			> "$BASENAME.ogv-compresslog" 2>&1
 	else
-		ffmpeg2theora $1 -o $BASENAME.ogv
+		ffmpeg2theora $1 -o $BASENAME.ogv \
 	#		--width 384 --height 288
-	#		> "$BASENAME.ogv-compresslog" 2>&1
+			> "$BASENAME.ogv-compresslog" 2>&1
 	fi
 else
 	echo "$BASENAME.ogv allready exist!"

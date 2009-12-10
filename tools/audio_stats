@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Print out some audio info/stats
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <audio-file>"
+	exit 1
+fi
+
+sox $1 -n stat

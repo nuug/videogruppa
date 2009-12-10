@@ -28,7 +28,10 @@ my $title;
 my $what;
 my $date;
 my $location;
+my $genre;
 my $license;
+my $organization;
+my $contact;
 my @takk;
 my @url;
 
@@ -58,8 +61,14 @@ while (<CSV>) {
 						$date=$index;
 					} elsif ($_ eq "Location") {
 						$location=$index;
+					} elsif ($_ eq "Genre") {
+						$genre=$index;
 					} elsif ($_ eq "License") {
 						$license=$index;
+					} elsif ($_ eq "Organization") {
+						$organization=$index;
+					} elsif ($_ eq "Contact") {
+						$contact=$index;
 					} elsif ($_ eq "Takk") {
 						push(@takk, $index); 
 					} elsif ($_ eq "URL") {
@@ -86,8 +95,14 @@ while (<CSV>) {
 				print "$columns[$date]";
 			} elsif ($info eq "location") {
 				print "$columns[$location]";
+			} elsif ($info eq "genre") {
+				print "$columns[$genre]";
 			} elsif ($info eq "license") {
 				print "$columns[$license]";
+			}  elsif ($info eq "organization") {
+				print "$columns[$organization]";
+			}  elsif ($info eq "contact") {
+				print "$columns[$contact]";
 			} elsif ($info eq "takk") {
 				foreach (@takk) {
 					my $takk = $columns[$_];

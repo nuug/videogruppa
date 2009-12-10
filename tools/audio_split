@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Splits a audio-file to a left- and right-file.
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <audio-file>"
+	exit 1
+fi
+
+sox $1 -c 1 $NAME-left.$EXT mixer -l 2> /dev/null
+sox $1 -c 1 $NAME-right.$EXT mixer -r 2> /dev/null

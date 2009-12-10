@@ -15,10 +15,15 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-if [ -z "$4" ]; then
-	DURATION="30" #`./duration $1`
-echo "start: $2 - Dur: $DURATION"
-	ffmpeg -i $1 -ss $2 -t $DURATION -vn -acodec copy $NAME.$FORMAT #2> /dev/null
+if [ "$FORMAT" == "pcm_s16le" ]; then
+	FORMAT="wav"
+fi
+
+if [ "$3" ]; then
+	#DURATION="30" #`./duration$1`
+	DURATION="$3"
+	#echo "start: $2 - Dur: $DURATION"
+	ffmpeg -i $1 -ss $2 -t $DURATION -vn -acodec copy $NAME.$FORMAT 2> /dev/null
 else
-	ffmpeg -i $1 -vn -acodec copy $NAME.$FORMAT #2> /dev/null
+	ffmpeg -i $1 -vn -acodec copy $NAME.$FORMAT 2> /dev/null
 fi

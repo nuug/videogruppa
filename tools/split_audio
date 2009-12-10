@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Date:    2009-11-30
+# Date:    2009-12-10
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
@@ -16,9 +16,10 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-sox $1 -c 1 left.wav mixer -l 2> /dev/null
-sox $1 -c 1 right.wav mixer -r 2> /dev/null
-sox -m left.wav right.wav mono.wav 2> /dev/null
+#sox $1 -c 1 left.wav mixer -l 2> /dev/null
+#sox $1 -c 1 right.wav mixer -r 2> /dev/null
+./audio_split $1
+sox -m $NAME-left.wav $NAME-right.wav mono.wav 2> /dev/null
 sox mono.wav -c 2 stereo.wav 2> /dev/null
 ffmpeg -i stereo.wav -acodec $EXT -ab "$BITRATE"k $NAME-new.$EXT 2> /dev/null
-rm left.wav right.wav mono.wav stereo.wav
+rm $NAME-left.wav $NAME-right.wav mono.wav stereo.wav

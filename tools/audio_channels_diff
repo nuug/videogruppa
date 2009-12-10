@@ -6,36 +6,33 @@
 #
 # Check if the left and right channel is equal.
 
+# ext-format må fikses!! hmm
+
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 NAME=`basename $1 .$EXT`
-FORMAT=`./audio_format $1`
+#FORMAT=`./audio_format $1`
 
 if [ -z "$1" ]; then
 	echo "Usage: $0 <video-file>"
 	exit 1
 fi
 
-# funker ikke helt enda
-./extract_audio $1 0 10
-
-# legg på navn-left/right
-./audio_split $NAME
-#sox $1 -c 1 $NAME-left.wav mixer -l 2> /dev/null
-#sox $1 -c 1 $NAME-right.wav mixer -r 2> /dev/null
-
-./audio_info $NAME-left.$FORMAT &> $NAME-left.$FORMAT.stat
-./audio_info $NAME-right.$FORMAT &> $NAME-right.$FORMAT.stat
-
-LEFT=`md5sum $NAME-left.$FORMAT.stat | awk '{print $1}'`
-RIGHT=`md5sum $NAME-right.$FORMAT.stat | awk '{print $1}'`
-
-#sox left.wav -n stat &> left.wav.stat
-#sox right.wav -n stat &> right.wav.stat
-
-if [ "$LEFT" == "$RIGHT" ]; then
-	echo 0
-else
-	echo 1
+if [ ! -f $BASENAME.wav ]; then
+	echo "File $BASENAME.wav does not exists"
+	./audio_extract $1 0 60
 fi
 
-rm $NAME.$FORMAT $NAME-left* $NAME-right*
+./audio_split $NAME.wav
+./audio_stats $NAME-left.wav &> $NAME-left.wav.stat
+./audio_stats $NAME-right.wav &> $NAME-right.wav.stat
+
+LEFT=`md5sum $NAME-left.wav.stat | awk '{print $1}'`
+RIGHT=`md5sum $NAME-right.wav.stat | awk '{print $1}'`
+
+if [ "$LEFT" == "$RIGHT" ]; then
+	echo "eq"
+else
+	echo "nq"
+fi
+
+rm $NAME.wav $NAME-left* $NAME-right*

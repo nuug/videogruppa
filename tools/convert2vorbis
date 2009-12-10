@@ -8,38 +8,51 @@
 
 #./require oggenc vorbis-tools
 
-# todo: add license metadata, other?
+# todo: add tag license and copyright metadata (-c tag=value), more tags?
+# * language, publisher, copyright
+# legg til require
 
-	echo "Generating $basename.ogg"
-	$debug oggenc --downmix -b 64 -o "$basename.ogg" "$basename.wav" > "${basename}.ogg-compresslog" 2>&1
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
 
+BITRATE="64"
 
-       -c comment, --comment comment
-              Add the string comment as an extra comment.  This may be used multiple times, and all instances will be added to each of  the  input  files
-              specified. The argument should be in the form "tag=value".
+DATE=`./csv $2 $1 date`
+TITLE=`./csv $2 $1 title`
+WHAT=`./csv $2 $1 what`
+NAME=`./csv $2 $1 name`
+GENRE=`./csv $2 $1 genre`
+LOCATION=`./csv $2 $1 location`
+LICENSE=`./csv $2 $1 license`
 
-       -a artist, --artist artist
-              Set the artist comment field in the comments to artist.
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file> [<csv-file>]"
+	exit 1
+fi
 
-       -G genre, --genre genre
-              Set the genre comment field in the comments to genre.
+if [ ! -f $BASENAME.wav ]; then
+	echo "File $BASENAME.wav does not exists"
+	./audio_extract $1
+fi
 
-       -d date, --date date
-              Sets the date comment field to the given value. This should be the date of recording.
+echo "Generating $BASENAME.ogg ($BITRATE kbps)"
 
-       -N n, --tracknum n
-              Sets the track number comment field to the given value.
+# --downmix
+#Downmix stereo to mono. Only allowed on stereo input.
+# sjekke om det er stero først? hvis ja, legg på downmix..
 
-       -t title, --title title
-              Set the track title comment field to title.
-
-       -l album, --album album
-              Set the album comment field to album.
-
-genre
-
--a $NAME
--G $GENRE
--d $DATE
--t $TITLE
--l $WHAT
+if [ "$2" ]; then
+echo "test"
+	oggenc "$BASENAME.wav" --downmix -b $BITRATE \
+		--date "$DATE" \
+		--title "$TITLE" \
+		--album "$WHAT" \
+		--artist "$NAME" \
+		--genre "$GENRE" \
+		2>&1
+#		> "$BASENAME.ogg-compresslog" 2>&1
+else
+	oggenc "$BASENAME.wav" --downmix -b $BITRATE \
+		2>&1
+		#> "$BASENAME.ogg-compresslog" 2>&1
+fi

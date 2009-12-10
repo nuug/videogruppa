@@ -10,7 +10,7 @@ if [ -z "$2" ]; then
 fi
 
 ./check_diskspace $1
-#./audio_channels_diff $1
+./audio_channels_diff $1
 ./intro $1 $2
 ./outro $1 $2
 ./join_video $NAME-new.$FORMAT $NAME-intro$FORMAT $1 $NAME-outro$FORMAT

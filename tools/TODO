@@ -1,0 +1,10 @@
+TODO
+
+* Små fikser og mulighet for å liste alle rader i csv-filen
+* Kopier funksjoner i fra http://wiki.nuug.no/grupper/video/scripts
+* Konverter til flere formater (samt tilpasset til vimeo, youtube, etc)
+* Opplastning til f.eks: vimeo, youtube, google video, wikipedia commons, etc
+* Annonserings scripts; e-post, rss, twitter, identica, linkedin, etc
+* Oppsett av dvswitch i fra cvs-fil
+* Full støtte for dv- og hdv-video i alle scripts
+* Automatisere alt av manuell postprod. ;)

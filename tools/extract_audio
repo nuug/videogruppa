@@ -11,8 +11,14 @@ NAME=`basename $1 .$EXT`
 FORMAT=`./audio_format $1`
 
 if [ -z "$1" ]; then
-	echo "Usage: $0 <video-file>"
+	echo "Usage: $0 <video-file> [<start-pos> <duration>]"
 	exit 1
 fi
 
-ffmpeg -i $1 -vn -acodec copy $NAME.$FORMAT 2> /dev/null
+if [ -z "$4" ]; then
+	DURATION="30" #`./duration $1`
+echo "start: $2 - Dur: $DURATION"
+	ffmpeg -i $1 -ss $2 -t $DURATION -vn -acodec copy $NAME.$FORMAT #2> /dev/null
+else
+	ffmpeg -i $1 -vn -acodec copy $NAME.$FORMAT #2> /dev/null
+fi

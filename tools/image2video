@@ -9,7 +9,8 @@
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 NAME=`basename $1 .$EXT`
 WIDESCREEN=`./video_aspect_ratio $1`
-FRAMES=`./video_fps $1`
+#FRAMES=`./video_fps $1`
+FRAMES=1
 ENDNAME=$2
 NTSC=`./video_standard $1`
 

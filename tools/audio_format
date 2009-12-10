@@ -6,9 +6,16 @@
 #
 # Grabs audio format from audio/video-file
 
+FORMAT=`ffmpeg -i $1 2>&1 | grep Audio | cut -d " " -f 8 | sed 's/,//g'`
+
 if [ -z "$1" ]; then
 	echo "Usage: $0 <audio/video-file>"
 	exit 1
 fi
 
-ffmpeg -i $1 2>&1 | grep Audio | cut -d " " -f 8 | sed 's/,//g'
+if [ "$FORMAT" == "pcm_s16le" ]; then
+	echo "wav"
+else
+	echo $FORMAT
+fi
+

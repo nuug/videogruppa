@@ -1,0 +1,31 @@
+README
+
+Dette er en samling av små-verktøy for postprod av video-opptak,
+laget spesielt med tanke på NUUGs videogruppe.
+
+"process-video" vil for øyeblikket utføre følgene:
+* Generere intro- og outro-video med informasjon fra en csv-fil.
+* Kombinere disse to sammen med orginal videoen.
+* Konvertere til Ogg Theora og Vorbis - med metadata fra en csv-fil.
+
+Advarsel: Aldri jobb direkte med orginalfilen(e), scriptene kan
+          variere av kvalitet. :)
+          
+Du vil alltid finne den nyeste versjon av verktøyene i SVN:
+  svn co svn+ssh://nerdhaven.nuug.no/data/video/svnroot/trunk/tools
+
+Arbeidsflyt
+
+1. Kopier template.csv til en ny fil og rediger etter behov.
+1.1. Tips: Bruk gjerne OpenOffice.org Spreadsheet til oppgaven.
+1.2. CSV-filen kan innholde en eller flere felt med "Takk" og "URL".
+1.3. Pass på at "Filename" stemmer overens med video-filen du skal bearbeide.
+2. Kopier inn videoen(e) du skal arbeide med inn i mappen.
+3. Kjør: ./process-video <video-fil> <csv-fil>
+
+Når scriptet er ferdig, vil det ligge en Ogg Theora og Vorbis utgave
+klar til opplastning/publisering. :)
+
+--
+Ole Kristian Lien (oklien) <oklien@nuug.no>
+NUUGs videogruppe

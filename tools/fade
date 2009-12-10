@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Fades in and out a image for x seconds.
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+
+if [ -z "$3" ]; then
+	echo "Usage: $0 <image-file> <seconds> <bg-color>"
+	exit 1
+fi
+
+count=100 # mer enn 10 sek, må denne økes(?)
+file=$1
+seconds=`expr $2 \* 100`
+color=$3
+
+#fps=25
+
+for ((i = 100 ; i >= 4 ; i = i - 4)); do
+  count=`expr $count + 1`
+#  echo "Generating intro - fade in $i% (frame $count)"
+  convert -fill $color -colorize $i% $1 $NAME$count.png
+done
+
+# todo: gjør om til hardlenke(?)
+for ((i = 4 ; i <= $seconds ; i = i + 4)); do
+  count=`expr $count + 1`
+#  echo "Generating intro - still $i% (frame $count)"
+  cp $1 $NAME$count.png
+done
+
+# Fade out
+for ((i = 4 ; i <= 100 ; i = i + 4)); do
+  count=`expr $count + 1`
+#  echo "Generating intro - fade out $i% (frame $count)"
+  convert -fill $color -colorize $i% $1 $NAME$count.png
+done

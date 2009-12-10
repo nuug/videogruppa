@@ -18,7 +18,6 @@ fi
 if [ -z "$4" ]; then
 	DURATION=`./duration $1`
 	ffmpeg -i $1 -ss $3 -t $DURATION -vcodec copy -acodec copy $NAME-new.$EXT
-
 else
 	ffmpeg -i $1 -ss $3 -t $4 -vcodec copy -acodec copy $NAME-new.$EXT
 fi

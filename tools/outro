@@ -4,7 +4,7 @@
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
-# Generate outro-file to a video
+# Generate outro-file with fade in/out from csv-file
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 BASENAME=`basename $1 .$EXT`
@@ -21,19 +21,21 @@ if [ -z "$1" ]; then
 fi
 
 ./image_text $1 outro-$COUNT black "TAKK TIL"
-COUNT=`expr $COUNT + 1`
-./image_text $1 outro-$COUNT black "TAKK TIL"
-COUNT=`expr $COUNT + 1`
-./image_text $1 outro-$COUNT black "TAKK TIL"
+./fade $BASENAME-outro-$COUNT.png 3 black
+rm $BASENAME-outro-$COUNT.png
 COUNT=`expr $COUNT + 1`
 
 ./image_text $1 outro-$COUNT black "$NAME" Foredragsholder
-COUNT=`expr $COUNT + 1`
-./image_text $1 outro-$COUNT black "$LOCATION" Lokaler
+./fade $BASENAME-outro-$COUNT.png 1 black
+rm $BASENAME-outro-$COUNT.png
 COUNT=`expr $COUNT + 1`
 
-# takk
-# quick hack
+./image_text $1 outro-$COUNT black "$LOCATION" Lokaler
+./fade $BASENAME-outro-$COUNT.png 1 black
+rm $BASENAME-outro-$COUNT.png
+COUNT=`expr $COUNT + 1`
+
+# dirty hack
 oldIFS=$IFS
 IFS='
 '
@@ -42,18 +44,21 @@ for i in $TAKK ; do
 	HVEM=`echo "$i" | cut -d ":" -f 2`
 # echo "TAKK: $HVA - $HVEM"
 	./image_text $1 outro-$COUNT black "$HVEM" "$HVA"
+	./fade $BASENAME-outro-$COUNT.png 1 black
+	rm $BASENAME-outro-$COUNT.png
 	COUNT=`expr $COUNT + 1`
 done
 IFS=$IFS
 
-# url
 for i in $URL ; do
 # echo "URL: $i"
 	./image_text $1 outro-$COUNT black " "
-	COUNT=`expr $COUNT + 1`
+	./fade $BASENAME-outro-$COUNT.png 1 black
+	rm $BASENAME-outro-$COUNT.png
+
 	./image_text $1 outro-$COUNT black "$i"
-	COUNT=`expr $COUNT + 1`
-	./image_text $1 outro-$COUNT black "$i"
+	./fade $BASENAME-outro-$COUNT.png 2 black
+	rm $BASENAME-outro-$COUNT.png
 	COUNT=`expr $COUNT + 1`
 done
 

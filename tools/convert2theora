@@ -1,5 +1,10 @@
 #!/bin/bash
-# ikke i svn
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Convert the video to Ogg Theora.
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 BASENAME=`basename $1 .$EXT`
@@ -28,7 +33,8 @@ if [ ! -f "$BASENAME.ogv" ] ; then
 			--location "$LOCATION" \
 			--license "$LICENSE" \
 			> "$BASENAME.ogv-compresslog" 2>&1
-			
+
+# NUUG:http://nuug.no/ alltid første URL?
 #		--organization     # Name of organization (studio)
 #		--copyright        # Copyright
 #		--license $LICENSE \

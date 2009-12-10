@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Convert the sound from the video to Ogg Vorbis.
+
+#./require oggenc vorbis-tools
+
+# todo: add license metadata, other?
+
+	echo "Generating $basename.ogg"
+	$debug oggenc --downmix -b 64 -o "$basename.ogg" "$basename.wav" > "${basename}.ogg-compresslog" 2>&1
+
+
+       -c comment, --comment comment
+              Add the string comment as an extra comment.  This may be used multiple times, and all instances will be added to each of  the  input  files
+              specified. The argument should be in the form "tag=value".
+
+       -a artist, --artist artist
+              Set the artist comment field in the comments to artist.
+
+       -G genre, --genre genre
+              Set the genre comment field in the comments to genre.
+
+       -d date, --date date
+              Sets the date comment field to the given value. This should be the date of recording.
+
+       -N n, --tracknum n
+              Sets the track number comment field to the given value.
+
+       -t title, --title title
+              Set the track title comment field to title.
+
+       -l album, --album album
+              Set the album comment field to album.
+
+genre
+
+-a $NAME
+-G $GENRE
+-d $DATE
+-t $TITLE
+-l $WHAT

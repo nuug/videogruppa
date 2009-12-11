@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for i in {0..10}; do
+	VQUALITY=$i
+
+	for i in {-2..10}; do
+		AQUALITY=$i
+		echo "--videoquality $VQUALITY --audioquality $AQUALITY"
+#		ffmpeg2theora $1 -o $NAME-v$VQUALITY-a$AQUALITY.ogv \
+#		 --videoquality $VQUALITY \
+#		 --audioquality $AQUALITY \
+	
+	done
+done

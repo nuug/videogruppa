@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Date:    2009-12-14
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Grabs video bitrate from video-file
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+ffmpeg -i $1 2>&1 | grep Duration | awk '{print $6}'

@@ -8,7 +8,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-echo '"Filename","Video Quality","Video Bitrate (kb/s)","Audio Quality","Audio Bitrate (kb/s)","Filesize(Mb)"'
+echo '"Filename","Video Quality","Video Bitrate (kb/s)","Audio Quality","Audio Bitrate (kb/s)","Filesize(Mb)"' > $NAME.txt
 
 for i in {5..10}; do
 	VQUALITY=$i
@@ -22,6 +22,6 @@ for i in {5..10}; do
 		SIZE=`du -m $NAME-v$VQUALITY-a$AQUALITY.ogv | awk '{print $1}'`
 		VBITRATE=`./video_bitrate $NAME-v$VQUALITY-a$AQUALITY.ogv`
 		ABITRATE=`./audio_bitrate $NAME-v$VQUALITY-a$AQUALITY.ogv`	
-echo "\"$NAME-v$VQUALITY-a$AQUALITY.ogv\",\"$VQUALITY\",\"$VBITRATE\",\"$AQUALITY\",\"$ABITRATE\",\"$SIZE\",\"$TIME\""
+echo "\"$NAME-v$VQUALITY-a$AQUALITY.ogv\",\"$VQUALITY\",\"$VBITRATE\",\"$AQUALITY\",\"$ABITRATE\",\"$SIZE\",\"$TIME\"" >> $NAME.txt
 	done
 done

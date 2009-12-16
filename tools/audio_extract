@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Date:    2009-11-30
+# Date:    2009-12-16
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
@@ -15,9 +15,11 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-if [ "$FORMAT" == "pcm_s16le" ]; then
-	FORMAT="wav"
-fi
+#if [ "$FORMAT" == "pcm_s16le" ]; then
+#	FORMAT="wav"
+#fi
+
+echo "Extracting $NAME.$FORMAT..."
 
 if [ "$3" ]; then
 	#DURATION="30" #`./duration$1`

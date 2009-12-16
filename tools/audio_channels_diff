@@ -1,38 +1,46 @@
 #!/bin/bash
 #
-# Date:    2009-12-10
+# Date:    2009-12-16
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
 # Check if the left and right channel is equal.
+# if not equal, exit code 3..
 
 # ext-format må fikses!! hmm
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 NAME=`basename $1 .$EXT`
-#FORMAT=`./audio_format $1`
+FORMAT=`./audio_format $1`
 
 if [ -z "$1" ]; then
 	echo "Usage: $0 <video-file>"
 	exit 1
 fi
 
-if [ ! -f $BASENAME.wav ]; then
-	echo "File $BASENAME.wav does not exists"
-	./audio_extract $1 0 60
+echo "Checking $1 audio channels..."
+
+if [ ! -f "$NAME.$FORMAT" ]; then
+	echo "File $NAME.$FORMAT does not exists."
+	./audio_extract $1 0 60 # øke til feks 2?
 fi
 
-./audio_split $NAME.wav
-./audio_stats $NAME-left.wav &> $NAME-left.wav.stat
-./audio_stats $NAME-right.wav &> $NAME-right.wav.stat
+./audio_split $NAME.$FORMAT
+./audio_stats $NAME-left.wav &> $NAME-left.stat
+./audio_stats $NAME-right.wav &> $NAME-right.stat
 
-LEFT=`md5sum $NAME-left.wav.stat | awk '{print $1}'`
-RIGHT=`md5sum $NAME-right.wav.stat | awk '{print $1}'`
+# find a better method to compare audio!
+LEFT=`grep Mean $NAME-left.stat | md5sum`
+RIGHT=`grep Mean $NAME-right.stat | md5sum`
 
 if [ "$LEFT" == "$RIGHT" ]; then
-	echo "eq"
+	echo "Audio channels is equal."
+	rm $NAME.$FORMAT $NAME-left* $NAME-right*
+	exit
 else
-	echo "nq"
+	echo "Audio channels is not equal."
+	rm $NAME.$FORMAT $NAME-left* $NAME-right*
+	exit 3
 fi
 
-rm $NAME.wav $NAME-left* $NAME-right*
+

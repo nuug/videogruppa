@@ -23,6 +23,8 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
+echo "Generating intro-video from $2 for $1..."
+
 # LOGO
 ./image_logo $1 intro-$COUNT white $LOGO
 ./fade $BASENAME-intro-$COUNT.png 3 white

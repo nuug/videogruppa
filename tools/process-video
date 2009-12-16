@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Date:    2009-12-16
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Process a video-file automatically
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 NAME=`basename $1 .$EXT`
@@ -9,21 +15,45 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
-echo "Checking diskspace..."
-./check_diskspace $1
-echo "Checking that both audio channeles is equal..."
-#./audio_channels_diff $1
-echo "Generating intro..."
-#./intro $1 $2
-echo "Generating outro..."
-#./outro $1 $2
-echo "Joining videoes..."
-#./join_video $NAME-new.$EXT $NAME-intro.$EXT $1 $NAME-outro.$EXT
+echo "Processing video $1 with info from $2..."
 
+#./check_diskspace $1
+#if [ "${?}" == "1" ] ; then
+#	exit 1
+#fi
+
+#./audio_channels_diff $1
+#if [ "${?}" == "3" ] ; then
+#	echo "should run ./merge_audio_stereo_track $1...neh.."
+	#./merge_audio_stereo_track $1
+#fi
+
+
+# ./audio_check_silence
+
+# ./audio_check_noise $1
+	# if x do ./audio_remove_noise
+
+# bytte plass? ^ v
+
+# ./audio_check_volume $1
+	# if x do ./audio_gain_volume
+
+# mv fade video/image_fade
+# ./audio_fade
+
+#./intro $1 $2
+#./outro $1 $2
+#./join_video $NAME-new.$EXT $NAME-intro.$EXT $1 $NAME-outro.$EXT
+#rm $NAME-intro.$EXT $NAME-outro.$EXT
+
+#echo "Backing up $1 to $NAME-old.$EXT..."
 #mv $1 $NAME-old.$EXT
 #mv $NAME-new.$EXT $1
 
-echo "Converting to theora..."
-./convert2theora $1 $2
-echo "Converting to vorbis..."
-./convert2vorbis $1 $2
+./convert2theora $1
+./metadata $NAME.ogv $2
+
+./convert2vorbis $1
+./metadata $NAME.ogg $2
+

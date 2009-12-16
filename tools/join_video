@@ -1,10 +1,13 @@
 #!/bin/bash
 #
-# Date:    2009-11-30
+# Date:    2009-12-16
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
 # Joins together two or more video-files
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
 
 if [ -z "$3" ]; then
         echo "Usage: $0 <new-file> <video-file> <video-file> [...]"
@@ -21,8 +24,10 @@ done
 unset array[0]
 
 # todo: Concatenating works with MPEG-1, MPEG-2 PS and DV
-if [ ! -f "$basename.dv" ] ; then
+if [ $EXT == "dv" ] ; then
+echo "Joining video-files using cat..."
 	cat ${array[*]} > $1
 else
+echo "Joining video-files using mencoder.."
 	mencoder -oac copy -ovc copy -idx -o ${array[*]}
 fi

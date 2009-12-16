@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Date:    2009-12-10
+# Date:    2009-12-16
 # Author:  Ole Kristian Lien
 # License: GNU General Public License
 #
@@ -11,4 +11,5 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
+echo "Generating audio statistics for $1..."
 sox $1 -n stat

@@ -14,5 +14,9 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-sox $1 -c 1 $NAME-left.$EXT mixer -l 2> /dev/null
-sox $1 -c 1 $NAME-right.$EXT mixer -r 2> /dev/null
+# sox FAIL formats: can't open output file `1-left.mp2': SoX was compiled without MP3 encoding support
+# kan ikke encode til mp{2,3}...
+
+echo "Splitting up audio to a left- and right-file..."
+sox $1 -c 1 $NAME-left.wav mixer -l 2> /dev/null
+sox $1 -c 1 $NAME-right.wav mixer -r 2> /dev/null

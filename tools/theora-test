@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# maskin info
+# ffmpeg versjon, libtheora
+# logg til fil
+
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 NAME=`basename $1 .$EXT`
 
@@ -8,7 +12,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-echo '"Filename","Video Quality","Video Bitrate (kb/s)","Audio Quality","Audio Bitrate (kb/s)","Filesize(Mb)"' > $NAME.txt
+echo '"Filename","Video Quality","Video Bitrate (kb/s)","Audio Quality","Audio Bitrate (kb/s)","Filesize(Mb)","Time"' #> $NAME.txt
 
 for i in {5..10}; do
 	VQUALITY=$i
@@ -18,10 +22,12 @@ for i in {5..10}; do
 		 --videoquality $VQUALITY \
 		 --audioquality $AQUALITY \
 		> "$NAME.ogv-compresslog" 2> time.txt
-		TIME=`cat time.txt`
+		TIME=`tail -1 time.txt `
 		SIZE=`du -m $NAME-v$VQUALITY-a$AQUALITY.ogv | awk '{print $1}'`
 		VBITRATE=`./video_bitrate $NAME-v$VQUALITY-a$AQUALITY.ogv`
 		ABITRATE=`./audio_bitrate $NAME-v$VQUALITY-a$AQUALITY.ogv`	
-echo "\"$NAME-v$VQUALITY-a$AQUALITY.ogv\",\"$VQUALITY\",\"$VBITRATE\",\"$AQUALITY\",\"$ABITRATE\",\"$SIZE\",\"$TIME\"" >> $NAME.txt
+echo "\"$NAME-v$VQUALITY-a$AQUALITY.ogv\",\"$VQUALITY\",\"$VBITRATE\",\"$AQUALITY\",\"$ABITRATE\",\"$SIZE\",\"$TIME\"" #>> $NAME.txt
 	done
 done
+
+rm time.txt

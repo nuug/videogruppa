@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+# Date:    2009-12-10
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Adds metadata to video/audio
+
+# todo: fiks csv ext.. kan ikke være hardkodet..
+# video og lyd, blir dobbelt av comments.. ikke bra - hvis funker, split opp if-ene!!!
+# mangler i vlc: Language, Publisher
+# utf8- øæå funker dårlig
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+WHAT=`./csv $2 $BASENAME.dv what`
+DATE=`./csv $2 $BASENAME.dv date`
+LOCATION=`./csv $2 $BASENAME.dv location`
+GENRE=`./csv $2 $BASENAME.dv genre`
+TITLE=`./csv $2 $BASENAME.dv title`
+NAME=`./csv $2 $BASENAME.dv name`
+LICENSE=`./csv $2 $BASENAME.dv license`
+ORGANIZATION=`./csv $2 $BASENAME.dv organization`
+CONTACT=`./csv $2 $BASENAME.dv contact`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video/audio-file> [<csv-file>]"
+	exit 1
+fi
+
+./require oggz-comment #oggz-tools
+#./require vorbiscomment #vorbis-tools
+
+if [ $EXT == "ogg" ] || [ $EXT == "ogv" ]; then
+	if [ "$2" ]; then
+		echo "Writing metadata to $1..."
+		oggz-comment $1 -o $BASENAME-comment.$EXT --content-type theora\
+			TITLE="$TITLE" \
+			ALBUM="$WHAT" \
+			ARTIST="$NAME" \
+			PERFORMER="$NAME" \
+			COPYRIGHT="$ORGANIZATION" \
+			LICENSE="$LICENSE" \
+			ORGANIZATION="$ORGANIZATION" \
+			GENRE="$GENRE" \
+			DATE="$DATE" \
+			LOCATION="$LOCATION" \
+			CONTACT="$CONTACT" 
+
+# rm, mv
+
+	else
+		oggz-comment -l $1
+	fi
+else
+	echo "File format is not supported yet."
+fi

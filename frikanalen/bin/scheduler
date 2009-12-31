@@ -330,6 +330,7 @@ sub vlc_start {
     } else {
         $vlc->{url} = "http://localhost:8080/";
         $vlc->{pid} = $pid;
+        $vlc->{loop} = 0;
 #        sleep 5; # Give VLC some time to start
         return $vlc;
     }
@@ -349,28 +350,20 @@ sub vlc_play {
 
     $file =~ s#/#%2F#g;
 
+    my @cmds = ();
+    push(@cmds, [$vlc->{url} ."requests/status.xml?command=pl_empty", undef]);
+    push(@cmds, [$vlc->{url} ."requests/status.xml?command=in_play&input=$file",
+                 undef]);
+    push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
+                 sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; }]);
 
-    my $url = $vlc->{url} . "requests/status.xml?command=pl_empty";
-    unless (lwp_get($url)) {
-        print "Failed to contact VLC\n";
-    }
-    $url = $vlc->{url} . "requests/status.xml?command=in_play&input=$file";
-    unless (lwp_get($url)) {
-        print "Failed to contact VLC\n";
-    }
-    if ($loop && !$vlc->{loop}) {
-        my $url = $vlc->{url} . "requests/status.xml?command=pl_repeat";
-        $vlc->{loop} = 1;
+    for my $cmdref (@cmds) {
+        my ($url, $postfunc) = @{$cmdref};
+
         unless (lwp_get($url)) {
             print "Failed to contact VLC\n";
+        } elsif (defined $postfunc) {
+            $postfunc->($vlc, $url);
         }
-
-    } else {
-        my $url = $vlc->{url} . "requests/status.xml?command=pl_repeat";
-        $vlc->{loop} = 0;
-        unless (lwp_get($url)) {
-            print "Failed to contact VLC\n";
-        }
-
     }
 }

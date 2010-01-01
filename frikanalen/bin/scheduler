@@ -354,8 +354,10 @@ sub vlc_play {
     push(@cmds, [$vlc->{url} ."requests/status.xml?command=pl_empty", undef]);
     push(@cmds, [$vlc->{url} ."requests/status.xml?command=in_play&input=$file",
                  undef]);
-    push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
-                 sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; }]);
+    if ($loop != $vlc->{loop}) {
+        push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
+                     sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; }]);
+    }
 
     for my $cmdref (@cmds) {
         my ($url, $postfunc) = @{$cmdref};

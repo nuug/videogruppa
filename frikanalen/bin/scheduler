@@ -307,7 +307,7 @@ sub get_epglist {
 # it is not very good for initial testing.
 # http://wiki.videolan.org/Documentation:Streaming_HowTo/VLM
 sub vlc_start {
-    my $vlc = {};
+    my $vlc = shift || {};
     my $pid = fork();
     if (not defined $pid) {
         return undef;
@@ -361,7 +361,12 @@ sub vlc_play {
         my ($url, $postfunc) = @{$cmdref};
 
         unless (lwp_get($url)) {
-            print "Failed to contact VLC\n";
+            print "Failed to contact VLC, restarting\n";
+            kill $vlc->{pid};
+            sleep 1; # Give it some time to die if it was running
+            vlc_start($vlc);
+            sleep 2; # Give the new one some time to start
+            return vlc_play($vlc, $file, $loop);
         } elsif (defined $postfunc) {
             $postfunc->($vlc, $url);
         }

@@ -23,6 +23,7 @@ my $query = new CGI;
 my $nuug_frikanalen_url = 'http://www.nuug.no/pub/video/frikanalen/';
 my $scripturl = url();
 my $category = $query->param("category");
+my $organization = $query->param("organization");
 my $cat = $category ? "category=$category" : "";
 my $sort = $query->param("sort");
 my $sor = $sort ? "sort=$sort" : "";
@@ -79,17 +80,27 @@ sub get_categories {
 sub searchvids {
  # Returnerer referanse med "array of hashrefs". Hashref inneholder metadata og urler 
  # til videoer. Bruk Dumper til å titte på.
+ my $category = shift;
+ my $organization = shift;
  my $returndata ;
  my $res;
  my $obj;
  my $soap = new SOAP::Lite
  -> uri('http://localhost/CommunitySiteService')
  -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
- if ($category) {
+ if ($category ) {
    $obj = $soap->SearchVideos(
      SOAP::Data->name('searcher' => {
 	  'PredefinedSearchType' => $searchtype,
 	  'CategoryName' => $category,
+	  'Take' => 10000,
+	}
+     )
+   );
+ } elsif ($organization) {
+   $obj = $soap->SearchVideos(
+     SOAP::Data->name('searcher' => {
+ 	  'Organization' => $organization,
 	  'Take' => 10000,
 	}
      )
@@ -187,7 +198,7 @@ EOF
 
 sub printbody {
  # Returnerer kroppen til htmltabellen. Innholdet er avhengig av $category
- my $videos = &searchvids($category);
+ my $videos = &searchvids($category,$organization);
  $video_count = (@{$videos});
  # print Dumper($videos);
  print "<div id=\"videos\">\n";
@@ -284,7 +295,7 @@ sub videosort {
 sub generate_rss {
    print_rss_header();
 
-   my $videos = &searchvids($category);
+   my $videos = &searchvids($category,$organization);
 
    foreach my $video ( sort videosort @{$videos} ) {
 	my $id = $video->{'MetaDataVideoId'};

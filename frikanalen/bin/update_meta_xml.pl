@@ -63,6 +63,7 @@ sub get_frikanalen_meta_subset {
 	    $returndata->{$utf8_id}->{'Title'} = encode("utf8",$video->{'Title'});
 	    $returndata->{$utf8_id}->{'Length'} = encode("utf8",$video->{'MetaData'}->{'Length'});
 	    $returndata->{$utf8_id}->{'Description'} = encode("utf8",$video->{'Description'});
+	    $returndata->{$utf8_id}->{'Organization'} = encode("utf8",$video->{'Organization'});
 	}
 	return $returndata;
     } else {

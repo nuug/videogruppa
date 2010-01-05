@@ -32,6 +32,7 @@ if (! exists  $ref->{$id} ) {
 }
 my $title = $ref->{$id}->{Title};
 my $description = $ref->{$id}->{Description};
+my $organization = $ref->{$id}->{Organization};
 my $length = int($ref->{$id}->{Length});
 my $seconds = ($length%60);
 my $minutes = int(($length%3600)/60);
@@ -89,6 +90,7 @@ if ($playlist) {
    <div id="content_video">
 	<h1>$title</h1>
 	<p>$description</p>
+	<p><b>Organisasjon:</b> $organization</p>
 	<applet code="com.fluendo.player.Cortado.class"
 	archive="http://www.nuug.no/tools/cortado-unsigned.jar"
 	width="640" height="320">

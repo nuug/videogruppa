@@ -5,7 +5,7 @@
 # License: GNU General Public license
 
 # Script for å levere inkeltvideoer basert på $Id
-#
+# 
 # http://wiki.nuug.no/grupper/video/pubfrikanalen
 
 use strict;
@@ -54,7 +54,7 @@ if ($playlist) {
    my $id = "id_$1";
    my $ogvurl = $ref->{$id}->{ogvUri};
    print "Content-type: audio/x-mpegurl\n\n";
-   print "$ogvurl";
+   print "$ogvurl";  
    exit 0;
 } else {
 
@@ -64,7 +64,7 @@ if ($playlist) {
    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
    <html>
    <head>
-   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+   <meta http-equiv="content-type" content="text/html; charset=UTF-8">  
    <title>Frikanalen - med &aring;pne standarder</title>
    <link href="style1.css" rel="stylesheet" type="text/css">
    </head>
@@ -87,37 +87,37 @@ if ($playlist) {
    </table>
    </div>
    <div id="content_video">
-        <h1>$title</h1>
-        <p>$description</p>
-        <applet code="com.fluendo.player.Cortado.class"
-        archive="http://www.nuug.no/tools/cortado-xiph-unsigned.jar"
-        width="640" height="320">
-        <param name="url" value="$ogvurl"/>
-        <param name="local" value="false"/>
-        <param name="showStatus" value="show"/>
-        <param name="bufferSize" value="500"/>
-        <param name="duration" value="$duration"/>
-        <param name="keepaspect" value="true"/>
+	<h1>$title</h1>
+	<p>$description</p>
+	<applet code="com.fluendo.player.Cortado.class"
+	archive="http://www.nuug.no/tools/cortado-unsigned.jar"
+	width="640" height="320">
+	<param name="url" value="$ogvurl"/>
+	<param name="local" value="false"/>
+	<param name="showStatus" value="show"/>
+	<param name="bufferSize" value="500"/>
+	<param name="duration" value="$duration"/>
+	<param name="keepaspect" value="true"/>
        <img src="$imageuri" width="640" height="320" border="0" alt="preview">
-        </applet>
-        <p><table cellpadding=5>
-        <tr><td>Lengde:</td><td> $lengde </td></tr>
-        <tr><td>Dato:</td><td> $date </td></tr>
-        </table>
-        <p>Dersom du ikke ser noe video p&aring; denne siden, har du en nettleser uten fungerende java-st&oslash;tte. F&oslash;lgende lenker kan benyttes dersom dette er tilfelle, eller du &oslash;nsker mere kontroll p&aring; s&oslash;king (playlist url) eller laste ned hele filen (Ogg Theora) . Vi har ogs&aring;  lagt inn direktelink til Windows Media url p&aring; frikanalen sin side.
-        <p>Video URLs:
-        <br><a href="$playlisturl">Playlist url (m3u) </a>for ekstern avspiller. <a href="http://www.videolan.org">(VLC fungerer  godt p&aring; alle platformer .)</a>
-        <br><a href="$ogvurl">Ogg Theora</a>
-        <br><a href="$wmvurl">Windows Media</a>
-        <br><a href="frontpage.cgi">Tilbake</a></p>
-        </div>
-        <div id="footer">
-        &copy; 2009 Foreningen Frikanalen, design
+	</applet>
+	<p><table cellpadding=5>
+	<tr><td>Lengde:</td><td> $lengde </td></tr>
+	<tr><td>Dato:</td><td> $date </td></tr>
+	</table>
+	<p>Dersom du ikke ser noe video p&aring; denne siden, har du en nettleser uten fungerende java-st&oslash;tte. F&oslash;lgende lenker kan benyttes dersom dette er tilfelle, eller du &oslash;nsker mere kontroll p&aring; s&oslash;king (playlist url) eller laste ned hele filen (Ogg Theora) . Vi har ogs&aring;  lagt inn direktelink til Windows Media url p&aring; frikanalen sin side. 
+	<p>Video URLs:
+	<br><a href="$playlisturl">Playlist url (m3u) </a>for ekstern avspiller. <a href="http://www.videolan.org">(VLC fungerer  godt p&aring; alle platformer .)</a>
+	<br><a href="$ogvurl">Ogg Theora</a>
+	<br><a href="$wmvurl">Windows Media</a>
+	<br><a href="frontpage.cgi">Tilbake</a></p>
+	</div>
+	<div id="footer">
+	&copy; 2009 Foreningen Frikanalen, design 
     <a href="http://www.wildweb.no" target="_blank">Wild Web</a>
-        </div>
-        </div>
-        </body>
-        </html>
+	</div>
+	</div>
+	</body>
+	</html>
 EOF
 }
 

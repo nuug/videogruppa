@@ -24,6 +24,9 @@
 # TrueType font name/path used by GD to draw text
 my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
 
+# Set to 0 if VLC should not play in full screen mode
+my $fullscreen = 1;
+
 use strict;
 use warnings;
 
@@ -331,6 +334,7 @@ sub vlc_start {
         $vlc->{url} = "http://localhost:8080/";
         $vlc->{pid} = $pid;
         $vlc->{loop} = 0;
+        $vlc->{fullscreen} = 0;
 #        sleep 5; # Give VLC some time to start
         return $vlc;
     }
@@ -357,6 +361,11 @@ sub vlc_play {
     if ($loop != $vlc->{loop}) {
         push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
                      sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; }]);
+    }
+
+    if ($fullscreen != $vlc->{fullscreen}) {
+        push(@cmds, [$vlc->{url} . "requests/status.xml?command=fullscreen",
+                     sub { my $vlc = shift; $vlc->{fullscreen} = ! $vlc->{fullscreen}; }]);
     }
 
     for my $cmdref (@cmds) {

@@ -264,10 +264,18 @@ sub generate_program {
         my $tmpdv = "temp.dv";
 
         system("image2raw -r $len $tmppng > $tmpdv");
-        # Generate Ogg Theora, VLC do not understand raw DV
-
-        my $resultfile = "test.ogv";
-        system("ffmpeg2theora --width 384 --height 288 -o $resultfile $tmpdv");
+        my $resultfile;
+        # Generate Ogg Theora or MPEG, VLC do not understand raw DV
+        if (0) {
+            # VLC leak memory when looping over a Ogg Theora file
+            $resultfile = "test.ogv";
+            system("ffmpeg2theora", "--width", "384", "--height", "288",
+                   "-o", $resultfile, $tmpdv);
+        } else {
+            $resultfile = "test.mpeg";
+            unlink($resultfile);
+            system("ffmpeg", "-s", "384x288", "-i", $tmpdv, $resultfile);
+        }
         unlink $tmppng;
         unlink $tmpdv;
         print "Done generating pause screen DV\n";
@@ -328,7 +336,9 @@ sub vlc_start {
 #        push(@vlcargs, "--sout='#duplicate{dst=display,dst=\"transcode{vcodec=theo,vb=256,acodec=vorb,ab=64,vfilter=canvas{width=320,height=240,canvas-aspect=4:3}}:standard{mux=ogg,dst=source:$icecastpasswd\@$icecastserver/live.ogv,access=shout}\"}'");
 
         print "starting VLC: vlc ". join(" ", @vlcargs) . "\n";
-        exec("vlc", @vlcargs);
+        exec(
+#           "valgrind", "--leak-check=full",
+            "vlc", @vlcargs);
         exit 0;
     } else {
         $vlc->{url} = "http://localhost:8080/";
@@ -382,4 +392,5 @@ sub vlc_play {
             $postfunc->($vlc, $url);
         }
     }
+    sleep(1);
 }

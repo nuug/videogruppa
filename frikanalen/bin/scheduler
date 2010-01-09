@@ -178,7 +178,7 @@ sub schedule_video {
                      my $nowstring = strftime("%H:%M:%S", localtime(time()));
                      print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
 
-                     vlc_play($vlc, $ogvurl);
+                     vlc_play($vlc, $ogvurl, 0);
 
                  });
 

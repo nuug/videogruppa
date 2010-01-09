@@ -1,11 +1,11 @@
-#!/usr/bin/perl -w
-
+#!/usr/bin/perl
+#
 # Author: Petter Reinholdtsen
 # Date: 2009-10-15
 # License: GNU General Public license v2 or later
 #
-# Generer detaljert tidsplan for streaming basert på EPG-fil hentet
-# fra frikanalen.
+# Generer detaljert tidsplan for streaming basert på EPG-fil (XML)
+# hentet fra frikanalen via SOAP-APIet som er tilgjengelig.
 #
 # http://wiki.nuug.no/grupper/video/pubfrikanalen
 #
@@ -40,7 +40,7 @@ use Event;
 use File::Temp;
 
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
-use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
+use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 
 #binmode STDOUT, ":utf8";
 
@@ -195,8 +195,16 @@ sub schedule_video {
                      my $event = shift;
                      my $seq = $event->w->data()->{seq};
                      my $vlc = $event->w->data()->{vlc};
-                     print "Generate pause screen for $seq\n";
+                     my $nowstring = strftime("%H:%M:%S", localtime(time()));
+                     print "Generate pause screen for $seq (now $nowstring)\n";
+                     my $start = time();
                      my $programogv = generate_program($vlc, $seq);
+                     my $stop = time();
+                     $nowstring = strftime("%H:%M:%S", localtime(time()));
+                     print "Done generating pause screen DV (now $nowstring)\n";
+                     my $duration = $stop - $start;
+                     print "error: Generating pause screen took too long ($duration seconds)\n"
+                         if (30 < $duration);
                      Event->timer(at => $stoptime,
                                   cb => sub {
                                       my $nowstring = strftime("%H:%M:%S", localtime(time()));
@@ -278,7 +286,6 @@ sub generate_program {
         }
         unlink $tmppng;
         unlink $tmpdv;
-        print "Done generating pause screen DV\n";
         return $resultfile;
     } else {
         print "Unable to save temporary PNG file\n";

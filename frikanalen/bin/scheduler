@@ -130,11 +130,11 @@ while ($seq < scalar @events) {
 
     # Skip entries from the past
     if ($starttime >= $now) {
-        schedule_video($vlc, $seq, $starttime, $stoptime);
+        schedule_video($vlc, $seq, int($starttime), int($stoptime));
     } elsif ($stoptime >= $now && $starttime <= $now) {
         # If some program is already running, just start it to get
         # something showing.
-        schedule_video($vlc, $seq, $now, $stoptime);
+        schedule_video($vlc, $seq, $now, int($stoptime));
     }
     $seq++;
 }
@@ -207,10 +207,13 @@ sub schedule_video {
                          if (30 < $duration);
                      Event->timer(at => $stoptime,
                                   cb => sub {
-                                      my $nowstring = strftime("%H:%M:%S", localtime(time()));
+                                      my $now = time();
+                                      my $nowstring = strftime("%H:%M:%S", localtime($now));
                                       my $str = strftime("%H:%M:%S", localtime($stoptime));
                                       print "Starting pause screen $str (now $nowstring)\n";
                                       vlc_play($vlc, $programogv, 1);
+                                      print "error: Started pause screen too late ($stoptime != $now)\n"
+                                          unless ($stoptime == $now);
                                   });
                  } );
 }

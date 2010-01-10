@@ -100,6 +100,7 @@ sub searchvids {
  } elsif ($organization) {
    $obj = $soap->SearchVideos(
      SOAP::Data->name('searcher' => {
+          'PredefinedSearchType' => $searchtype,
           'Organization' => $organization,
           'Take' => 10000,
         }

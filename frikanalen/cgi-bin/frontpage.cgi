@@ -168,7 +168,7 @@ EOF
  my $all_cat = $category ? "<ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
  print "$all_cat";
  foreach my $cat (@{$categories}) {
-   if ($cat->{'Name'} eq $category) {
+   if (defined $category && $cat->{'Name'} eq $category) {
      print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $cat->{'Name'}</li>";
    } else {
      print "<li><a href=\"$scripturl\?category=$cat->{'Name'};$sor\" >$cat->{'Name'}</a></li>";

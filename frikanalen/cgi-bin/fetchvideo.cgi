@@ -13,6 +13,7 @@ use warnings;
 
 use XML::Simple;
 use CGI qw/:standard/;
+use URI::Escape;
 
 binmode STDOUT, ":utf8";
 

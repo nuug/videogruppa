@@ -181,11 +181,3 @@ ul {
 	width: 258px;
 	padding: 10px;
 }
-
-.list {
-	padding-top: 20px;
-}
-
-#choose_cat, #choose_ed, #choose_org {
-	display: none;
-}

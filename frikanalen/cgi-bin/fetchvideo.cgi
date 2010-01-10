@@ -92,7 +92,7 @@ if ($playlist) {
    <div id="content_video">
         <h1>$title</h1>
         <p>$description</p>
-        <p><b>Organisasjon:</b> <a href="frontpage.cgi?org=$org_escaped">$organization</a></p>
+        <p><b>Organisasjon:</b> <a href="frontpage.cgi?organization=$org_escaped">$organization</a></p>
         <applet code="com.fluendo.player.Cortado.class"
         archive="http://www.nuug.no/tools/cortado-unsigned.jar"
         width="640" height="320">

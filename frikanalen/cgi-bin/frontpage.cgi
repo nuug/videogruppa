@@ -5,7 +5,7 @@
 # License: GNU General Public license
 
 # Inngansportal til Frikanalen sine videoer i theora format
-# 
+#
 # http://wiki.nuug.no/grupper/video/pubfrikanalen
 
 use strict;
@@ -52,7 +52,7 @@ if (defined $rss) {
 
 sub get_categories {
  # Returnerer referanse med "array of hashrefs". Hver hashref inneholder variablene 'Name' og 'Id'.
- # Kun 'Name' er brukt. 
+ # Kun 'Name' er brukt.
  my $soap = new SOAP::Lite
  -> uri('http://localhost/CommunitySiteService')
  -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
@@ -78,7 +78,7 @@ sub get_categories {
 }
 
 sub searchvids {
- # Returnerer referanse med "array of hashrefs". Hashref inneholder metadata og urler 
+ # Returnerer referanse med "array of hashrefs". Hashref inneholder metadata og urler
  # til videoer. Bruk Dumper til å titte på.
  my $category = shift;
  my $organization = shift;
@@ -91,26 +91,26 @@ sub searchvids {
  if ($category ) {
    $obj = $soap->SearchVideos(
      SOAP::Data->name('searcher' => {
-	  'PredefinedSearchType' => $searchtype,
-	  'CategoryName' => $category,
-	  'Take' => 10000,
-	}
+          'PredefinedSearchType' => $searchtype,
+          'CategoryName' => $category,
+          'Take' => 10000,
+        }
      )
    );
  } elsif ($organization) {
    $obj = $soap->SearchVideos(
      SOAP::Data->name('searcher' => {
- 	  'Organization' => $organization,
-	  'Take' => 10000,
-	}
+          'Organization' => $organization,
+          'Take' => 10000,
+        }
      )
    );
  } else {
    $obj = $soap->SearchVideos(
      SOAP::Data->name('searcher' => {
-	  'PredefinedSearchType' => $searchtype,
-	  'Take' => 10000,
-	} 
+          'PredefinedSearchType' => $searchtype,
+          'Take' => 10000,
+        }
      )
    );
  }
@@ -139,7 +139,7 @@ sub printheader {
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
  <html>
  <head>
- <meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8">
  <title>Frikanalen - med &aring;pne standarder</title>
  <link href="style1.css" rel="stylesheet" type="text/css">
  </head>
@@ -230,9 +230,9 @@ sub printbody {
      print "<li><div class=\"container\"><div class=\"description\"><a href=\"$videouri\">";
      print "<img src=\"$imageuri\" align=\"left\" border=\"0\" width=\"64\" alt=\"thumbnail\"><strong>$title</strong>\n";
      if ($hours) {
-	  print "\ (Lengde: ".(sprintf('%2dt %2dm',$hours,$minutes)).') </a><br>';
+          print "\ (Lengde: ".(sprintf('%2dt %2dm',$hours,$minutes)).') </a><br>';
      } else {
-	  print "\ (Lengde: ".(sprintf('%2dm %2ds', $minutes, $seconds)).') </a><br>';
+          print "\ (Lengde: ".(sprintf('%2dm %2ds', $minutes, $seconds)).') </a><br>';
      }
      print "Publisert: $uploaddate<br>\n" if $uploaddate;
      print "$description\n" if $description;
@@ -258,16 +258,16 @@ sub printfooter {
   if ($current == 0) {
     print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 ";
   } else {
-	print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=\"$scripturl\?page=0;$sor;$cat\">1</a> ";
+        print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=\"$scripturl\?page=0;$sor;$cat\">1</a> ";
   }
   for (my $x = 1; $x < $pagenum; $x++) {
     my $p = $x + 1;
     if ($x == $current) {
      print "$p ";
     } else {
-	 print "<a href=\"$scripturl\?page=$x;$sor;$cat\">$p</a> ";	
-    }	 
-  } 
+         print "<a href=\"$scripturl\?page=$x;$sor;$cat\">$p</a> ";
+    }
+  }
   print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
   unless ($next == $pagenum) {
     print " <a href=\"$scripturl\?page=$next;$sor;$cat\">Neste</a>\n";
@@ -278,7 +278,7 @@ sub printfooter {
  print <<EOF;
   <div id=\"footer\">
   &nbsp;<br>
-  &copy; 2009 Foreningen Frikanalen, design 
+  &copy; 2009 Foreningen Frikanalen, design
  <a href="http://www.wildweb.no" target="_blank">Wild Web</a>
  </div>
  </div>
@@ -298,22 +298,22 @@ sub generate_rss {
    my $videos = &searchvids($category,$organization);
 
    foreach my $video ( sort videosort @{$videos} ) {
-	my $id = $video->{'MetaDataVideoId'};
-	my $videouri = "${nuug_frikanalen_url}fetchvideo.cgi\?videoId=$id";
-	my $ogvfile = "$id.ogv";
-	my $num = $id; $num =~ s/^id_//;
+        my $id = $video->{'MetaDataVideoId'};
+        my $videouri = "${nuug_frikanalen_url}fetchvideo.cgi\?videoId=$id";
+        my $ogvfile = "$id.ogv";
+        my $num = $id; $num =~ s/^id_//;
 
 # print STDERR Dumper($video);
 
        my $oggfilepath = "$videodir/$ogvfile";
        my $date = format_rss_date($video->{'Details'}->{'UploadDate'});
 
-	if ( -e $oggfilepath ) {
-	    my $size = (stat($oggfilepath))[7];
-	    item($video->{'Title'}, $date, $videouri, $video->{'Description'},
-		 "$nuug_frikanalen_url$id.ogv", "application/ogg", $size,
-		 $video->{'ImageUri'}, int($video->{'MetaData'}->{'Length'}));
-	}
+        if ( -e $oggfilepath ) {
+            my $size = (stat($oggfilepath))[7];
+            item($video->{'Title'}, $date, $videouri, $video->{'Description'},
+                 "$nuug_frikanalen_url$id.ogv", "application/ogg", $size,
+                 $video->{'ImageUri'}, int($video->{'MetaData'}->{'Length'}));
+        }
    }
    print_rss_footer();
 }

@@ -18,13 +18,20 @@ use SOAP::Lite  on_action => sub {sprintf '%s/%s', @_}, ;
 use Data::Dumper;
 use Date::Parse;
 use POSIX qw(strftime);
+use Encode;
+use URI::Escape;
 
 my $query = new CGI;
 my $nuug_frikanalen_url = 'http://www.nuug.no/pub/video/frikanalen/';
 my $scripturl = url();
 my $category = $query->param("category");
-my $organization = $query->param("organization");
 my $cat = $category ? "category=$category" : "";
+my $organization = $query->param("organization");
+my $org_escaped = uri_escape($organization);
+my $org = $organization ? "organization=$org_escaped" : "";
+my $editor = $query->param("editor");
+my $ed_escaped = uri_escape($editor);
+my $ed = $editor ? "editor=$ed_escaped" : "";
 my $sort = $query->param("sort");
 my $sor = $sort ? "sort=$sort" : "";
 my $searchtype = $sort ? "$sort" : "MostRecent";
@@ -77,18 +84,48 @@ sub get_categories {
 
 }
 
+sub get_organizations {
+ my $soap = new SOAP::Lite
+ -> uri('http://localhost/CommunitySiteService')
+ -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
+ my $res;
+ my $soap_response = $soap->GetOrganizations;
+ unless ($soap_response->fault) {
+   my $res = $soap_response->result;
+   return $res->{'Data'}->{'string'};
+ } else {
+   print join ', ',
+   $soap_response->faultcode,
+   $soap_response->faultstring;
+ }
+}
+
+sub get_editors {
+ my $soap = new SOAP::Lite
+ -> uri('http://localhost/CommunitySiteService')
+ -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
+ my $res;
+ my $soap_response = $soap->GetEditors;
+ unless ($soap_response->fault) {
+   my $res = $soap_response->result;
+   return $res->{'Data'}->{'string'};
+ } else {
+   print join ', ',
+   $soap_response->faultcode,
+   $soap_response->faultstring;
+ }
+}
+
 sub searchvids {
  # Returnerer referanse med "array of hashrefs". Hashref inneholder metadata og urler
  # til videoer. Bruk Dumper til å titte på.
- my $category = shift;
- my $organization = shift;
  my $returndata ;
  my $res;
  my $obj;
  my $soap = new SOAP::Lite
  -> uri('http://localhost/CommunitySiteService')
  -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
- if ($category ) {
+ if ($category) {
    $obj = $soap->SearchVideos(
      SOAP::Data->name('searcher' => {
           'PredefinedSearchType' => $searchtype,
@@ -97,11 +134,23 @@ sub searchvids {
         }
      )
    );
+
  } elsif ($organization) {
+   $organization = SOAP::Data->type(string => encode("utf8",$organization));
    $obj = $soap->SearchVideos(
      SOAP::Data->name('searcher' => {
           'PredefinedSearchType' => $searchtype,
           'Organization' => $organization,
+          'Take' => 10000,
+        }
+     )
+   );
+  } elsif ($editor) {
+   $editor = SOAP::Data->type(string => encode("utf8",$editor));
+   $obj = $soap->SearchVideos(
+     SOAP::Data->name('searcher' => {
+          'PredefinedSearchType' => $searchtype,
+          'Editor' => $editor,
           'Take' => 10000,
         }
      )
@@ -129,9 +178,21 @@ sub searchvids {
 }
 
 sub printheader {
- # Skriver ut toppen av forsiden + høyremeny med kategorier, sorteringstyper og link til rss
- # tilbake til megselv?category=$category;sort=¤sort
+ # Skriver ut toppen av forsiden + høyremeny med kategorier,
+ # sorteringstyper og link til rss tilbake til
+ # megselv?category=$category;sort=¤sort
+ my $menu;
+ if ($organization) {
+    $menu = "org";
+ } elsif ($editor) {
+    $menu = "ed";
+ } else {
+    $menu = "cat";
+ }
+ my $arg = join(";", $sor,$cat,$org,$ed);
  my $categories = &get_categories;
+ my $organizations = &get_organizations;
+ my $editors = &get_editors;
  my %searchtypes = ("Nyeste", "MostRecent", "Tittel", "OrderByTitle", "Topp vurderte", "TopRated", "Mest sett", "MostViewed", "Mest diskutert", "MostDiscussed");
  my $search;
  print "Content-type: text/html; charset=UTF-8\n\n";
@@ -143,8 +204,11 @@ sub printheader {
  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
  <title>Frikanalen - med &aring;pne standarder</title>
  <link href="style1.css" rel="stylesheet" type="text/css">
+ <script type="text/javascript" src="hide.js"></script>
  </head>
- <body>
+EOF
+ print "<body onload=\"show_" . $menu . "();\">";
+ print <<EOF;
  <div id="page">
  <div id="top"><img src="logo.png" alt="Frikanalen">
  <p id="av"><span class="overskrift">TV FOR ALLE</span><br>
@@ -165,8 +229,9 @@ sub printheader {
  <div id="content">
 EOF
  # Kategorier
- print "<div id=\"kategorier\">&nbsp;<h2>KATEGORIER</h2>";
- my $all_cat = $category ? "<ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
+ print "<div id=\"kategorier\"><div class=\"list\"><h2>&nbsp;Kategorier</h2>";
+ print "<div id=\"choose_cat\"><ul><li><a href=\"#\" onclick=\"show_cat();\">[ velg ]</a></li></ul></div>";
+ my $all_cat = $category ? "<div id=\"list_cat\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_cat\"><ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
  print "$all_cat";
  foreach my $cat (@{$categories}) {
    if (defined $category && $cat->{'Name'} eq $category) {
@@ -175,23 +240,51 @@ EOF
      print "<li><a href=\"$scripturl\?category=$cat->{'Name'};$sor\" >$cat->{'Name'}</a></li>";
    }
  }
- print "</ul>";
+ print "</ul></div></div>";
+ # Organisasjoner
+ print "<div class=\"list\"><h2>&nbsp;Organisasjoner</h2>";
+ print "<div id=\"choose_org\"><ul><li><a href=\"#\" onclick=\"show_org();\">[ velg ]</a></li></ul></div>";
+ my $all_org = $organization ? "<div id=\"list_org\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_org\"><ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
+ print "$all_org";
+ foreach (@{$organizations}) {
+    $org_escaped = uri_escape($_);
+    if (defined $organization && $_ eq $organization){
+      print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $_</li>";
+    } else {
+      print "<li><a href=\"$scripturl\?organization=$org_escaped;$sor\" >$_</a></li>";
+    }
+}
+ print "</ul></div></div>";
+ # Redaktører
+ print "<div class=\"list\"><h2>&nbsp;Redakt&oslash;rer</h2>";
+ print "<div id=\"choose_ed\"><ul><li><a href=\"#\" onclick=\"show_ed();\">[ velg ]</a></li></ul></div>";
+ my $all_ed = $editor ? "<div id=\"list_ed\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_ed\"><ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
+ print "$all_ed";
+ foreach (@{$editors}) {
+    $ed_escaped = uri_escape($_);
+    if (defined $editor && $_ eq $editor) {
+      print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $_</li>";
+    } else {
+      print "<li><a href=\"$scripturl\?editor=$ed_escaped;$sor\" >$_</a></li>";
+    }
+}
+ print "</ul></div></div>";
  # Sorteringer
  print "&nbsp;<h2>SORTER</h2>";
  print "<ul>";
   foreach $search (sort keys %searchtypes) {
-     if ($searchtypes{$search} eq $searchtype) {
-     print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $search</li>";
-   } else {
-     print "<li><a href=\"$scripturl\?sort=$searchtypes{$search};$cat\">$search</a></li>";
-   }
+    if ($searchtypes{$search} eq $searchtype) {
+      print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $search</li>";
+    } else {
+      print "<li><a href=\"$scripturl\?sort=$searchtypes{$search};$org\">$search</a></li>";
+    }
  }
  # Link til rss
  print <<EOF;
   </ul>
  <div id="rss">
  <p><a href="$scripturl\?rss=1;$cat">RSS</a> for
-   <a href="http://subscribe.getmiro.com/?url1=$scripturl\?rss=1;$cat">Miro</a></p>
+   <a href="http://subscribe.getmiro.com/?url1=$scripturl\?rss=1;$arg">Miro</a></p>
  </div>
  </div>
 EOF
@@ -199,7 +292,7 @@ EOF
 
 sub printbody {
  # Returnerer kroppen til htmltabellen. Innholdet er avhengig av $category
- my $videos = &searchvids($category,$organization);
+ my $videos = &searchvids($category,$organization,$editor);
  $video_count = (@{$videos});
  # print Dumper($videos);
  print "<div id=\"videos\">\n";
@@ -245,6 +338,8 @@ sub printbody {
 }
 
 sub printfooter {
+ # List argumenter for sortering, kategorier, organisasjon og redaktør
+ my $arg = join(";", $sor,$cat,$org,$ed);
  # Hvis mer enn en side med videoer, skriv ut pager-links
  if ($video_count > $videos_per_page) {
   my $pagenum = (int(($video_count-1) / $videos_per_page)+1);
@@ -254,24 +349,24 @@ sub printfooter {
   print "<div id=\"pager\">\n";
   print "<p>&nbsp;</p>\n";
   if ($current > 0) {
-    print "<a href=\"$scripturl\?page=$previous;$sor;$cat\">Forrige</a> ";
+    print "<a href=\"$scripturl\?page=$previous;$arg\">Forrige</a> ";
   }
   if ($current == 0) {
     print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 ";
   } else {
-        print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=\"$scripturl\?page=0;$sor;$cat\">1</a> ";
+        print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=\"$scripturl\?page=0;$arg\">1</a> ";
   }
   for (my $x = 1; $x < $pagenum; $x++) {
     my $p = $x + 1;
     if ($x == $current) {
      print "$p ";
     } else {
-         print "<a href=\"$scripturl\?page=$x;$sor;$cat\">$p</a> ";
+         print "<a href=\"$scripturl\?page=$x;$arg\">$p</a> ";
     }
   }
   print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
   unless ($next == $pagenum) {
-    print " <a href=\"$scripturl\?page=$next;$sor;$cat\">Neste</a>\n";
+    print " <a href=\"$scripturl\?page=$next;$arg\">Neste</a>\n";
   }
   print "</div>\n";
  }
@@ -296,7 +391,7 @@ sub videosort {
 sub generate_rss {
    print_rss_header();
 
-   my $videos = &searchvids($category,$organization);
+   my $videos = &searchvids($category,$organization,$editor);
 
    foreach my $video ( sort videosort @{$videos} ) {
         my $id = $video->{'MetaDataVideoId'};

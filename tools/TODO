@@ -8,3 +8,14 @@ TODO
 * Oppsett av dvswitch i fra cvs-fil
 * Full støtte for dv- og hdv-video i alle scripts
 * Automatisere alt av manuell postprod. ;)
+
+./audio_spectrogram 20100112-munin.wav 
+ * Generating spectrogram...sox spectrogram: only 1 channel is
+ * supported
+mv: cannot stat `spectrogram.png': No such file or directory
+OK!
+
+
+må lage et script som sjekker antall channels, så putte det i
+spectrogram scriptet.
+

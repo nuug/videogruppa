@@ -11,5 +11,8 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-echo "Generating audio statistics for $1..."
+./require sox
+
+echo -n " * Generating audio statistics for $1..."
 sox $1 -n stat
+echo -e "OK!"

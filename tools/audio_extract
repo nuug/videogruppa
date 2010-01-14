@@ -15,6 +15,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
+./require ffmpeg
 #if [ "$FORMAT" == "pcm_s16le" ]; then
 #	FORMAT="wav"
 #fi

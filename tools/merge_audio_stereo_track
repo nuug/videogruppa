@@ -15,19 +15,9 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-echo "Processing $1:"
-
-echo -n " * Extracting audio..."
-./extract_audio $1
-echo -e "OK"
-
-echo -n " * Splitting up audio..."
+./audio_extract $1
 ./split_audio $NAME.$AFORMAT
-echo -e "OK"
+#./merge_av $NAME-new.$AFORMAT $1
 
-echo -n " * Merging new audio with video..."
-./merge_av $NAME-new.$AFORMAT $1
-echo -e "OK"
-
-rm $1 $NAME.$AFORMAT $NAME-new.$AFORMAT
-mv $NAME-new.$EXT $1
+#rm $1 $NAME.$AFORMAT $NAME-new.$AFORMAT
+#mv $NAME-new.$EXT $1

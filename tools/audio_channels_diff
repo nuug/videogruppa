@@ -18,10 +18,10 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-echo "Checking $1 audio channels..."
+echo " * Checking $1 for different audio channels:"
 
 if [ ! -f "$NAME.$FORMAT" ]; then
-	echo "File $NAME.$FORMAT does not exists."
+	echo " * File $NAME.$FORMAT does not exists:"
 	./audio_extract $1 0 60 # øke til feks 2?
 fi
 
@@ -34,11 +34,11 @@ LEFT=`grep Mean $NAME-left.stat | md5sum`
 RIGHT=`grep Mean $NAME-right.stat | md5sum`
 
 if [ "$LEFT" == "$RIGHT" ]; then
-	echo "Audio channels is equal."
+	echo " * Audio channels is equal!"
 	rm $NAME.$FORMAT $NAME-left* $NAME-right*
 	exit
 else
-	echo "Audio channels is not equal."
+	echo " * Audio channels is not equal!"
 	rm $NAME.$FORMAT $NAME-left* $NAME-right*
 	exit 3
 fi

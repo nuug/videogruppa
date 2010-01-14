@@ -19,7 +19,23 @@ fi
 #sox $1 -c 1 left.wav mixer -l 2> /dev/null
 #sox $1 -c 1 right.wav mixer -r 2> /dev/null
 ./audio_split $1
-sox -m $NAME-left.wav $NAME-right.wav mono.wav 2> /dev/null
-sox mono.wav -c 2 stereo.wav 2> /dev/null
-ffmpeg -i stereo.wav -acodec $EXT -ab "$BITRATE"k $NAME-new.$EXT 2> /dev/null
-rm $NAME-left.wav $NAME-right.wav mono.wav stereo.wav
+
+echo -n " * Merging channels to mono..."
+sox -m $NAME-left.wav $NAME-right.wav $NAME-mono.wav
+# 2> /dev/null
+echo -e "OK!"
+
+echo -n " * Creating two-channel-stereo from mono..."
+sox $NAME-mono.wav -c 2 $NAME-stereo.wav
+# 2> /dev/null
+echo -e "OK!"
+
+echo -n " * Encoding to format: $EXT with bitrate $BITRATE
+k)..."
+ffmpeg -i $NAME-stereo.wav -acodec $EXT -ab "$BITRATE"k $NAME-new.$EXT 
+#2> /dev/null
+echo -e "OK!"
+
+echo -n " * Removing temp. sound files..."
+#rm $NAME-left.wav $NAME-right.wav $NAME-mono.wav $NAME-stereo.wav
+echo -e "OK!"

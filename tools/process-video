@@ -22,11 +22,11 @@ if [ "${?}" == "1" ] ; then
 	exit 1
 fi
 
-##./audio_channels_diff $1
-##if [ "${?}" == "3" ] ; then
-##	echo "should run ./merge_audio_stereo_track $1...neh.."
+./audio_channels_diff $1
+if [ "${?}" == "3" ] ; then
+#	echo "should run ./merge_audio_stereo_track $1...neh.."
 #	#./merge_audio_stereo_track $1
-##fi
+fi
 
 
 ## ./audio_check_silence

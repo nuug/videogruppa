@@ -1,0 +1,16 @@
+#!/bin/bash
+
+FILES="*.ogv"
+for f in $FILES
+do
+#	echo "Processing $f file..."
+#	NAME=`./csv wpa.csv $f name`
+#	if [ -n "$NAME" ] ; then
+#		./process-video $f wpa.csv
+echo "$f:"
+		./metadata $f wpa.csv
+#		echo "good file"
+#	else
+#		echo "bad file"
+#	fi
+done

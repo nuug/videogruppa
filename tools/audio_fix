@@ -1,0 +1,21 @@
+#!/bin/bash
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+NAME=`basename $1 .$EXT`
+FORMAT=`./audio_format $1`
+
+./audio_extract $1
+#./audio_spectrogram $NAME.wav
+mv $NAME.png $NAME-old.png
+./audio_check_volume $NAME.wav
+VOLUME=`cat $NAME.wav.vol`
+./audio_gain_volume $NAME.wav $VOLUME
+./audio_check_noise $NAME.wav
+./audio_remove_noise $NAME.wav
+#./audio_spectrogram $NAME.wav
+
+echo -n " * Cleaning up audio-stasj..."
+rm $NAME-old.wav $NAME.wav.vol $NAME.noise-profile
+echo -e "OK!"
+
+./merge_av $NAME.wav $1

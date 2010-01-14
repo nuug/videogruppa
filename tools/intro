@@ -23,7 +23,7 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
-echo "Generating intro-video from $2 for $1..."
+echo -n " * Generating intro-video..."
 
 # LOGO
 ./image_logo $1 intro-$COUNT white $LOGO
@@ -50,3 +50,5 @@ rm $BASENAME-intro-$COUNT.png
 
 ./image2video $1 intro
 rm $BASENAME-intro-*.png
+
+echo -e "OK!"

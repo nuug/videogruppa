@@ -20,7 +20,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-echo "Generating outro-video from $2 for $1..."
+echo -n " * Generating outro-video..."
 
 ./image_text $1 outro-$COUNT black "TAKK TIL"
 ./fade $BASENAME-outro-$COUNT.png 3 black
@@ -65,3 +65,5 @@ done
 
 ./image2video $1 outro
 rm $BASENAME-outro*.png
+
+echo -e "OK!"

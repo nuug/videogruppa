@@ -31,6 +31,7 @@ my $location;
 my $genre;
 my $license;
 my $organization;
+my $language;
 my $contact;
 my @takk;
 my @url;
@@ -69,6 +70,8 @@ while (<CSV>) {
 						$organization=$index;
 					} elsif ($_ eq "Contact") {
 						$contact=$index;
+                                        } elsif ($_ eq "Language") {
+                                                $language=$index;
 					} elsif ($_ eq "Takk") {
 						push(@takk, $index); 
 					} elsif ($_ eq "URL") {
@@ -78,7 +81,8 @@ while (<CSV>) {
 				}
 		}
 
-		next if ($.	 == 1);
+		next if ($. == 1);
+#print "# $. \n\n";
 
 		if ($video eq $columns[0]) {
 			if ($info eq "filename") {
@@ -103,6 +107,8 @@ while (<CSV>) {
 				print "$columns[$organization]";
 			}  elsif ($info eq "contact") {
 				print "$columns[$contact]";
+                        }  elsif ($info eq "language") {
+                                print "$columns[$language]";
 			} elsif ($info eq "takk") {
 				foreach (@takk) {
 					my $takk = $columns[$_];
@@ -118,9 +124,10 @@ while (<CSV>) {
 			} else {
 				print "$info column doesn't exist\n";
 			}
-		} else {
-			print "$info row doesn't exist\n";
-		}
+
+		}# else {
+		#	print "$info row doesn't exist\n";
+		#}
 	} else {
 		my $err = $csv->error_input;
 		print "Failed to parse line #$..: $err";

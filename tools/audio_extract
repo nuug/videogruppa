@@ -19,7 +19,7 @@ fi
 #	FORMAT="wav"
 #fi
 
-echo "Extracting $NAME.$FORMAT..."
+echo -n " * Extracting audio ($FORMAT)..."
 
 if [ "$3" ]; then
 	#DURATION="30" #`./duration$1`
@@ -29,3 +29,5 @@ if [ "$3" ]; then
 else
 	ffmpeg -i $1 -vn -acodec copy $NAME.$FORMAT 2> /dev/null
 fi
+
+echo -e "OK!"

@@ -3,7 +3,11 @@
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 NAME=`basename $1 .$EXT`
 
-if [ -z "$2" ]; then
-	echo "Usage: $0 <video-file> <csv-file>"
+if [ -z "$1" ]; then
+	echo "Usage: $0 <wav-file>"
 	exit 1
 fi
+
+echo -n " * Checking volume levels..."
+sox $1 -n stat -v 2> $1.vol
+echo -e "OK!"

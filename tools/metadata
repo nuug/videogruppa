@@ -8,7 +8,6 @@
 
 # todo: fiks csv ext.. kan ikke være hardkodet..
 # video og lyd, blir dobbelt av comments.. ikke bra - hvis funker, split opp if-ene!!!
-# mangler i vlc: Language, Publisher
 # utf8- øæå funker dårlig
 
 EXT=`echo "$1"|awk -F . '{print $NF}'`
@@ -23,6 +22,7 @@ NAME=`./csv $2 $BASENAME.dv name`
 LICENSE=`./csv $2 $BASENAME.dv license`
 ORGANIZATION=`./csv $2 $BASENAME.dv organization`
 CONTACT=`./csv $2 $BASENAME.dv contact`
+LANGUAGE=`./csv $2 $BASENAME.dv language`
 
 if [ -z "$1" ]; then
 	echo "Usage: $0 <video/audio-file> [<csv-file>]"
@@ -34,8 +34,23 @@ fi
 
 if [ $EXT == "ogg" ] || [ $EXT == "ogv" ]; then
 	if [ "$2" ]; then
-		echo "Writing metadata to $1..."
-		oggz-comment $1 -o $BASENAME-comment.$EXT --content-type theora\
+
+		mv $1 $BASENAME-old.$EXT
+
+if [ $LICENSE == "cc-by-sa-3.0-no" ]; then
+	LICENSE="http://creativecommons.org/licenses/by-sa/3.0/no/"
+fi
+
+if [ $LANGUAGE == "no" ]; then
+	LANGUAGE="Norsk"
+fi
+
+if [ $LANGUAGE == "en" ]; then
+	LANGUAGE="Engelsk"
+fi
+
+		echo -n " * Writing Ogg metadata..."
+		oggz-comment $BASENAME-old.$EXT -o $1 --content-type theora\
 			TITLE="$TITLE" \
 			ALBUM="$WHAT" \
 			ARTIST="$NAME" \
@@ -46,8 +61,11 @@ if [ $EXT == "ogg" ] || [ $EXT == "ogv" ]; then
 			GENRE="$GENRE" \
 			DATE="$DATE" \
 			LOCATION="$LOCATION" \
-			CONTACT="$CONTACT" 
+			CONTACT="$CONTACT" \
+			LANGUAGE="$LANGUAGE" \
+			PUBLISHER="$ORGANIZATION" 
 
+		echo -e "OK!"
 # rm, mv
 
 	else

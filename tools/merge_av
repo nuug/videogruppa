@@ -14,4 +14,7 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
-ffmpeg -i $1 -i $2 -map 1:0 -map 0:0 -acodec copy -vcodec copy $NAME-new.$EXT 2> /dev/null
+echo -n " * Merging new audio with video..."
+mv $2 $NAME-old.$EXT
+ffmpeg -i $1 -i $NAME-old.$EXT -map 1:0 -map 0:0 -acodec copy -vcodec copy $2 2> /dev/null
+echo -e "OK!"

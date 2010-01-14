@@ -15,45 +15,57 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
-echo "Processing video $1 with info from $2..."
+echo "Processing video $1 with info from $2:"
 
-#./check_diskspace $1
-#if [ "${?}" == "1" ] ; then
-#	exit 1
-#fi
+./check_diskspace $1
+if [ "${?}" == "1" ] ; then
+	exit 1
+fi
 
-#./audio_channels_diff $1
-#if [ "${?}" == "3" ] ; then
-#	echo "should run ./merge_audio_stereo_track $1...neh.."
-	#./merge_audio_stereo_track $1
-#fi
+##./audio_channels_diff $1
+##if [ "${?}" == "3" ] ; then
+##	echo "should run ./merge_audio_stereo_track $1...neh.."
+#	#./merge_audio_stereo_track $1
+##fi
 
 
-# ./audio_check_silence
+## ./audio_check_silence
 
-# ./audio_check_noise $1
-	# if x do ./audio_remove_noise
+./audio_extract $1
+##./audio_spectrogram $NAME.wav
+##mv $NAME.png $NAME-old.png
+./audio_check_volume $NAME.wav
+VOLUME=`cat $NAME.wav.vol`
+./audio_gain_volume $NAME.wav $VOLUME
+./audio_check_noise $NAME.wav
+./audio_remove_noise $NAME.wav
+##./audio_spectrogram $NAME.wav
+./merge_av $NAME.wav $1
 
-# bytte plass? ^ v
+echo -n " * Cleaning up temp. audio-files..."
+rm $NAME.wav $NAME-old.wav $NAME.wav.vol $NAME.noise-profile
+echo -e "OK!"
 
-# ./audio_check_volume $1
-	# if x do ./audio_gain_volume
+#### Denn maa inn igjen ####
+rm $NAME-old.dv
+####
 
-# mv fade video/image_fade
-# ./audio_fade
+## mv fade video/image_fade
+## ./audio_fade
 
-#./intro $1 $2
-#./outro $1 $2
-#./join_video $NAME-new.$EXT $NAME-intro.$EXT $1 $NAME-outro.$EXT
-#rm $NAME-intro.$EXT $NAME-outro.$EXT
+./intro $1 $2
+./outro $1 $2
+mv $1 $NAME-temp.$EXT
+./join_video $NAME.$EXT $NAME-intro.$EXT $NAME-temp.$EXT $NAME-outro.$EXT
+rm $NAME-intro.$EXT $NAME-outro.$EXT $NAME-temp.dv 
 
-#echo "Backing up $1 to $NAME-old.$EXT..."
-#mv $1 $NAME-old.$EXT
-#mv $NAME-new.$EXT $1
+##echo "Backing up $1 to $NAME-old.$EXT..."
+##mv $1 $NAME-old.$EXT
+##mv $NAME-new.$EXT $1
 
 ./convert2theora $1
+rm $NAME.ogv-compresslog
 ./metadata $NAME.ogv $2
 
-./convert2vorbis $1
-./metadata $NAME.ogg $2
-
+##./convert2vorbis $1
+##./metadata $NAME.ogg $2

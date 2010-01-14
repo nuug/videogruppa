@@ -14,5 +14,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
+echo -n " * Generating spectrogram..."
 sox $1 -n spectrogram
 mv spectrogram.png $NAME.png
+echo -e "OK!"

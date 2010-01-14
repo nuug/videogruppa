@@ -3,7 +3,16 @@
 EXT=`echo "$1"|awk -F . '{print $NF}'`
 NAME=`basename $1 .$EXT`
 
-if [ -z "$2" ]; then
-	echo "Usage: $0 <video-file> <csv-file>"
+if [ -z "$1" ]; then
+	echo "Usage: $0 <wav-file>"
 	exit 1
+fi
+
+if [ $EXT == "wav" ] ; then
+	echo -n " * Generating noise-profile..."
+#	sox $1 -n trim 0 1.5 noiseprof $NAME.noise-profile
+	sox $1 -n noiseprof $NAME.noise-profile
+	echo -e "OK"
+else
+	echo "Error: need .wav"
 fi

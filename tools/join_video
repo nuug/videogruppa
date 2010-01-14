@@ -25,9 +25,14 @@ unset array[0]
 
 # todo: Concatenating works with MPEG-1, MPEG-2 PS and DV
 if [ $EXT == "dv" ] ; then
-echo "Joining video-files using cat..."
+echo -n " * Joining video-files using cat..."
 	cat ${array[*]} > $1
 else
-echo "Joining video-files using mencoder.."
-	mencoder -oac copy -ovc copy -idx -o ${array[*]}
+echo -n " * Joining video-files using mencoder..."
+	mencoder -oac copy -ovc copy -idx -o $1 ${array[*]} > "$BASENAME.log" 2>&1
 fi
+rm $BASENAME.log
+echo -e "OK!"
+
+# mencoder må hyssje!
+# -quiet

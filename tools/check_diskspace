@@ -14,9 +14,11 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-echo "Checking for enough disk space to continue..."
+echo -n " * Checking for enough disk space to continue..."
 
 if [ $DISK -le $FILE ]; then
 	echo "Error: Not enough disk space to continue! Aborting."
 	exit 1
 fi
+
+echo -e "OK!"

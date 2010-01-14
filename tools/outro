@@ -56,6 +56,7 @@ for i in $URL ; do
 	./image_text $1 outro-$COUNT black " "
 	./fade $BASENAME-outro-$COUNT.png 1 black
 	rm $BASENAME-outro-$COUNT.png
+	COUNT=`expr $COUNT + 1`
 
 	./image_text $1 outro-$COUNT black "$i"
 	./fade $BASENAME-outro-$COUNT.png 2 black

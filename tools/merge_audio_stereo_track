@@ -17,7 +17,9 @@ fi
 
 ./audio_extract $1
 ./split_audio $NAME.$AFORMAT
-#./merge_av $NAME-new.$AFORMAT $1
+./merge_av $NAME.$AFORMAT $1
+
+rm $NAME.$AFORMAT
 
 #rm $1 $NAME.$AFORMAT $NAME-new.$AFORMAT
 #mv $NAME-new.$EXT $1

@@ -25,7 +25,7 @@ fi
 ./audio_channels_diff $1
 if [ "${?}" == "3" ] ; then
 #	echo "should run ./merge_audio_stereo_track $1...neh.."
-#	#./merge_audio_stereo_track $1
+	./merge_audio_stereo_track $1
 fi
 
 
@@ -63,9 +63,11 @@ rm $NAME-intro.$EXT $NAME-outro.$EXT $NAME-temp.dv
 ##mv $1 $NAME-old.$EXT
 ##mv $NAME-new.$EXT $1
 
-./convert2theora $1
-rm $NAME.ogv-compresslog
-./metadata $NAME.ogv $2
+#./convert2theora $1
+#rm $NAME.ogv-compresslog
+#./metadata $NAME.ogv $2
 
 ##./convert2vorbis $1
 ##./metadata $NAME.ogg $2
+
+scp $1 oklien@nerdhaven.nuug.no:/data/video/raw/

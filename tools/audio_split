@@ -14,7 +14,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-./require sox
+./require sox || { exit 1; }
 # sox FAIL formats: can't open output file `1-left.mp2': SoX was compiled without MP3 encoding support
 # kan ikke encode til mp{2,3}...
 

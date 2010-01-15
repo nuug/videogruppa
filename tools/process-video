@@ -24,7 +24,6 @@ fi
 
 ./audio_channels_diff $1
 if [ "${?}" == "3" ] ; then
-#	echo "should run ./merge_audio_stereo_track $1...neh.."
 	./merge_audio_stereo_track $1
 fi
 
@@ -37,8 +36,8 @@ fi
 ./audio_check_volume $NAME.wav
 VOLUME=`cat $NAME.wav.vol`
 ./audio_gain_volume $NAME.wav $VOLUME
-./audio_check_noise $NAME.wav
-./audio_remove_noise $NAME.wav
+#./audio_check_noise $NAME.wav
+#./audio_remove_noise $NAME.wav
 ##./audio_spectrogram $NAME.wav
 ./merge_av $NAME.wav $1
 
@@ -47,7 +46,7 @@ rm $NAME.wav $NAME-old.wav $NAME.wav.vol $NAME.noise-profile
 echo -e "OK!"
 
 #### Denn maa inn igjen ####
-rm $NAME-old.dv
+#rm $NAME-old.dv
 ####
 
 ## mv fade video/image_fade
@@ -70,4 +69,4 @@ rm $NAME-intro.$EXT $NAME-outro.$EXT $NAME-temp.dv
 ##./convert2vorbis $1
 ##./metadata $NAME.ogg $2
 
-scp $1 oklien@nerdhaven.nuug.no:/data/video/raw/
+#scp $1 oklien@nerdhaven.nuug.no:/data/video/raw/

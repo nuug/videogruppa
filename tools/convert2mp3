@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# Date:    2010-01-15
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Convert the sound from the video to mp3.
+
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+BITRATE="64"
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file> [<audio-quality>]"
+	exit 1
+fi
+
+./require lame || { exit 1; } 
+./audio_extract $1
+
+echo -n " * Generating $BASENAME.mp3 ($BITRATE kbps)..."
+
+if [ "$2" ]; then
+	$BITRATE=$2
+fi
+
+lame -b $BITRATE -a "$BASENAME.wav" "$BASENAME.mp3" > \
+"$BASENAME.mp3-compresslog" 2>&1
+
+echo -e "OK!"

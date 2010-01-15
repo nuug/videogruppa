@@ -17,14 +17,10 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-./require oggenc # vorbis-tools
+./require oggenc || { exit 1; } # vorbis-tools
+./audio_extract $1
 
-if [ ! -f $BASENAME.wav ]; then
-	echo "File $BASENAME.wav does not exists"
-	./audio_extract $1
-fi
-
-echo "Generating $BASENAME.ogg ($BITRATE kbps)..."
+echo -n " * Generating $BASENAME.ogg ($BITRATE kbps)..."
 
 # --downmix
 #Downmix stereo to mono. Only allowed on stereo input.
@@ -36,3 +32,5 @@ fi
 
 oggenc "$BASENAME.wav" --downmix -b $BITRATE \
 	2>&1
+
+echo -e "OK!"

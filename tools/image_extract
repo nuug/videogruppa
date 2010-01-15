@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# Date:    2010-01-15
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Extract thumbnail from video
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+DURATION=`./duration $1`
+OLD_IFS="$IFS"
+IFS=":"
+TIME=( $DURATION )
+IFS="$OLD_IFS"
+TOTAL=`echo "(${TIME[0]} * 3600) + (${TIME[1]} * 60) + ${TIME[2]}" | bc`
+let SECOND=$RANDOM%$TOTAL+1
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+if [ -f $BASENAME.jpg ] ; then
+	echo " * Image thumbnail already exist."
+	exit 1
+fi
+
+echo -n " * Extracting image thumbnail from video (frame $SECOND s)..."
+ffmpeg  -itsoffset -$SECOND  -i $1 -vcodec mjpeg -vframes 1 -an -f rawvideo -s 320x240 $BASENAME.jpg \
+> "$BASENAME.jpg-compresslog" 2>&1
+echo -e "OK!"

@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Date:    2010-01-17
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Convert the video to x264.
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+./require mencoder || { exit 1; }
+
+# todo: pass på å behold 4:3/16:9 i x:y..
+
+if [ ! -f "${BASENAME}_x264.avi" ] ; then
+	echo -n " * Convertering video to x264..."
+	mencoder -ovc x264 -x264encopts \
+	subq=6:8x8dct:frameref=5:bframes=3:b_pyramid:weight_b:pass=1:bitrate=512 \
+	-lameopts br=64 -oac mp3lame -o "${BASENAME}_x264.avi" "$1" > "${BASENAME}_x264.avi-compresslog" 2>&1	
+	echo -e "OK!"
+else
+	echo "$BASENAME_x264.avi allready exist!"
+	exit 1
+fi

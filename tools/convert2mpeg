@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Date:    2010-01-17
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Convert the video to MPEG.
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+./require ffmpeg || { exit 1; }
+
+# todo: pass på å behold 4:3/16:9 i x:y..
+
+if [ ! -f "$BASENAME.mpeg" ] ; then
+	echo -n " * Convertering video to MPEG..."
+	ffmpeg -i "$1" -vcodec mpeg1video -s 384x288 -b 240000 -g 96 \
+	-ab 64000 -ac 1 -ar 32000 "$BASENAME.mpeg"  > "$BASENAME.mpeg-compresslog" 2>&1
+	echo -e "OK!"
+else
+	echo "$BASENAME.mpeg allready exist!"
+	exit 1
+fi

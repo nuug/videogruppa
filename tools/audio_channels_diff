@@ -20,11 +20,7 @@ fi
 
 echo " * Checking $1 for different audio channels:"
 
-if [ ! -f "$NAME.$FORMAT" ]; then
-	echo " * File $NAME.$FORMAT does not exists:"
-	./audio_extract $1 0 60 # øke til feks 2?
-fi
-
+./audio_extract $1 0 60 # øke til feks 2?
 ./audio_split $NAME.$FORMAT
 ./audio_stats $NAME-left.wav &> $NAME-left.stat
 ./audio_stats $NAME-right.wav &> $NAME-right.stat

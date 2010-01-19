@@ -20,7 +20,7 @@ fi
 ./require oggenc || { exit 1; } # vorbis-tools
 ./audio_extract $1
 
-echo -n " * Generating $BASENAME.ogg ($BITRATE kbps)..."
+echo -n " * Converting audio to Ogg Vorbis ($BITRATE kbps)..."
 
 # --downmix
 #Downmix stereo to mono. Only allowed on stereo input.
@@ -30,7 +30,7 @@ if [ "$2" ]; then
 	$BITRATE=$2
 fi
 
-oggenc "$BASENAME.wav" --downmix -b $BITRATE \
-	2>&1
+oggenc "$BASENAME.wav" --downmix -b $BITRATE > "$BASENAME.ogg-compresslog" 2>&1
+#	2>&1
 
 echo -e "OK!"

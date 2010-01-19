@@ -21,8 +21,8 @@ fi
 #	FORMAT="wav"
 #fi
 
-if [ ! -f $BASENAME.wav ]; then
-	echo " * File $BASENAME.wav does not exists:"
+if [ ! -f $NAME.wav ]; then
+	echo " * File $NAME.wav does not exists:"
 	echo -n " * Extracting audio ($FORMAT)..."
 
 	if [ "$3" ]; then
@@ -36,5 +36,5 @@ if [ ! -f $BASENAME.wav ]; then
 
 	echo -e "OK!"
 else
-	echo " * File $BASENAME.wav already exists."
+	echo " * File $NAME.wav already exists."
 fi

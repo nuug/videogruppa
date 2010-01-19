@@ -25,11 +25,14 @@ fi
 # todo: pass på å behold 4:3/16:9 i x:y..
 
 if [ ! -f "$BASENAME.ogv" ] ; then
-	echo -n " * Convertering video to Ogg Theora (video quality: $VIDEOQUALITY - audio quality: $AUDIOQUALITY)..."
-	ffmpeg2theora $1 -o $BASENAME.ogv \
-			--videoquality $VIDEOQUALITY --audioquality $AUDIOQUALITY \
-			> "$BASENAME.ogv-compresslog" 2>&1
+#	echo -n " * Convertering video to Ogg Theora (video quality: $VIDEOQUALITY - audio quality: $AUDIOQUALITY)..."
+#	ffmpeg2theora $1 -o $BASENAME.ogv \
+#			--videoquality $VIDEOQUALITY --audioquality $AUDIOQUALITY \
+#			> "$BASENAME.ogv-compresslog" 2>&1
 	#		--width 384 --height 288
+
+	echo -n " * Convertering video to Ogg Theora..."
+	ffmpeg2theora --width 384 --height 288 -o "$BASENAME.ogv" "$1" > "$BASENAME.ogv-compresslog" 2>&1
 	echo -e "OK!"
 else
 	echo "$BASENAME.ogv allready exist!"

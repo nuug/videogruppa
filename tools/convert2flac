@@ -17,16 +17,18 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-./require lame || { exit 1; } 
+./require speex || { exit 1; } 
 ./audio_extract $1
 
-echo -n " * Convertering audio to mp3 ($BITRATE kbps)..."
+echo -n " * Generating $BASENAME.spx ($BITRATE kbps)..."
 
 if [ "$2" ]; then
 	$BITRATE=$2
 fi
 
-lame -b $BITRATE -a "$BASENAME.wav" "$BASENAME.mp3" > \
+speexenc $1 
+ -b $BITRATE -a "$BASENAME.wav" "$BASENAME.mp3" > \
 "$BASENAME.mp3-compresslog" 2>&1
+
 
 echo -e "OK!"

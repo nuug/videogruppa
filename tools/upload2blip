@@ -1,0 +1,20 @@
+#!/bin/bash
+# todo: maks 1gb og riktige formater!
+# bruk REST-api i steden for ftp!
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+USERNAME=`grep username blip|awk '{print $3}'`
+PASSWORD=`grep password blip|awk '{print $3}'`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <filename>"
+	exit 1
+fi
+
+./require curl || { exit 1; } 
+
+echo -n " * Uploading $1 to blip.tv..."
+curl -T $1 --silent --user $USERNAME:$PASSWORD ftp://ftp.blip.tv/
+echo -e "OK!"

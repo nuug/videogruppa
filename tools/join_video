@@ -28,10 +28,11 @@ if [ $EXT == "dv" ] ; then
 echo -n " * Joining video-files using cat..."
 	cat ${array[*]} > $1
 else
+# elsif ext hdv video - m2t
 echo -n " * Joining video-files using mencoder..."
-	mencoder -oac copy -ovc copy -idx -o $1 ${array[*]} > "$BASENAME.log" 2>&1
+	mencoder -oac copy -ovc copy -idx -o $1 ${array[*]} > "$NAME.log" 2>&1
+	#rm $NAME.log
 fi
-rm $BASENAME.log
 echo -e "OK!"
 
 # mencoder må hyssje!

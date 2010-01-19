@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Date:    2010-01-17
+# Author:  Ole Kristian Lien
+# License: GNU General Public License
+#
+# Convert the video to ipod video.
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <video-file>"
+	exit 1
+fi
+
+./require ffmpeg || { exit 1; }
+
+# todo: pass på å behold 4:3/16:9 i x:y..
+
+if [ ! -f "${BASENAME}_ipod.mov" ] ; then
+	echo -n " * Convertering video to iPod video..."
+#	ffmpeg -i "$1" -f mp4 -vcodec mpeg4 -maxrate 1000k -b 700k -qmin 3 -qmax 5 \
+#	-bufsize 4096k -g 300 -acodec libfaac -ab 192k -s 320x240 -aspect 4:3 "${BASENAME}_ipod.mov" > "${BASENAME}_ipod.mov-compresslog" 2>&1
+
+#ffmpeg -i $1 -f mp4 -b 1800 -maxrate 2500 \
+#	-vcodec mpeg4 -qmin 3 -qmax 5 -s 320x240 \
+#	-acodec aac -ab 128 \
+
+ffmpeg -i $1 -f mp4 -vcodec mpeg4 -maxrate 1000k -b 700k -qmin 3 -qmax 5 -bufsize 4096 -g 300 -acodec libfaac -ab 192k -s 320x240 -aspect 4:3 \
+	"${BASENAME}_ipod.mov" > "${BASENAME}_ipod.mov-compresslog" 2>&1
+
+else
+	echo "$BASENAME_ipod.mov allready exist!"
+	exit 1
+fi

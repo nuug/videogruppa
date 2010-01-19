@@ -29,28 +29,39 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-./require oggz-comment #oggz-tools
+./require oggz-comment || { exit 1; } #oggz-tools
+./require id3tool || { exit 1; }
 #./require vorbiscomment #vorbis-tools
 
-if [ $EXT == "ogg" ] || [ $EXT == "ogv" ]; then
+if [ $EXT == "ogg" ] || [ $EXT == "ogv" ] || [ $EXT == "spx" ] || [ $EXT == "flac" ]; then
 	if [ "$2" ]; then
 
 		mv $1 $BASENAME-old.$EXT
 
-if [ $LICENSE == "cc-by-sa-3.0-no" ]; then
-	LICENSE="http://creativecommons.org/licenses/by-sa/3.0/no/"
-fi
+		if [ $LICENSE == "cc-by-sa-3.0-no" ]; then
+			LICENSE="http://creativecommons.org/licenses/by-sa/3.0/no/"
+		fi
 
-if [ $LANGUAGE == "no" ]; then
-	LANGUAGE="Norsk"
-fi
+		if [ $LANGUAGE == "no" ]; then
+			LANGUAGE="Norsk"
+		fi
 
-if [ $LANGUAGE == "en" ]; then
-	LANGUAGE="Engelsk"
-fi
+		if [ $LANGUAGE == "en" ]; then
+			LANGUAGE="Engelsk"
+		fi
 
-		echo -n " * Writing Ogg metadata..."
-		oggz-comment $BASENAME-old.$EXT -o $1 --content-type theora\
+		if [ $EXT == "ogg" ]; then
+			CONTENT="vorbis"
+		elif [ $EXT == "ogv" ]; then
+			CONTENT="theora"
+		elif [ $EXT == "spx" ]; then
+			CONTENT="speex"
+		elif [ $EXT == "flac" ]; then
+			CONTENT="flac"
+		fi
+
+		echo -n " * Writing Ogg ($CONTENT) metadata..."
+		oggz-comment $BASENAME-old.$EXT -o $1 --content-type $CONTENT \
 			TITLE="$TITLE" \
 			ALBUM="$WHAT" \
 			ARTIST="$NAME" \
@@ -71,6 +82,33 @@ fi
 	else
 		oggz-comment -l $1
 	fi
+
+
+elif [ $EXT == "mp3" ]; then
+        if [ "$2" ]; then
+		YEAR=`echo $DATE| cut -c1-4`
+
+# notes feltet er for kort..
+#		if [ $LICENSE == "cc-by-sa-3.0-no" ]; then
+#		        LICENSE="http://creativecommons.org/licenses/by-sa/3.0/no/"
+#		fi
+
+		echo -n " * Writing mp3 (ID3) metadata..."
+		cp $1 $BASENAME-old.$EXT
+
+		id3tool $1 \
+			--set-title="$TITLE" \
+			--set-album="$WHAT" \
+			--set-artist="$NAME" \
+			--set-year="$YEAR" \
+			--set-note="$LICENSE" \
+			--set-genre-word="Speech"
+
+		echo -e "OK!"
+	else
+		id3tool $1
+	fi
+
 else
 	echo "File format is not supported yet."
 fi

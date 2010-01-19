@@ -42,12 +42,8 @@ VOLUME=`cat $NAME.wav.vol`
 ./merge_av $NAME.wav $1
 
 echo -n " * Cleaning up temp. audio-files..."
-rm $NAME.wav $NAME-old.wav $NAME.wav.vol $NAME.noise-profile
+rm $NAME.wav $NAME-old.wav $NAME.wav.vol # $NAME.noise-profile
 echo -e "OK!"
-
-#### Denn maa inn igjen ####
-#rm $NAME-old.dv
-####
 
 ## mv fade video/image_fade
 ## ./audio_fade
@@ -58,15 +54,35 @@ mv $1 $NAME-temp.$EXT
 ./join_video $NAME.$EXT $NAME-intro.$EXT $NAME-temp.$EXT $NAME-outro.$EXT
 rm $NAME-intro.$EXT $NAME-outro.$EXT $NAME-temp.dv 
 
-##echo "Backing up $1 to $NAME-old.$EXT..."
-##mv $1 $NAME-old.$EXT
-##mv $NAME-new.$EXT $1
-
-#./convert2theora $1
+/convert2theora $1
 #rm $NAME.ogv-compresslog
-#./metadata $NAME.ogv $2
+./metadata $NAME.ogv $2
 
-##./convert2vorbis $1
-##./metadata $NAME.ogg $2
+./convert2vorbis $NAME-old.$EXT
+mv $NAME-old.ogg $NAME.ogg
+./metadata $NAME.ogg $2
+
+./convert2mp3 $NAME-old.$EXT
+mv $NAME-old.mp3 $NAME.mp3
+./metadata $NAME.mp3 $2
+
+./convert2mpeg $1
+#./convert2ipod $1 # ubuntu har deaktivert ffmpeg sin libfaac støtte.
+./convert2x264 $1
+
+./image_extract $1
+
+echo -n " * Cleaing up temp. files..."
+rm $NAME-old.ogv  $NAME-old.wav $NAME-old.ogg $NAME-old.mp3
+rm $NAME*-compresslog
+echo -e "OK!"
+
+
+./upload2nerdhaven $NAME-thumb.jpeg
+./upload2nerdhaven $NAME.jpeg
+./upload2nerdhaven $NAME.mp3
+./upload2nerdhaven $NAME.ogg
+./upload2nerdhaven $NAME.mpeg
+./upload2nerdhaven $NAME.ogv
 
 #scp $1 oklien@nerdhaven.nuug.no:/data/video/raw/

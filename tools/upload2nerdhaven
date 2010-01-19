@@ -1,0 +1,19 @@
+#!/bin/bash
+
+EXT=`echo "$1"|awk -F . '{print $NF}'`
+BASENAME=`basename $1 .$EXT`
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <filename> [<new-filename>]"
+	exit 1
+fi
+
+echo -n " * Uploading $1 to nerdhaven..."
+
+if [ $EXT == "dv" ]; then
+	scp -q $1 nerdhaven.nuug.no:/data/video/raw/$2
+else
+	scp -q $1 nerdhaven.nuug.no:/data/video/published/$2
+fi
+
+echo -e "OK!"

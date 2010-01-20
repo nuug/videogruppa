@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/opt/local/bin/perl
 #
 # Author: Petter Reinholdtsen
 # Date: 2009-10-15
@@ -22,7 +22,8 @@
 #  ttf-liberation
 
 # TrueType font name/path used by GD to draw text
-my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
+#my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
+my $gdfont = "./fonts/LiberationSans-Regular.ttf";
 
 # Set to 0 if VLC should not play in full screen mode
 my $fullscreen = 1;
@@ -228,8 +229,7 @@ sub generate_program {
     my $left = 0;
     my $futurelines = 9;
     $im->fill(50,50,$white);
-    my @bounds =
-        $im->stringFT($black,$gdfont,$fontsize*2,$left,30,50,"Frikanalen");
+    my @bounds = $im->stringFT($black,$gdfont,$fontsize*2,$left,30,50,"Frikanalen");
 
     $bounds[1] += 80; # Move rest of the text down on the screen
 
@@ -252,44 +252,26 @@ sub generate_program {
 
             my $infostring = "$datestring";
             print "  $infostring\n";
-            @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,
-                                    90, $bounds[1] + $fontsize * 2, "$infostring");
+            @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,90, $bounds[1] + $fontsize * 2, "$infostring");
             $date = $datestring;
         }
         my $infostring = "$startstring-$stopstring - $title";
         print "  $infostring\n";
-        @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,
-                                100, $bounds[1] + $fontsize * 2, "$infostring");
+        @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100, $bounds[1] + $fontsize * 2, "$infostring");
         $seq++;
     }
 
-    my $png = new File::Temp( UNLINK => 0, SUFFIX => '.png' );
-    if ($png) {
+    my $jpg = new File::Temp( UNLINK => 0, SUFFIX => '.jpg' );
+    if ($jpg) {
         print "Generate pause screen DV ($startseq)\n";
-        print $png $im->png;
-        my $tmppng = $png->filename();
-        close($png);
-
-        my $len = 10 * 25; # 10 seconds in frames (25 frames/second)
-        # use image2raw from package smilutils
-        my $tmpdv = "temp.dv";
-
-        system("image2raw -r $len $tmppng > $tmpdv");
-        my $resultfile;
-        # Generate Ogg Theora or MPEG, VLC do not understand raw DV
-        if (0) {
-            # VLC leak memory when looping over a Ogg Theora file
-            $resultfile = "test.ogv";
-            system("ffmpeg2theora", "--width", "384", "--height", "288",
-                   "-o", $resultfile, $tmpdv);
-        } else {
-            $resultfile = "test.mpeg";
-            unlink($resultfile);
-            system("ffmpeg", "-s", "384x288", "-i", $tmpdv, $resultfile);
-        }
-        unlink $tmppng;
-        unlink $tmpdv;
-        return $resultfile;
+        print $jpg $im->jpeg;
+        my $tmpjpg = $jpg->filename();
+        close($jpg);
+        my $pausevid = "test.mpeg";
+	# Png input is broken in ffmpeg . Jpg works. 
+	unlink($pausevid);
+        system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s 720x576 $pausevid");
+        return $pausevid;
     } else {
         print "Unable to save temporary PNG file\n";
     }
@@ -335,7 +317,7 @@ sub vlc_start {
     } elsif (0 == $pid){
 #    system("vlc", "--extraintf", "telnet", "--telnet-password", "secret");
         my @vlcargs;
-        push(@vlcargs, "--extraintf", "http");
+        push(@vlcargs, "--extraintf=http");
 
         # Icecast server
         my $icecastserver = "voip.nuug.no:8000";
@@ -346,9 +328,14 @@ sub vlc_start {
 #        push(@vlcargs, "--sout='#duplicate{dst=display,dst=\"transcode{vcodec=theo,vb=256,acodec=vorb,ab=64,vfilter=canvas{width=320,height=240,canvas-aspect=4:3}}:standard{mux=ogg,dst=source:$icecastpasswd\@$icecastserver/live.ogv,access=shout}\"}'");
 
         print "starting VLC: vlc ". join(" ", @vlcargs) . "\n";
-        exec(
+        my $os = `uname -s`;
+	chomp($os);
+	if ( $os eq 'Darwin' ) { 
+         exec( "/Applications/VLC.app/Contents/MacOS/VLC", @vlcargs);
+	} else { 
 #           "valgrind", "--leak-check=full",
-            "vlc", @vlcargs);
+         exec( "vlc", @vlcargs);
+	} 
         exit 0;
     } else {
         $vlc->{url} = "http://localhost:8080/";

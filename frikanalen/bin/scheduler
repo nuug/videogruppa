@@ -365,18 +365,19 @@ sub vlc_play {
     push(@cmds, [$vlc->{url} ."requests/status.xml?command=pl_empty", undef]);
     push(@cmds, [$vlc->{url} ."requests/status.xml?command=in_play&input=$file",
                  undef]);
-    if ($loop != $vlc->{loop}) {
-        push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
-                     sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; }]);
-    }
-
     if ($fullscreen != $vlc->{fullscreen}) {
         push(@cmds, [$vlc->{url} . "requests/status.xml?command=fullscreen",
-                     sub { my $vlc = shift; $vlc->{fullscreen} = ! $vlc->{fullscreen}; }]);
+                     sub { my $vlc = shift; $vlc->{fullscreen} = ! $vlc->{fullscreen}; },
+             1]);
+    }
+    if ($loop != $vlc->{loop}) {
+        push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
+                     sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; },
+             1]);
     }
 
     for my $cmdref (@cmds) {
-        my ($url, $postfunc) = @{$cmdref};
+        my ($url, $postfunc, $presleep, $postsleep) = @{$cmdref};
 
         unless (lwp_get($url)) {
             print "Failed to contact VLC, restarting\n";
@@ -386,7 +387,9 @@ sub vlc_play {
             sleep 2; # Give the new one some time to start
             return vlc_play($vlc, $file, $loop);
         } elsif (defined $postfunc) {
+            sleep $presleep if $presleep;
             $postfunc->($vlc, $url);
+            sleep $postsleep if $postsleep;
         }
     }
     sleep(1);

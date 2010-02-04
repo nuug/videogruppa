@@ -79,6 +79,8 @@ for my $url (@{$listref}) {
         # from the @events array.
         if ($event->{'start'} && $event->{'contentId'}) {
 
+#            get_video_meta($event->{'contentId'});
+
 # EPG contentId = fetchvideo.cgi videoId
 # http://www.nuug.no/pub/video/frikanalen/fetchvideo.cgi?videoId=4449
             my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
@@ -268,8 +270,8 @@ sub generate_program {
         my $tmpjpg = $jpg->filename();
         close($jpg);
         my $pausevid = "test.mpeg";
-	# Png input is broken in ffmpeg . Jpg works. 
-	unlink($pausevid);
+        # Png input is broken in ffmpeg . Jpg works.
+        unlink($pausevid);
         system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s 720x576 $pausevid");
         return $pausevid;
     } else {
@@ -329,13 +331,13 @@ sub vlc_start {
 
         print "starting VLC: vlc ". join(" ", @vlcargs) . "\n";
         my $os = `uname -s`;
-	chomp($os);
-	if ( $os eq 'Darwin' ) { 
+        chomp($os);
+        if ( $os eq 'Darwin' ) {
          exec( "/Applications/VLC.app/Contents/MacOS/VLC", @vlcargs);
-	} else { 
+        } else {
 #           "valgrind", "--leak-check=full",
          exec( "vlc", @vlcargs);
-	} 
+        }
         exit 0;
     } else {
         $vlc->{url} = "http://localhost:8080/";
@@ -393,4 +395,40 @@ sub vlc_play {
         }
     }
     sleep(1);
+}
+
+sub get_video_meta {
+    my $id = shift;
+
+    my $soap = new SOAP::Lite
+        -> uri('http://localhost/CommunitySiteService')
+        -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
+
+# Request list of a all avalable metadata for the video with the ID
+# provided as an argument.
+
+    my $obj = $soap->SearchVideos(
+        SOAP::Data->name('searcher' => {
+            'PredefinedSearchType' => 'Default',
+            'MetaDataVideoId' => $id,
+            # Expect only 1 result, but accept more to detect an
+            # error in the API.
+            'Take' => 10,
+                         }
+        )
+        );
+    if ($obj->fault) {
+        print join ', ',
+              $obj->faultcode,
+              $obj->faultstring;
+        return;
+    }
+
+    my $res = $obj->result;
+    my $key = $_[0];
+    my $nuug_video_prefix = 'http://www.nuug.no/pub/video/frikanalen/';
+#    print Dumper($res);
+    foreach my $video ($res->{'Data'}->{'Video'}) {
+        print Dumper($video), "\n";
+    }
 }

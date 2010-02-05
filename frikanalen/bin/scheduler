@@ -22,8 +22,8 @@
 #  ttf-liberation
 
 # TrueType font name/path used by GD to draw text
-#my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
-my $gdfont = "./fonts/LiberationSans-Regular.ttf";
+my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
+#my $gdfont = "./fonts/LiberationSans-Regular.ttf";
 
 # Set to 0 if VLC should not play in full screen mode
 my $fullscreen = 1;

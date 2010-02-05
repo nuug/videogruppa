@@ -27,6 +27,7 @@ my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.tt
 
 # Set to 0 if VLC should not play in full screen mode
 my $fullscreen = 1;
+my $skiptonorecords = 1;
 
 use strict;
 use warnings;
@@ -100,6 +101,12 @@ for my $url (@{$listref}) {
             $event->{'HasTonoRecords'} = $metaref->{'HasTonoRecords'};
             my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
             $event->{'pageurl'} = "$baseurl/fetchvideo.cgi?videoId=$videoId";
+
+            # Should we skip entries with tono records?
+            if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
+                print "info: Skipping event at $start with tono records\n";
+                next;
+            }
 
             my $url = url_exist($event->{'broadcasturl'}) ?
                 $event->{'broadcasturl'} :

@@ -47,9 +47,14 @@ use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 
 my $vlc = vlc_start();
 
+sub vlc_stop {
+    my $pid = $vlc->{pid};
+    print "Killing $pid\n";
+    kill $pid;
+};
+
 # Stop vlc on exit
-$Event::DIED = sub { my $pid = $vlc->{pid};
-                     print "Killing $pid\n"; kill $pid; };
+$Event::DIED = vlc_stop();
 
 #$Event::DebugLevel = 2;
 
@@ -78,25 +83,31 @@ for my $url (@{$listref}) {
         # Why do this test fail to keep entries with no start entry
         # from the @events array.
         if ($event->{'start'} && $event->{'contentId'}) {
-
-#            get_video_meta($event->{'contentId'});
-
 # EPG contentId = fetchvideo.cgi videoId
 # http://www.nuug.no/pub/video/frikanalen/fetchvideo.cgi?videoId=4449
-            my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
             my $videoId = $event->{'contentId'};
-            my $ogvurl = "$baseurl/${videoId}.ogv";
-            $event->{'ogvurl'}  = $ogvurl;
+            my $metaref = get_video_meta($event->{'contentId'});
+            my $title = $event->{'title'};
+
+            unless ($metaref) {
+                print "error: Missing info for id $videoId \"$title\", not scheduling at $start\n";
+                next;
+            }
+
+
+            $event->{'ogvurl'}  = $metaref->{'VideoOgvUri'};
+            $event->{'broadcasturl'}  = $metaref->{'VideoBroadcastUri'};
+            $event->{'HasTonoRecords'} = $metaref->{'HasTonoRecords'};
+            my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
             $event->{'pageurl'} = "$baseurl/fetchvideo.cgi?videoId=$videoId";
 
-            my $ua = new LWP::UserAgent;
-            my $req = new HTTP::Request HEAD => $ogvurl;
-            my $res = $ua->request($req);
-            if ($res->is_success) {
+            my $url = url_exist($event->{'broadcasturl'}) ?
+                $event->{'broadcasturl'} :
+                (url_exist($event->{'ogvurl'}) ? $event->{'ogvurl'} : undef);
+            if ($url) {
                 push @events, $event;
             } else {
-                my $title = $event->{'title'};
-                print "error: Missing $ogvurl ($title), not scheduling at $start\n";
+                print "error: Missing file for id $videoId \"$title\", not scheduling at $start\n";
             }
         } else {
             print "Empty event: ", Dumper($event);
@@ -107,7 +118,7 @@ for my $url (@{$listref}) {
 @events = sort start_order @events;
 my $seq = 0;
 
-# Pause program.  Generate pause screen outside event loop to make
+# Pause program.  Generate first pause screen outside event loop to make
 # sure it start imediately.
 {
     my $now = time();
@@ -147,6 +158,15 @@ while ($seq < scalar @events) {
 Event::loop();
 
 exit 0;
+
+
+sub url_exist {
+    my $url = shift;
+    my $ua = new LWP::UserAgent;
+    my $req = new HTTP::Request HEAD => $url;
+    my $res = $ua->request($req);
+    return $res->is_success;
+}
 
 sub short_time {
     my $timestring = shift;
@@ -370,7 +390,7 @@ sub vlc_play {
     if ($fullscreen != $vlc->{fullscreen}) {
         push(@cmds, [$vlc->{url} . "requests/status.xml?command=fullscreen",
                      sub { my $vlc = shift; $vlc->{fullscreen} = ! $vlc->{fullscreen}; },
-             1]);
+             2]);
     }
     if ($loop != $vlc->{loop}) {
         push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
@@ -425,10 +445,12 @@ sub get_video_meta {
     }
 
     my $res = $obj->result;
-    my $key = $_[0];
-    my $nuug_video_prefix = 'http://www.nuug.no/pub/video/frikanalen/';
 #    print Dumper($res);
+    unless ($res->{'Data'}) {
+        return;
+    }
+
     foreach my $video ($res->{'Data'}->{'Video'}) {
-        print Dumper($video), "\n";
+        return $video;
     }
 }

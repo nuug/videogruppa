@@ -32,6 +32,8 @@ my $skiptonorecords = 1;
 use strict;
 use warnings;
 
+use Getopt::Std;
+
 use XML::Simple;
 use Data::Dumper;
 use LWP::UserAgent;
@@ -44,9 +46,13 @@ use File::Temp;
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 
-#binmode STDOUT, ":utf8";
+use vars qw(%opts %downloadreq);
 
-my $vlc = vlc_start();
+getopts("g", \%opts);
+
+binmode STDOUT, ":utf8";
+
+my $vlc = vlc_start() unless ($opts{'g'});
 
 sub vlc_stop {
     my $pid = $vlc->{pid};
@@ -55,7 +61,7 @@ sub vlc_stop {
 };
 
 # Stop vlc on exit
-$Event::DIED = vlc_stop();
+$Event::DIED = \&vlc_stop;
 
 #$Event::DebugLevel = 2;
 
@@ -104,23 +110,43 @@ for my $url (@{$listref}) {
 
             # Should we skip entries with tono records?
             if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
-                print "info: Skipping event at $start with tono records\n";
+                print "info: Skipping event \"$title\" at $start with tono records\n";
                 next;
             }
 
-            my $url = url_exist($event->{'broadcasturl'}) ?
-                $event->{'broadcasturl'} :
-                (url_exist($event->{'ogvurl'}) ? $event->{'ogvurl'} : undef);
-            if ($url) {
-                push @events, $event;
-            } else {
-                print "error: Missing file for id $videoId \"$title\", not scheduling at $start\n";
+            # Download only
+            if ($opts{'g'}) {
+                $downloadreq{$event->{'broadcasturl'}} = 1;
+                next;
             }
+
+            my $playurl;
+            if (url_exist($event->{'broadcasturl'})) {
+                $playurl = $event->{'broadcasturl'};
+            } else {
+                print "warning: Missing broadcast file for id $videoId\n";
+                if (url_exist($event->{'ogvurl'})) {
+                    print "warning: Missing Ogg Theora file too, not scheduling \"$title\" at $start\n";
+                    next;
+                }
+            }
+            $event->{playurl} = $playurl;
+
+            push @events, $event;
         } else {
-            print "Empty event: ", Dumper($event);
+            print "error: empty event: ", Dumper($event);
         }
     }
 }
+
+if ($opts{'g'}) {
+    for my $url (keys %downloadreq) {
+        print "info: Downloading '$url'\n";
+        system("wget", $url);
+    }
+    exit 0;
+}
+
 
 @events = sort start_order @events;
 my $seq = 0;

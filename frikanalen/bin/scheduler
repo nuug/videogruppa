@@ -145,7 +145,7 @@ if ($opts{'g'}) {
         my $filename = "broadcast-$id.avi";
         if ( ! -f $filename) {
             print "info: Downloading '$url'.\n";
-            system("wget", "-nv", "-O", $filename, $url);
+            system("wget", "-O", $filename, $url);
         } else {
             print "info: Not downloading '$url', file $filename exist.\n";
         }
@@ -233,6 +233,7 @@ sub schedule_video {
                      my $seq = $data->{seq};
                      my $title = $eventref->{'title'};
                      my $ogvurl  = $eventref->{'ogvurl'};
+                     my $id = $eventref->{'contentId'};
                      my $vlc = $event->w->data()->{vlc};
 
                      my $startstring = short_time($eventref->{'start'}, 1);
@@ -240,7 +241,12 @@ sub schedule_video {
                      my $nowstring = strftime("%H:%M:%S", localtime(time()));
                      print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
 
-                     vlc_play($vlc, $ogvurl, 0);
+                     my $file = $ogvurl;
+                     if ( -f "broadcast-$id.avi") {
+                         print "info: Playing local $broadcast-$id.avi\n";
+                         $file = "broadcast-$id.avi";
+                     }
+                     vlc_play($vlc, $file, 0);
 
                  });
 

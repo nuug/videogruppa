@@ -1,0 +1,50 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+# SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
+use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
+
+sub print_tono_stats {
+    my $id = shift;
+
+    my $soap = new SOAP::Lite
+        -> uri('http://localhost/CommunitySiteService')
+        -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
+
+    my $obj = $soap->SearchVideos(
+        SOAP::Data->name('searcher' => {
+            'PredefinedSearchType' => 'Default',
+            'Take' => 10000,
+                         }
+        )
+        );
+    if ($obj->fault) {
+        print join ', ',
+              $obj->faultcode,
+              $obj->faultstring;
+        return;
+    }
+
+    my $res = $obj->result;
+#    print Dumper($res);
+    unless ($res->{'Data'}) {
+        return;
+    }
+    my $tono;
+    my $notono;
+    foreach my $video (@{$res->{'Data'}->{'Video'}}) {
+        if ("true" eq $video->{'HasTonoRecords'}) {
+            $tono++;
+        } else {
+            $notono++;
+        }
+    }
+    print("Innslag med tono-musikk:   $tono (",
+          int( 100 * $tono / ($tono+$notono)),"%)\n");
+    print("Innslag uten tonon-musikk: $notono (",
+          int( 100 * $notono / ($tono+$notono)),"%)\n");
+}
+
+print_tono_stats();

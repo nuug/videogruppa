@@ -108,12 +108,6 @@ for my $url (@{$listref}) {
             my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
             $event->{'pageurl'} = "$baseurl/fetchvideo.cgi?videoId=$videoId";
 
-            # Should we skip entries with tono records?
-            if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
-                print "info: Skipping event \"$title\" at $start with tono records\n";
-                next;
-            }
-
             # Download only
             if ($opts{'g'}) {
                 $downloadreq{$event->{'broadcasturl'}} = $videoId;
@@ -243,10 +237,15 @@ sub schedule_video {
 
                      my $file = $ogvurl;
                      if ( -f "broadcast-$id.avi") {
-                         print "info: Playing local $broadcast-$id.avi\n";
+                         print "info: Playing local broadcast-$id.avi\n";
                          $file = "broadcast-$id.avi";
                      }
-                     vlc_play($vlc, $file, 0);
+                     if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
+                         # XXX Should generate "Not allowed to play this" screen.
+                         $file = "";
+                     }
+
+                     vlc_play($vlc, $file, 0) if $file;
 
                  });
 
@@ -322,7 +321,14 @@ sub generate_program {
             @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,90, $bounds[1] + $fontsize * 2, "$infostring");
             $date = $datestring;
         }
-        my $infostring = "$startstring-$stopstring - $title";
+        # Should we skip entries with tono records?
+        my $infostring;
+        if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
+            $infostring = "$startstring-$stopstring - ($title)";
+        } else {
+            $infostring = "$startstring-$stopstring - $title";
+        }
+
         print "  $infostring\n";
         @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100, $bounds[1] + $fontsize * 2, "$infostring");
         $seq++;

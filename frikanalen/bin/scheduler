@@ -116,7 +116,7 @@ for my $url (@{$listref}) {
 
             # Download only
             if ($opts{'g'}) {
-                $downloadreq{$event->{'broadcasturl'}} = 1;
+                $downloadreq{$event->{'broadcasturl'}} = $videoId;
                 next;
             }
 
@@ -141,8 +141,14 @@ for my $url (@{$listref}) {
 
 if ($opts{'g'}) {
     for my $url (keys %downloadreq) {
-        print "info: Downloading '$url'\n";
-        system("wget", $url);
+        my $id = $downloadreq{$url};
+        my $filename = "broadcast-$id.avi";
+        if ( ! -f $filename) {
+            print "info: Downloading '$url'.\n";
+            system("wget", "-nv", "-O", $filename, $url);
+        } else {
+            print "info: Not downloading '$url', file $filename exist.\n";
+        }
     }
     exit 0;
 }

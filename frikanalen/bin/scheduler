@@ -323,8 +323,8 @@ sub generate_program {
         }
         # Should we skip entries with tono records?
         my $infostring;
-        if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
-            $infostring = "$startstring-$stopstring - ($title)";
+        if ("true" eq $event->{'HasTonoRecords'}) {
+            $infostring = "$startstring-$stopstring * $title";
         } else {
             $infostring = "$startstring-$stopstring - $title";
         }

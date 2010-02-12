@@ -406,11 +406,13 @@ sub vlc_start {
         my $os = `uname -s`;
         chomp($os);
         if ( $os eq 'Darwin' ) {
-         exec( "/Applications/VLC.app/Contents/MacOS/VLC", @vlcargs);
+            unshift @vlcargs, "/Applications/VLC.app/Contents/MacOS/VLC";
         } else {
 #           "valgrind", "--leak-check=full",
-         exec( "vlc", @vlcargs);
+            unshift @vlcargs, "vlc";
         }
+        print "exec: ", join(" ", @vlcargs), "\n";
+        exec(@vlcargs);
         exit 0;
     } else {
         $vlc->{url} = "http://localhost:8080/";

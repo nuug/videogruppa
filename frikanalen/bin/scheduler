@@ -288,12 +288,12 @@ sub schedule_video {
 sub generate_program {
     my ($vlc, $startseq) = @_;
 
-    my $im = new GD::Image(720,576); # PAL
+    my $im = new GD::Image(720,432); # PAL 16:9
     my $white = $im->colorAllocate(255,255,255);
     my $black = $im->colorAllocate(  0,  0,  0);
     my $fontsize = 20;
     my $left = 0;
-    my $futurelines = 9;
+    my $futurelines = 6;
     $im->fill(50,50,$white);
     my @bounds = $im->stringFT($black,$gdfont,$fontsize*2,$left,30,50,"Frikanalen");
 

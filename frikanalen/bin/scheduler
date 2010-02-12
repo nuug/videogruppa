@@ -292,10 +292,11 @@ sub generate_program {
     my $white = $im->colorAllocate(255,255,255);
     my $black = $im->colorAllocate(  0,  0,  0);
     my $fontsize = 20;
+    my $linespace = 1.3;
     my $left = 0;
-    my $futurelines = 6;
+    my $futurelines = 8;
     $im->fill(50,50,$white);
-    my @bounds = $im->stringFT($black,$gdfont,$fontsize*2,$left,30,50,"Frikanalen");
+    my @bounds = $im->stringFT($black,$gdfont,$fontsize*$linespace,$left,30,50,"Frikanalen");
 
     $bounds[1] += 80; # Move rest of the text down on the screen
 
@@ -318,7 +319,7 @@ sub generate_program {
 
             my $infostring = "$datestring";
             print "  $infostring\n";
-            @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,90, $bounds[1] + $fontsize * 2, "$infostring");
+            @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,90, $bounds[1] + $fontsize * $linespace, "$infostring");
             $date = $datestring;
         }
         # Should we skip entries with tono records?
@@ -330,7 +331,7 @@ sub generate_program {
         }
 
         print "  $infostring\n";
-        @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100, $bounds[1] + $fontsize * 2, "$infostring");
+        @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100, $bounds[1] + $fontsize * $linespace, "$infostring");
         $seq++;
     }
 

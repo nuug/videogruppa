@@ -48,6 +48,10 @@ use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 
 use vars qw(%opts %downloadreq);
 
+# PAL 16:9
+my $palwidth = 720;
+my $palheight = 432;
+
 getopts("g", \%opts);
 
 binmode STDOUT, ":utf8";
@@ -288,7 +292,7 @@ sub schedule_video {
 sub generate_program {
     my ($vlc, $startseq) = @_;
 
-    my $im = new GD::Image(720,432); # PAL 16:9
+    my $im = new GD::Image($palwidth,$palheight);
     my $white = $im->colorAllocate(255,255,255);
     my $black = $im->colorAllocate(  0,  0,  0);
     my $fontsize = 20;
@@ -344,7 +348,7 @@ sub generate_program {
         my $pausevid = "test.mpeg";
         # Png input is broken in ffmpeg . Jpg works.
         unlink($pausevid);
-        system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s 720x576 $pausevid");
+        system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s ${palwidth}x${palheight} $pausevid");
         return $pausevid;
     } else {
         print "Unable to save temporary PNG file\n";

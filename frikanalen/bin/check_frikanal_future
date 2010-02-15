@@ -1,0 +1,121 @@
+#!/usr/bin/perl
+#
+# Author: Petter Reinholdtsen
+# Date: 2010-02-15
+# License: GNU General Public license v2 or later
+#
+# Nagios check controling that the next days entries have been uploaded.
+
+use strict;
+use warnings;
+
+use XML::Simple;
+use Data::Dumper;
+use LWP::UserAgent;
+use Date::Parse;
+use POSIX;
+
+# SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
+use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
+
+my $listref = get_epglist();
+my $retval = 0;
+for my $url (@{$listref}) {
+    my $ua = new LWP::UserAgent;
+    my $req = new HTTP::Request GET => $url;
+    my $res = $ua->request($req);
+    my $epgref = XMLin($res->content);
+    for my $event (@{$epgref->{event}}) {
+        my $now = time();
+
+        my $start = $event->{'start'};
+        my $starttime = str2time($start);
+        my $stop = $event->{'stop'};
+        my $stoptime = str2time($stop);
+
+        # Ignore if more than two days ahead, or stopped in the past
+        next if $starttime > $now + 2 * 24 * 60 * 60;
+        next if $stoptime < $now;
+
+        # Why do this test fail to keep entries with no start entry
+        # from the @events array.
+        if ($event->{'start'} && $event->{'contentId'}) {
+            my $videoId = $event->{'contentId'};
+            my $metaref = get_video_meta($event->{'contentId'});
+            my $title = $event->{'title'};
+            my $org = $event->{'organisation'};
+            unless ($metaref) {
+                # Critical if less then 24 hours left
+                if ($starttime < $now +  24 * 60 * 60) {
+                    $retval = 2; # CRITICAL
+                } else {
+                    $retval = 1; # WARNING
+                }
+                printf("Missing video %d \"%s\" by %s %s. ",
+                       $videoId, $title, $org, short_time($start));
+            }
+        }
+    }
+}
+print "Next few days entries are present." if ($retval == 0);
+print "\n";
+exit $retval;
+
+sub short_time {
+    my $timestring = shift;
+    my $timestamp = str2time($timestring);
+    return strftime("%Y-%m-%dT%H:%M", localtime($timestamp));
+}
+
+sub get_epglist {
+    my $soap = new SOAP::Lite
+        -> uri('http://tempuri.org')
+        -> proxy('http://communitysite1.frikanalen.tv/CommunitySite/EpgWebService.asmx');
+    my $res;
+    my $obj = $soap->GetEpgUrls;
+    unless ($obj->fault) {
+        return $obj->result->{string};
+    } else {
+#        print Dumper($obj);
+        print $obj->fault->{faultstring}, "\n";
+        return undef;
+    }
+}
+
+sub get_video_meta {
+    my $id = shift;
+
+    my $soap = new SOAP::Lite
+        -> uri('http://localhost/CommunitySiteService')
+        -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
+
+# Request list of a all avalable metadata for the video with the ID
+# provided as an argument.
+
+    my $obj = $soap->SearchVideos(
+        SOAP::Data->name('searcher' => {
+            'PredefinedSearchType' => 'Default',
+            'MetaDataVideoId' => $id,
+            # Expect only 1 result, but accept more to detect an
+            # error in the API.
+            'Take' => 10,
+                         }
+        )
+        );
+    if ($obj->fault) {
+        print join ', ',
+              $obj->faultcode,
+              $obj->faultstring;
+        return;
+    }
+
+    my $res = $obj->result;
+#    print Dumper($res);
+    unless ($res->{'Data'}) {
+        return;
+    }
+
+    foreach my $video ($res->{'Data'}->{'Video'}) {
+        return $video;
+    }
+}

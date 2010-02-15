@@ -4,7 +4,8 @@
 # Date: 2010-02-15
 # License: GNU General Public license v2 or later
 #
-# Nagios check controling that the next days entries have been uploaded.
+# Nagios plugin for controlling that the next days entries have been
+# uploaded to Frikanalen.
 
 use strict;
 use warnings;

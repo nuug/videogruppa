@@ -21,6 +21,7 @@ use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 
 my $listref = get_epglist();
 my $retval = 0;
+my %eventcache;
 for my $url (@{$listref}) {
     my $ua = new LWP::UserAgent;
     my $req = new HTTP::Request GET => $url;
@@ -42,7 +43,13 @@ for my $url (@{$listref}) {
         # from the @events array.
         if ($event->{'start'} && $event->{'contentId'}) {
             my $videoId = $event->{'contentId'};
-            my $metaref = get_video_meta($event->{'contentId'});
+            my $metaref;
+            if (exists $eventcache{$videoId}) {
+                $metaref = $eventcache{$videoId};
+            } else {
+                $metaref = get_video_meta($event->{'contentId'});
+                $eventcache{$videoId} = $metaref;
+            }
             my $title = $event->{'title'};
             my $org = $event->{'organisation'};
             unless ($metaref) {

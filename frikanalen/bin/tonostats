@@ -46,10 +46,8 @@ sub get_tono_stats {
 }
 sub print_tono_stats {
     my ($with, $without) = get_tono_stats();
-    print("Innslag med tono-musikk:   $with (",
-          int( 100 * $with / ($with+$without)),"%)\n");
-    print("Innslag uten tonon-musikk: $without (",
-          int( 100 * $without / ($with+$without)),"%)\n");
+    printf("Innslag med tono-musikk:   %d (%.1f%%)\n",   $with, 100 * $with / ($with+$without));
+    printf("Innslag uten tonon-musikk: %d (%.1f%%)\n",$without, 100 *$without/($with+$without));
 }
 sub munin_plugin {
     my @ARGV = @_;

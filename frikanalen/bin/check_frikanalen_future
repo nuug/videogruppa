@@ -55,9 +55,9 @@ for my $url (@{$listref}) {
             unless ($metaref) {
                 # Critical if less then 24 hours left
                 if ($starttime < $now +  24 * 60 * 60) {
-                    $retval = 2; # CRITICAL
+                    $retval = 2 if $retval < 2; # CRITICAL
                 } else {
-                    $retval = 1; # WARNING
+                    $retval = 1 if $retval < 1; # WARNING
                 }
                 printf("Missing video %d \"%s\" by %s %s. ",
                        $videoId, $title, $org, short_time($start));

@@ -16,6 +16,8 @@ use LWP::UserAgent;
 use Date::Parse;
 use POSIX;
 
+my $numdays = 2;
+
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 
@@ -35,8 +37,8 @@ for my $url (@{$listref}) {
         my $stop = $event->{'stop'};
         my $stoptime = str2time($stop);
 
-        # Ignore if more than two days ahead, or stopped in the past
-        next if $starttime > $now + 2 * 24 * 60 * 60;
+        # Ignore if more than $numdays days ahead, or stopped in the past
+        next if $starttime > $now + $numdays * 24 * 60 * 60;
         next if $stoptime < $now;
 
         # Why do this test fail to keep entries with no start entry
@@ -54,7 +56,7 @@ for my $url (@{$listref}) {
             my $org = $event->{'organisation'};
             unless ($metaref) {
                 # Critical if less then 24 hours left
-                if ($starttime < $now +  24 * 60 * 60) {
+                if ($starttime < $now + 24 * 60 * 60) {
                     $retval = 2 if $retval < 2; # CRITICAL
                 } else {
                     $retval = 1 if $retval < 1; # WARNING
@@ -65,7 +67,7 @@ for my $url (@{$listref}) {
         }
     }
 }
-print "Next few days entries are present." if ($retval == 0);
+print "Next $numdays days entries are present." if ($retval == 0);
 print "\n";
 exit $retval;
 

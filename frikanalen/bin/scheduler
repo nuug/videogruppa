@@ -22,8 +22,8 @@
 #  ttf-liberation
 
 # TrueType font name/path used by GD to draw text
-my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
-#my $gdfont = "./fonts/LiberationSans-Regular.ttf";
+#my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf";
+my $gdfont = "./fonts/LiberationSans-Regular.ttf";
 
 # Set to 0 if VLC should not play in full screen mode
 my $fullscreen = 1;
@@ -52,11 +52,84 @@ use vars qw(%opts %downloadreq);
 my $palwidth = 720;
 my $palheight = 432;
 
-getopts("g", \%opts);
+my $ezplaylist = "./frikanalen.m3u";
+my $ezpid;
+my $ezcfg = new File::Temp( UNLINK => 0, SUFFIX => '.xml' );
+my $ezcfgname = $ezcfg->filename();
+
+getopts("hogs:", \%opts);
 
 binmode STDOUT, ":utf8";
 
-my $vlc = vlc_start() unless ($opts{'g'});
+if ($opts{'h'}) { usage();exit 1; };
+
+my $vlc = vlc_start() unless ($opts{'g'} || $opts{'s'} );
+
+sub stream {
+  if ( exists $opts{'s'} ) { 
+   if ( $opts{'s'} eq "" ) { 
+     &usage; 
+   } else {
+    if ( $opts{'s'}=~/^http:\/\// ) {
+     &ezstream_start($opts{'s'}); 
+    } else { print "Not an url\n";&usage };
+   } 
+  }
+}
+
+sub usage {
+ print "Usage: $0 [-g -o] | [-s icecast-url]\n";
+ print "-g     : Download broadcast files. No playing.\n";
+ print "-g -o  : Download ogv files. No playing.\n";
+ print "-s url : Stream live to icecast url \n";
+ exit 1;
+}
+
+sub plwrite {
+  my $content = shift;
+  open PL, ">$ezplaylist" or die "Cannot open $ezplaylist for write :$!";
+  print PL "$content\n"; 
+  close PL;
+  if ( $ezpid ) {
+    kill SIGHUP => $ezpid;
+    kill SIGUSR1 => $ezpid;
+  }
+}
+
+sub ezstream_start {
+  my $ezstream = "/usr/bin/ezstream";
+  my $url = shift;
+  &plwrite("fk-program.ogv");
+  print $ezcfg <<EOF if $ezcfg;
+<ezstream>
+    <url>$url</url>
+    <sourcepassword>secret</sourcepassword>
+    <format>THEORA</format>
+    <stream_once>0</stream_once>
+    <filename>$ezplaylist</filename>
+    <svrinfoname>Frikanalen</svrinfoname>
+    <svrinfourl>http://www.frikanalen.no</svrinfourl>
+    <svrinfogenre></svrinfogenre>
+    <svrinfodescription></svrinfodescription>
+    <svrinfobitrate>200</svrinfobitrate>
+    <svrinfochannels>2</svrinfochannels>
+    <svrinfosamplerate>44100</svrinfosamplerate>
+    <svrinfopublic>0</svrinfopublic>
+</ezstream>
+EOF
+  close $ezcfg;  
+  defined($ezpid = fork()) or die "unable to fork: $!\n";
+  if ($ezpid == 0) { 
+   exec("$ezstream","-c","$ezcfgname");
+   die "unable to exec: $!\n";
+  }
+}
+
+sub ezstream_stop {
+  if ( $ezpid ) { kill SIGTERM => "$ezpid"; }
+  if ( -f $ezcfgname ) { unlink $ezcfgname } ;
+  if ( -f $ezplaylist ) { unlink $ezplaylist };
+}
 
 sub vlc_stop {
     my $pid = $vlc->{pid};
@@ -64,8 +137,16 @@ sub vlc_stop {
     kill $pid;
 };
 
+sub tidy {
+ if ( $opts{"s"} ) {
+  ezstream_stop();
+ } else {
+  vlc_stop();
+ }
+}
+
 # Stop vlc on exit
-$Event::DIED = \&vlc_stop;
+$Event::DIED =  \&tidy; 
 
 #$Event::DebugLevel = 2;
 
@@ -114,8 +195,13 @@ for my $url (@{$listref}) {
 
             # Download only
             if ($opts{'g'}) {
+             if ($opts{'o'} ) {
+               $downloadreq{$event->{'ogvurl'}} = $videoId;
+               next;
+              } else { 
                 $downloadreq{$event->{'broadcasturl'}} = $videoId;
                 next;
+              }
             }
 
             my $playurl;
@@ -140,7 +226,12 @@ for my $url (@{$listref}) {
 if ($opts{'g'}) {
     for my $url (keys %downloadreq) {
         my $id = $downloadreq{$url};
-        my $filename = "broadcast-$id.avi";
+        my $filename ;
+        if ($opts {'o'} ) {
+          $filename = "$id.ogv";
+        } else { 
+          $filename = "broadcast-$id.avi";
+        }
         if ( ! -f $filename) {
             print "info: Downloading '$url'.\n";
             system("wget", "-O", $filename, $url);
@@ -154,6 +245,18 @@ if ($opts{'g'}) {
 
 @events = sort start_order @events;
 my $seq = 0;
+
+if ( $opts{"s"} ) {
+ my $programogv = generate_program();
+ ezstream_start($opts{"s"}) ;
+ #sleep 30;
+ # plwrite("program.ogv");
+
+  print Dumper(@events);
+ #sleep 50;
+ #ezstream_stop();
+ exit 0;
+}
 
 # Pause program.  Generate first pause screen outside event loop to make
 # sure it start imediately.
@@ -214,6 +317,9 @@ sub short_time {
     } else {
         return strftime("%H:%M", localtime($timestamp));
     }
+}
+
+sub schedule_stream {
 }
 
 sub schedule_video {
@@ -345,13 +451,18 @@ sub generate_program {
         print $jpg $im->jpeg;
         my $tmpjpg = $jpg->filename();
         close($jpg);
-        my $pausevid = "test.mpeg";
+        my $pausevid;
+        if ( $opts{'s'} ) {
+          $pausevid = "fk-program.ogv";
+        } else {
+          $pausevid = "test.mpeg";
+        }
         # Png input is broken in ffmpeg . Jpg works.
         unlink($pausevid);
         system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s ${palwidth}x${palheight} $pausevid");
         return $pausevid;
     } else {
-        print "Unable to save temporary PNG file\n";
+        print "Unable to save temporary image file\n";
     }
 }
 

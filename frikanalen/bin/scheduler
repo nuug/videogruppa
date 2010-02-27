@@ -67,22 +67,22 @@ my $vlc = vlc_start() unless ($opts{'g'} || $opts{'s'} );
 
 sub stream {
   if ( exists $opts{'s'} ) { 
-   if ( $opts{'s'} eq "" ) { 
-     &usage; 
-   } else {
-    if ( $opts{'s'}=~/^http:\/\// ) {
-     &ezstream_start($opts{'s'}); 
+    if ( $opts{'s'} eq "" ) { 
+      &usage; 
+    } else {
+      if ( $opts{'s'}=~/^http:\/\// ) {
+	&ezstream_start($opts{'s'}); 
     } else { print "Not an url\n";&usage };
-   } 
+    } 
   }
 }
 
 sub usage {
- print "Usage: $0 [-g -o] | [-s icecast-url]\n";
- print "-g     : Download broadcast files. No playing.\n";
- print "-g -o  : Download ogv files. No playing.\n";
- print "-s url : Stream live to icecast url \n";
- exit 1;
+  print "Usage: $0 [-g -o] | [-s icecast-url]\n";
+  print "-g     : Download broadcast files. No playing.\n";
+  print "-g -o  : Download ogv files. No playing.\n";
+  print "-s url : Stream live to icecast url \n";
+  exit 1;
 }
 
 sub plwrite {
@@ -101,7 +101,7 @@ sub ezstream_start {
   my $url = shift;
   &plwrite("fk-program.ogv");
   print $ezcfg <<EOF if $ezcfg;
-<ezstream>
+  <ezstream>
     <url>$url</url>
     <sourcepassword>secret</sourcepassword>
     <format>THEORA</format>
@@ -115,13 +115,13 @@ sub ezstream_start {
     <svrinfochannels>2</svrinfochannels>
     <svrinfosamplerate>44100</svrinfosamplerate>
     <svrinfopublic>0</svrinfopublic>
-</ezstream>
+    </ezstream>
 EOF
-  close $ezcfg;  
+    close $ezcfg;  
   defined($ezpid = fork()) or die "unable to fork: $!\n";
   if ($ezpid == 0) { 
-   exec("$ezstream","-c","$ezcfgname");
-   die "unable to exec: $!\n";
+    exec("$ezstream","-c","$ezcfgname");
+    die "unable to exec: $!\n";
   }
 }
 
@@ -132,17 +132,17 @@ sub ezstream_stop {
 }
 
 sub vlc_stop {
-    my $pid = $vlc->{pid};
-    print "Killing $pid\n";
-    kill $pid;
+  my $pid = $vlc->{pid};
+  print "Killing $pid\n";
+  kill $pid;
 };
 
 sub tidy {
- if ( $opts{"s"} ) {
-  ezstream_stop();
- } else {
-  vlc_stop();
- }
+  if ( $opts{"s"} ) {
+    ezstream_stop();
+  } else {
+    vlc_stop();
+  }
 }
 
 # Stop vlc on exit
@@ -155,91 +155,91 @@ my @events = ();
 my $listref = get_epglist();
 for my $url (@{$listref}) {
 #    print "Loading '$url'\n";
-    my $ua = new LWP::UserAgent;
-    my $req = new HTTP::Request GET => $url;
-    my $res = $ua->request($req);
-    my $epgref = XMLin($res->content);
-    for my $event (@{$epgref->{event}}) {
+  my $ua = new LWP::UserAgent;
+  my $req = new HTTP::Request GET => $url;
+  my $res = $ua->request($req);
+  my $epgref = XMLin($res->content);
+  for my $event (@{$epgref->{event}}) {
 #        print Dumper($event);
-        my $now = time();
+    my $now = time();
 
-        my $start = $event->{'start'};
-        my $starttime = str2time($start);
-        my $stop = $event->{'stop'};
-        my $stoptime = str2time($stop);
+    my $start = $event->{'start'};
+    my $starttime = str2time($start);
+    my $stop = $event->{'stop'};
+    my $stoptime = str2time($stop);
 
-        # Ignore if more than two days ahead, or stopped in the past
-        next if $starttime > $now + 2 * 24 * 60 * 60;
-        next if $stoptime < $now;
+# Ignore if more than two days ahead, or stopped in the past
+    next if $starttime > $now + 2 * 24 * 60 * 60;
+    next if $stoptime < $now;
 
-        # Why do this test fail to keep entries with no start entry
-        # from the @events array.
-        if ($event->{'start'} && $event->{'contentId'}) {
+# Why do this test fail to keep entries with no start entry
+# from the @events array.
+    if ($event->{'start'} && $event->{'contentId'}) {
 # EPG contentId = fetchvideo.cgi videoId
 # http://www.nuug.no/pub/video/frikanalen/fetchvideo.cgi?videoId=4449
-            my $videoId = $event->{'contentId'};
-            my $metaref = get_video_meta($event->{'contentId'});
-            my $title = $event->{'title'};
+      my $videoId = $event->{'contentId'};
+      my $metaref = get_video_meta($event->{'contentId'});
+      my $title = $event->{'title'};
 
-            unless ($metaref) {
-                print "error: Missing info for id $videoId \"$title\", not scheduling at $start\n";
-                next;
-            }
+      unless ($metaref) {
+	print "error: Missing info for id $videoId \"$title\", not scheduling at $start\n";
+	next;
+      }
 
 
-            $event->{'ogvurl'}  = $metaref->{'VideoOgvUri'};
-            $event->{'broadcasturl'}  = $metaref->{'VideoBroadcastUri'};
-            $event->{'HasTonoRecords'} = $metaref->{'HasTonoRecords'};
-            my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
-            $event->{'pageurl'} = "$baseurl/fetchvideo.cgi?videoId=$videoId";
+      $event->{'ogvurl'}  = $metaref->{'VideoOgvUri'};
+      $event->{'broadcasturl'}  = $metaref->{'VideoBroadcastUri'};
+      $event->{'HasTonoRecords'} = $metaref->{'HasTonoRecords'};
+      my $baseurl = "http://www.nuug.no/pub/video/frikanalen";
+      $event->{'pageurl'} = "$baseurl/fetchvideo.cgi?videoId=$videoId";
 
-            # Download only
-            if ($opts{'g'}) {
-             if ($opts{'o'} ) {
-               $downloadreq{$event->{'ogvurl'}} = $videoId;
-               next;
-              } else { 
-                $downloadreq{$event->{'broadcasturl'}} = $videoId;
-                next;
-              }
-            }
+# Download only
+      if ($opts{'g'}) {
+	if ($opts{'o'} ) {
+	  $downloadreq{$event->{'ogvurl'}} = $videoId;
+	  next;
+	} else { 
+	  $downloadreq{$event->{'broadcasturl'}} = $videoId;
+	  next;
+	}
+      }
 
-            my $playurl;
-            if (url_exist($event->{'broadcasturl'})) {
-                $playurl = $event->{'broadcasturl'};
-            } else {
-                print "warning: Missing broadcast file for id $videoId\n";
-                if (url_exist($event->{'ogvurl'})) {
-                    print "warning: Missing Ogg Theora file too, not scheduling \"$title\" at $start\n";
-                    next;
-                }
-            }
-            $event->{playurl} = $playurl;
+      my $playurl;
+      if (url_exist($event->{'broadcasturl'})) {
+	$playurl = $event->{'broadcasturl'};
+      } else {
+	print "warning: Missing broadcast file for id $videoId\n";
+	if (url_exist($event->{'ogvurl'})) {
+	  print "warning: Missing Ogg Theora file too, not scheduling \"$title\" at $start\n";
+	  next;
+	}
+      }
+      $event->{playurl} = $playurl;
 
-            push @events, $event;
-        } else {
-            print "error: empty event: ", Dumper($event);
-        }
+      push @events, $event;
+    } else {
+      print "error: empty event: ", Dumper($event);
     }
+  }
 }
 
 if ($opts{'g'}) {
-    for my $url (keys %downloadreq) {
-        my $id = $downloadreq{$url};
-        my $filename ;
-        if ($opts {'o'} ) {
-          $filename = "$id.ogv";
-        } else { 
-          $filename = "broadcast-$id.avi";
-        }
-        if ( ! -f $filename) {
-            print "info: Downloading '$url'.\n";
-            system("wget", "-O", $filename, $url);
-        } else {
-            print "info: Not downloading '$url', file $filename exist.\n";
-        }
+  for my $url (keys %downloadreq) {
+    my $id = $downloadreq{$url};
+    my $filename ;
+    if ($opts {'o'} ) {
+      $filename = "$id.ogv";
+    } else { 
+      $filename = "broadcast-$id.avi";
     }
-    exit 0;
+    if ( ! -f $filename) {
+      print "info: Downloading '$url'.\n";
+      system("wget", "-O", $filename, $url);
+    } else {
+      print "info: Not downloading '$url', file $filename exist.\n";
+    }
+  }
+  exit 0;
 }
 
 
@@ -247,50 +247,60 @@ if ($opts{'g'}) {
 my $seq = 0;
 
 if ( $opts{"s"} ) {
- my $programogv = generate_program();
- ezstream_start($opts{"s"}) ;
- #sleep 30;
- # plwrite("program.ogv");
-
-  print Dumper(@events);
- #sleep 50;
- #ezstream_stop();
- exit 0;
-}
-
-# Pause program.  Generate first pause screen outside event loop to make
-# sure it start imediately.
-{
-    my $now = time();
-    my $programogv = generate_program($vlc, $seq);
-    Event->timer(at => $now,
-                 data => {
-                     seq => $seq,
-                     name => "Initial pause screen",
-                 },
-                 cb => sub {
-                     my $event = shift;
-                     my $seq = $event->w->data()->{seq};
-                     vlc_play($vlc, $programogv, 1);
-                 });
-}
-
-while ($seq < scalar @events) {
+  my $programogv = generate_program();
+  ezstream_start($opts{"s"}) ;
+  while ($seq < scalar @events) {
     my $event = $events[$seq];
     my $now = time();
     my $start = $event->{'start'};
     my $starttime = str2time($start);
     my $stoptime = str2time($event->{stop});
-
-    # Skip entries from the past
     if ($starttime >= $now) {
-        schedule_video($vlc, $seq, int($starttime), int($stoptime));
+      schedule_stream( $seq, int($starttime), int($stoptime));
     } elsif ($stoptime >= $now && $starttime <= $now) {
-        # If some program is already running, just start it to get
-        # something showing.
-        schedule_video($vlc, $seq, $now, int($stoptime));
+      schedule_stream( $seq, $now, int($stoptime));
     }
     $seq++;
+  }
+
+  #print Dumper(@events);
+  Event::loop();
+  exit 0;
+}
+
+# Pause program.  Generate first pause screen outside event loop to make
+# sure it start imediately.
+{
+  my $now = time();
+  my $programogv = generate_program($vlc, $seq);
+  Event->timer(at => $now,
+      data => {
+      seq => $seq,
+      name => "Initial pause screen",
+      },
+      cb => sub {
+      my $event = shift;
+      my $seq = $event->w->data()->{seq};
+      vlc_play($vlc, $programogv, 1);
+      });
+}
+
+while ($seq < scalar @events) {
+  my $event = $events[$seq];
+  my $now = time();
+  my $start = $event->{'start'};
+  my $starttime = str2time($start);
+  my $stoptime = str2time($event->{stop});
+
+# Skip entries from the past
+  if ($starttime >= $now) {
+    schedule_video($vlc, $seq, int($starttime), int($stoptime));
+  } elsif ($stoptime >= $now && $starttime <= $now) {
+# If some program is already running, just start it to get
+# something showing.
+    schedule_video($vlc, $seq, $now, int($stoptime));
+  }
+  $seq++;
 }
 
 #print Dumper(Event::all_watchers());
@@ -301,196 +311,255 @@ exit 0;
 
 
 sub url_exist {
-    my $url = shift;
-    my $ua = new LWP::UserAgent;
-    my $req = new HTTP::Request HEAD => $url;
-    my $res = $ua->request($req);
-    return $res->is_success;
+  my $url = shift;
+  my $ua = new LWP::UserAgent;
+  my $req = new HTTP::Request HEAD => $url;
+  my $res = $ua->request($req);
+  return $res->is_success;
 }
 
 sub short_time {
-    my $timestring = shift;
-    my $showseconds = shift;
-    my $timestamp = str2time($timestring);
-    if ($showseconds) {
-        return strftime("%H:%M:%S", localtime($timestamp));
-    } else {
-        return strftime("%H:%M", localtime($timestamp));
-    }
+  my $timestring = shift;
+  my $showseconds = shift;
+  my $timestamp = str2time($timestring);
+  if ($showseconds) {
+    return strftime("%H:%M:%S", localtime($timestamp));
+  } else {
+    return strftime("%H:%M", localtime($timestamp));
+  }
 }
 
 sub schedule_stream {
+  my ( $seq, $starttime, $stoptime ) = @_;
+  Event->timer(at => $starttime,
+      data => {
+      eventref => $events[$seq],
+      seq => $seq
+      },
+      cb => sub {
+      my $event = shift;
+      my $data = $event->w->data();
+      my $eventref = $data->{eventref};
+      my $seq = $data->{seq};
+      my $title = $eventref->{'title'};
+      my $id = $eventref->{'contentId'};
+      my $startstring = short_time($eventref->{'start'}, 1);
+      my $stopstring = short_time($eventref->{'stop'}, 1);
+      my $nowstring = strftime("%H:%M:%S", localtime(time()));
+      my $file = "";
+      print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
+      if ( -f "$id.ogv") {
+      print "info: Playing local $id.ogv\n";
+      $file = "$id.ogv";
+      }
+      if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
+# XXX Should generate "Not allowed to play this" screen.
+	$file = "";
+      }
+      plwrite($file) if $file;
+      });
+  my $stopstring = strftime("%H:%M", localtime($stoptime));
+  Event->timer(at => $stoptime - 30,
+      data => {
+      seq => $seq + 1,
+      name => "Pause starting $stopstring",
+      },
+      cb => sub {
+      my $event = shift;
+      my $seq = $event->w->data()->{seq};
+      my $nowstring = strftime("%H:%M:%S", localtime(time()));
+      print "Generate pause screen for $seq (now $nowstring)\n";
+      my $start = time();
+      my $programogv = generate_program();
+      my $stop = time();
+      $nowstring = strftime("%H:%M:%S", localtime(time()));
+      print "Done generating pause screen DV (now $nowstring)\n";
+      my $duration = $stop - $start;
+      print "error: Generating pause screen took too long ($duration seconds)\n" if (30 < $duration);
+      Event->timer(at => $stoptime,
+	cb => sub {
+	my $now = time();
+	my $nowstring = strftime("%H:%M:%S", localtime($now));
+	my $str = strftime("%H:%M:%S", localtime($stoptime));
+	print "Starting pause screen $str (now $nowstring)\n";
+	plwrite($programogv) if $programogv;
+	print "error: Started pause screen too late ($stoptime != $now)\n"
+	unless ($stoptime == $now);
+	}
+	);
+      }
+      );
 }
 
 sub schedule_video {
-    my ($vlc, $seq, $starttime, $stoptime) = @_;
-    Event->timer(at => $starttime,
-                 data => {
-                     eventref => $events[$seq],
-                     vlc => $vlc,
-                     seq => $seq
-                 },
-                 cb => sub {
-                     my $event = shift;
-                     my $data = $event->w->data();
-                     my $eventref = $data->{eventref};
-                     my $seq = $data->{seq};
-                     my $title = $eventref->{'title'};
-                     my $ogvurl  = $eventref->{'ogvurl'};
-                     my $id = $eventref->{'contentId'};
-                     my $vlc = $event->w->data()->{vlc};
+  my ($vlc, $seq, $starttime, $stoptime) = @_;
+  Event->timer(at => $starttime,
+      data => {
+      eventref => $events[$seq],
+      vlc => $vlc,
+      seq => $seq
+      },
+      cb => sub {
+      my $event = shift;
+      my $data = $event->w->data();
+      my $eventref = $data->{eventref};
+      my $seq = $data->{seq};
+      my $title = $eventref->{'title'};
+      my $ogvurl  = $eventref->{'ogvurl'};
+      my $id = $eventref->{'contentId'};
+      my $vlc = $event->w->data()->{vlc};
 
-                     my $startstring = short_time($eventref->{'start'}, 1);
-                     my $stopstring = short_time($eventref->{'stop'}, 1);
-                     my $nowstring = strftime("%H:%M:%S", localtime(time()));
-                     print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
+      my $startstring = short_time($eventref->{'start'}, 1);
+      my $stopstring = short_time($eventref->{'stop'}, 1);
+      my $nowstring = strftime("%H:%M:%S", localtime(time()));
+      print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
 
-                     my $file = $ogvurl;
-                     if ( -f "broadcast-$id.avi") {
-                         print "info: Playing local broadcast-$id.avi\n";
-                         $file = "broadcast-$id.avi";
-                     }
-                     if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
-                         # XXX Should generate "Not allowed to play this" screen.
-                         $file = "";
-                     }
+      my $file = $ogvurl;
+      if ( -f "broadcast-$id.avi") {
+	print "info: Playing local broadcast-$id.avi\n";
+	$file = "broadcast-$id.avi";
+      }
+      if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
+# XXX Should generate "Not allowed to play this" screen.
+	$file = "";
+      }
 
-                     vlc_play($vlc, $file, 0) if $file;
+      vlc_play($vlc, $file, 0) if $file;
 
-                 });
+      });
 
-    # Generate pause screen 30 seconds before the movie stop, and play
-    # this pause screen when the movie should stop.
-    my $stopstring = strftime("%H:%M", localtime($stoptime));
-    Event->timer(at => $stoptime - 30,
-                 data => {
-                     vlc => $vlc,
-                     seq => $seq + 1,
-                     name => "Pause starting $stopstring",
-                 },
-                 cb => sub {
-                     my $event = shift;
-                     my $seq = $event->w->data()->{seq};
-                     my $vlc = $event->w->data()->{vlc};
-                     my $nowstring = strftime("%H:%M:%S", localtime(time()));
-                     print "Generate pause screen for $seq (now $nowstring)\n";
-                     my $start = time();
-                     my $programogv = generate_program($vlc, $seq);
-                     my $stop = time();
-                     $nowstring = strftime("%H:%M:%S", localtime(time()));
-                     print "Done generating pause screen DV (now $nowstring)\n";
-                     my $duration = $stop - $start;
-                     print "error: Generating pause screen took too long ($duration seconds)\n"
-                         if (30 < $duration);
-                     Event->timer(at => $stoptime,
-                                  cb => sub {
-                                      my $now = time();
-                                      my $nowstring = strftime("%H:%M:%S", localtime($now));
-                                      my $str = strftime("%H:%M:%S", localtime($stoptime));
-                                      print "Starting pause screen $str (now $nowstring)\n";
-                                      vlc_play($vlc, $programogv, 1);
-                                      print "error: Started pause screen too late ($stoptime != $now)\n"
-                                          unless ($stoptime == $now);
-                                  });
-                 } );
+# Generate pause screen 30 seconds before the movie stop, and play
+# this pause screen when the movie should stop.
+  my $stopstring = strftime("%H:%M", localtime($stoptime));
+  Event->timer(at => $stoptime - 30,
+      data => {
+      vlc => $vlc,
+      seq => $seq + 1,
+      name => "Pause starting $stopstring",
+      },
+      cb => sub {
+      my $event = shift;
+      my $seq = $event->w->data()->{seq};
+      my $vlc = $event->w->data()->{vlc};
+      my $nowstring = strftime("%H:%M:%S", localtime(time()));
+      print "Generate pause screen for $seq (now $nowstring)\n";
+      my $start = time();
+      my $programogv = generate_program($vlc, $seq);
+      my $stop = time();
+      $nowstring = strftime("%H:%M:%S", localtime(time()));
+      print "Done generating pause screen DV (now $nowstring)\n";
+      my $duration = $stop - $start;
+      print "error: Generating pause screen took too long ($duration seconds)\n"
+      if (30 < $duration);
+      Event->timer(at => $stoptime,
+	cb => sub {
+	my $now = time();
+	my $nowstring = strftime("%H:%M:%S", localtime($now));
+	my $str = strftime("%H:%M:%S", localtime($stoptime));
+	print "Starting pause screen $str (now $nowstring)\n";
+	vlc_play($vlc, $programogv, 1);
+	print "error: Started pause screen too late ($stoptime != $now)\n"
+	unless ($stoptime == $now);
+	});
+      } );
 }
 
 sub generate_program {
-    my ($vlc, $startseq) = @_;
+  my ($vlc, $startseq) = @_;
 
-    my $im = new GD::Image($palwidth,$palheight);
-    my $white = $im->colorAllocate(255,255,255);
-    my $black = $im->colorAllocate(  0,  0,  0);
-    my $fontsize = 20;
-    my $linespace = 1.3;
-    my $left = 0;
-    my $futurelines = 8;
-    $im->fill(50,50,$white);
-    my @bounds = $im->stringFT($black,$gdfont,$fontsize*$linespace,$left,30,50,"Frikanalen");
+  my $im = new GD::Image($palwidth,$palheight);
+  my $white = $im->colorAllocate(255,255,255);
+  my $black = $im->colorAllocate(  0,  0,  0);
+  my $fontsize = 20;
+  my $linespace = 1.3;
+  my $left = 0;
+  my $futurelines = 8;
+  $im->fill(50,50,$white);
+  my @bounds = $im->stringFT($black,$gdfont,$fontsize*$linespace,$left,30,50,"Frikanalen");
 
-    $bounds[1] += 80; # Move rest of the text down on the screen
+  $bounds[1] += 80; # Move rest of the text down on the screen
 
     my $seq = 0;
-    my $date = "";
-    while ($seq < $futurelines) {
-        my $event = $events[$startseq + $seq];
-        my $title = $event->{'title'};
-        my $start = $event->{'start'};
-        my $stop = $event->{'stop'};
-        my $starttime = str2time($start);
-        my $stoptime = str2time($stop);
-        my $startstring = strftime("%H:%M", localtime($starttime));
-        my $stopstring = strftime("%H:%M", localtime($stoptime));
-        my $datestring = strftime("%Y-%m-%d", localtime($starttime));
-        if ($date ne $datestring) {
-            $futurelines -= 1;
-            # Stop here if there are too few lines left on the screen
-            next if $seq == $futurelines;
+  my $date = "";
+  while ($seq < $futurelines) {
+    my $event = $events[$startseq + $seq];
+    my $title = $event->{'title'};
+    my $start = $event->{'start'};
+    my $stop = $event->{'stop'};
+    my $starttime = str2time($start);
+    my $stoptime = str2time($stop);
+    my $startstring = strftime("%H:%M", localtime($starttime));
+    my $stopstring = strftime("%H:%M", localtime($stoptime));
+    my $datestring = strftime("%Y-%m-%d", localtime($starttime));
+    if ($date ne $datestring) {
+      $futurelines -= 1;
+# Stop here if there are too few lines left on the screen
+      next if $seq == $futurelines;
 
-            my $infostring = "$datestring";
-            print "  $infostring\n";
-            @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,90, $bounds[1] + $fontsize * $linespace, "$infostring");
-            $date = $datestring;
-        }
-        # Should we skip entries with tono records?
-        my $infostring;
-        if ("true" eq $event->{'HasTonoRecords'}) {
-            $infostring = "$startstring-$stopstring * $title";
-        } else {
-            $infostring = "$startstring-$stopstring - $title";
-        }
-
-        print "  $infostring\n";
-        @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100, $bounds[1] + $fontsize * $linespace, "$infostring");
-        $seq++;
+      my $infostring = "$datestring";
+      print "  $infostring\n";
+      @bounds = $im->stringFT($black,$gdfont,$fontsize,$left,90, $bounds[1] + $fontsize * $linespace, "$infostring");
+      $date = $datestring;
     }
-
-    my $jpg = new File::Temp( UNLINK => 0, SUFFIX => '.jpg' );
-    if ($jpg) {
-        print "Generate pause screen DV ($startseq)\n";
-        print $jpg $im->jpeg;
-        my $tmpjpg = $jpg->filename();
-        close($jpg);
-        my $pausevid;
-        if ( $opts{'s'} ) {
-          $pausevid = "fk-program.ogv";
-        } else {
-          $pausevid = "test.mpeg";
-        }
-        # Png input is broken in ffmpeg . Jpg works.
-        unlink($pausevid);
-        system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s ${palwidth}x${palheight} $pausevid");
-        return $pausevid;
+# Should we skip entries with tono records?
+    my $infostring;
+    if ("true" eq $event->{'HasTonoRecords'}) {
+      $infostring = "$startstring-$stopstring * $title";
     } else {
-        print "Unable to save temporary image file\n";
+      $infostring = "$startstring-$stopstring - $title";
     }
+
+    print "  $infostring\n";
+    @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100, $bounds[1] + $fontsize * $linespace, "$infostring");
+    $seq++;
+  }
+
+  my $jpg = new File::Temp( UNLINK => 0, SUFFIX => '.jpg' );
+  if ($jpg) {
+    print "Generate pause screen DV ($startseq)\n";
+    print $jpg $im->jpeg;
+    my $tmpjpg = $jpg->filename();
+    close($jpg);
+    my $pausevid;
+    if ( $opts{'s'} ) {
+      $pausevid = "fk-program.ogv";
+    } else {
+      $pausevid = "test.mpeg";
+    }
+# Png input is broken in ffmpeg . Jpg works.
+    unlink($pausevid);
+    system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s ${palwidth}x${palheight} $pausevid");
+    return $pausevid;
+  } else {
+    print "Unable to save temporary image file\n";
+  }
 }
 
 sub start_order {
-    my ($a, $b) = @_;
+  my ($a, $b) = @_;
 
-    # Try to figure out why some entries have no start entry, and why
-    # the test above do not keep these from showing up here.
+# Try to figure out why some entries have no start entry, and why
+# the test above do not keep these from showing up here.
 #    print "A: ", Dumper($a) unless defined $a->{'start'};
 #    print "B: ", Dumper($b) unless defined $b->{'start'};
-    return ($a->{'start'} || "") cmp ($b->{'start'} || "")
+  return ($a->{'start'} || "") cmp ($b->{'start'} || "")
 }
 
 ###########################################
 
 sub get_epglist {
-    my $soap = new SOAP::Lite
-        -> uri('http://tempuri.org')
-        -> proxy('http://communitysite1.frikanalen.tv/CommunitySite/EpgWebService.asmx');
-    my $res;
-    my $obj = $soap->GetEpgUrls;
-    unless ($obj->fault) {
-        return $obj->result->{string};
-    } else {
+  my $soap = new SOAP::Lite
+    -> uri('http://tempuri.org')
+    -> proxy('http://communitysite1.frikanalen.tv/CommunitySite/EpgWebService.asmx');
+  my $res;
+  my $obj = $soap->GetEpgUrls;
+  unless ($obj->fault) {
+    return $obj->result->{string};
+  } else {
 #        print Dumper($obj);
-        print $obj->fault->{faultstring}, "\n";
-        return undef;
-    }
+    print $obj->fault->{faultstring}, "\n";
+    return undef;
+  }
 }
 
 
@@ -499,128 +568,128 @@ sub get_epglist {
 # it is not very good for initial testing.
 # http://wiki.videolan.org/Documentation:Streaming_HowTo/VLM
 sub vlc_start {
-    my $vlc = shift || {};
-    my $pid = fork();
-    if (not defined $pid) {
-        return undef;
-    } elsif (0 == $pid){
+  my $vlc = shift || {};
+  my $pid = fork();
+  if (not defined $pid) {
+    return undef;
+  } elsif (0 == $pid){
 #    system("vlc", "--extraintf", "telnet", "--telnet-password", "secret");
-        my @vlcargs;
-        push(@vlcargs, "--extraintf=http");
+    my @vlcargs;
+    push(@vlcargs, "--extraintf=http");
 
-        # Icecast server
-        my $icecastserver = "voip.nuug.no:8000";
-        my $icecastuser = "source";
-        my $icecastpasswd = "secret";
+# Icecast server
+    my $icecastserver = "voip.nuug.no:8000";
+    my $icecastuser = "source";
+    my $icecastpasswd = "secret";
 
-        # Only work if 'vlc -l | grep access_output_shout' list
-        # support for streaming to an icecast server.
+# Only work if 'vlc -l | grep access_output_shout' list
+# support for streaming to an icecast server.
 #       push(@vlcargs, "--sout=#duplicate{dst=display,dst=\"transcode{vcodec=theo,vb=256,acodec=vorb,ab=64,vfilter=canvas{width=320,height=240,canvas-aspect=4:3}}:std{mux=ogg,dst=source:$icecastpasswd\@$icecastserver/live.ogv,access=shout}\"}");
 
-        print "starting VLC: vlc ". join(" ", @vlcargs) . "\n";
-        my $os = `uname -s`;
-        chomp($os);
-        if ( $os eq 'Darwin' ) {
-            unshift @vlcargs, "/Applications/VLC.app/Contents/MacOS/VLC";
-        } else {
-#           "valgrind", "--leak-check=full",
-            unshift @vlcargs, "vlc";
-        }
-        print "exec: ", join(" ", @vlcargs), "\n";
-        exec(@vlcargs);
-        exit 0;
+    print "starting VLC: vlc ". join(" ", @vlcargs) . "\n";
+    my $os = `uname -s`;
+    chomp($os);
+    if ( $os eq 'Darwin' ) {
+      unshift @vlcargs, "/Applications/VLC.app/Contents/MacOS/VLC";
     } else {
-        $vlc->{url} = "http://localhost:8080/";
-        $vlc->{pid} = $pid;
-        $vlc->{loop} = 0;
-        $vlc->{fullscreen} = 0;
-#        sleep 5; # Give VLC some time to start
-        return $vlc;
+#           "valgrind", "--leak-check=full",
+      unshift @vlcargs, "vlc";
     }
+    print "exec: ", join(" ", @vlcargs), "\n";
+    exec(@vlcargs);
+    exit 0;
+  } else {
+    $vlc->{url} = "http://localhost:8080/";
+    $vlc->{pid} = $pid;
+    $vlc->{loop} = 0;
+    $vlc->{fullscreen} = 0;
+#        sleep 5; # Give VLC some time to start
+    return $vlc;
+  }
 }
 
 sub lwp_get {
-    my $url = shift;
-    print "Visiting '$url'\n";
-    my $ua = new LWP::UserAgent;
-    my $req = new HTTP::Request GET => $url;
-    my $res = $ua->request($req);
-    return ($res->is_success);
+  my $url = shift;
+  print "Visiting '$url'\n";
+  my $ua = new LWP::UserAgent;
+  my $req = new HTTP::Request GET => $url;
+  my $res = $ua->request($req);
+  return ($res->is_success);
 }
 
 sub vlc_play {
-    my ($vlc, $file, $loop) = @_;
+  my ($vlc, $file, $loop) = @_;
 
-    $file =~ s#/#%2F#g;
+  $file =~ s#/#%2F#g;
 
-    my @cmds = ();
-    push(@cmds, [$vlc->{url} ."requests/status.xml?command=pl_empty", undef]);
-    push(@cmds, [$vlc->{url} ."requests/status.xml?command=in_play&input=$file",
-                 undef]);
-    if ($fullscreen != $vlc->{fullscreen}) {
-        push(@cmds, [$vlc->{url} . "requests/status.xml?command=fullscreen",
-                     sub { my $vlc = shift; $vlc->{fullscreen} = ! $vlc->{fullscreen}; },
-             2]);
+  my @cmds = ();
+  push(@cmds, [$vlc->{url} ."requests/status.xml?command=pl_empty", undef]);
+  push(@cmds, [$vlc->{url} ."requests/status.xml?command=in_play&input=$file",
+      undef]);
+  if ($fullscreen != $vlc->{fullscreen}) {
+    push(@cmds, [$vlc->{url} . "requests/status.xml?command=fullscreen",
+	sub { my $vlc = shift; $vlc->{fullscreen} = ! $vlc->{fullscreen}; },
+	2]);
+  }
+  if ($loop != $vlc->{loop}) {
+    push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
+	sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; },
+	1]);
+  }
+
+  for my $cmdref (@cmds) {
+    my ($url, $postfunc, $presleep, $postsleep) = @{$cmdref};
+
+    unless (lwp_get($url)) {
+      print "Failed to contact VLC, restarting\n";
+      kill $vlc->{pid};
+      sleep 1; # Give it some time to die if it was running
+	vlc_start($vlc);
+      sleep 2; # Give the new one some time to start
+	return vlc_play($vlc, $file, $loop);
+    } elsif (defined $postfunc) {
+      sleep $presleep if $presleep;
+      $postfunc->($vlc, $url);
+      sleep $postsleep if $postsleep;
     }
-    if ($loop != $vlc->{loop}) {
-        push(@cmds, [$vlc->{url} . "requests/status.xml?command=pl_repeat",
-                     sub { my $vlc = shift; $vlc->{loop} = ! $vlc->{loop}; },
-             1]);
-    }
-
-    for my $cmdref (@cmds) {
-        my ($url, $postfunc, $presleep, $postsleep) = @{$cmdref};
-
-        unless (lwp_get($url)) {
-            print "Failed to contact VLC, restarting\n";
-            kill $vlc->{pid};
-            sleep 1; # Give it some time to die if it was running
-            vlc_start($vlc);
-            sleep 2; # Give the new one some time to start
-            return vlc_play($vlc, $file, $loop);
-        } elsif (defined $postfunc) {
-            sleep $presleep if $presleep;
-            $postfunc->($vlc, $url);
-            sleep $postsleep if $postsleep;
-        }
-    }
-    sleep(1);
+  }
+  sleep(1);
 }
 
 sub get_video_meta {
-    my $id = shift;
+  my $id = shift;
 
-    my $soap = new SOAP::Lite
-        -> uri('http://localhost/CommunitySiteService')
-        -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
+  my $soap = new SOAP::Lite
+    -> uri('http://localhost/CommunitySiteService')
+    -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
 
 # Request list of a all avalable metadata for the video with the ID
 # provided as an argument.
 
-    my $obj = $soap->SearchVideos(
-        SOAP::Data->name('searcher' => {
-            'PredefinedSearchType' => 'Default',
-            'MetaDataVideoId' => $id,
-            # Expect only 1 result, but accept more to detect an
-            # error in the API.
-            'Take' => 10,
-                         }
-        )
-        );
-    if ($obj->fault) {
-        print join ', ',
-              $obj->faultcode,
-              $obj->faultstring;
-        return;
-    }
+  my $obj = $soap->SearchVideos(
+      SOAP::Data->name('searcher' => {
+	'PredefinedSearchType' => 'Default',
+	'MetaDataVideoId' => $id,
+# Expect only 1 result, but accept more to detect an
+# error in the API.
+	'Take' => 10,
+	}
+	)
+      );
+  if ($obj->fault) {
+    print join ', ',
+	  $obj->faultcode,
+	  $obj->faultstring;
+    return;
+  }
 
-    my $res = $obj->result;
+  my $res = $obj->result;
 #    print Dumper($res);
-    unless ($res->{'Data'}) {
-        return;
-    }
+  unless ($res->{'Data'}) {
+    return;
+  }
 
-    foreach my $video ($res->{'Data'}->{'Video'}) {
-        return $video;
-    }
+  foreach my $video ($res->{'Data'}->{'Video'}) {
+    return $video;
+  }
 }

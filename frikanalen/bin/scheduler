@@ -18,6 +18,7 @@
 #  libtimedate-perl
 #  libwww-perl
 #  vlc
+#  ezstream
 #  libsoap-lite-perl
 #  ttf-liberation
 
@@ -228,7 +229,7 @@ if ($opts{'g'}) {
     my $id = $downloadreq{$url};
     my $filename ;
     if ($opts {'o'} ) {
-      $filename = "$id.ogv";
+      $filename = "broadcast-$id.ogv";
     } else { 
       $filename = "broadcast-$id.avi";
     }
@@ -348,9 +349,9 @@ sub schedule_stream {
       my $nowstring = strftime("%H:%M:%S", localtime(time()));
       my $file = "";
       print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
-      if ( -f "$id.ogv") {
-      print "info: Playing local $id.ogv\n";
-      $file = "$id.ogv";
+      if ( -f "broadcast-$id.ogv") {
+        print "info: Playing local broadcast-$id.ogv\n";
+        $file = "broadcast-$id.ogv";
       }
       if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
 # XXX Should generate "Not allowed to play this" screen.

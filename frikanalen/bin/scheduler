@@ -12,6 +12,7 @@
 # Avhengig av følgende pakker (på Debian):
 #  libgd-gd2-perl
 #  smilutils
+#  ffmpeg
 #  ffmpeg2theora
 #  libevent-perl
 #  libxml-simple-perl

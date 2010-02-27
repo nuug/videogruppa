@@ -530,7 +530,11 @@ sub generate_program {
     }
 # Png input is broken in ffmpeg . Jpg works.
     unlink($pausevid);
-    system("ffmpeg -loop_input  -t 10 -i $tmpjpg -b 1800 -r 25 -s ${palwidth}x${palheight} $pausevid");
+    my @ffmpegcmd = ("ffmpeg", "-loop_input", "-t", "10", "-i", $tmpjpg, "-b", "1800",
+		     "-r", "25", "-s", "${palwidth}x${palheight}", "-f", "ogg",
+		     $pausevid);
+    print join(" ", @ffmpegcmd, "\n");
+    system(@ffmpegcmd);
     return $pausevid;
   } else {
     print "Unable to save temporary image file\n";

@@ -96,6 +96,14 @@ sub plwrite {
     kill SIGHUP => $ezpid;
     kill SIGUSR1 => $ezpid;
   }
+  sleep 5;
+  open PL, ">$ezplaylist" or die "Cannot open $ezplaylist for write :$!";
+  print PL "fk-program.ogv\n"; 
+  close PL;
+  if ( $ezpid ) {
+    kill SIGHUP => $ezpid; # Rearead playlist with pause screen, so that next loop
+                           # shows that and not the program again
+  }
 }
 
 sub ezstream_start {

@@ -55,7 +55,8 @@ my $palwidth = 720;
 my $palheight = 432;
 
 my $ezplaylist = "./frikanalen.m3u";
-my $ezpid;
+#my $ezpid;
+my $ezpid = "4261" ;
 my $ezcfg = new File::Temp( UNLINK => 0, SUFFIX => '.xml' );
 my $ezcfgname = $ezcfg->filename();
 
@@ -530,19 +531,23 @@ sub generate_program {
     print $jpg $im->jpeg;
     my $tmpjpg = $jpg->filename();
     close($jpg);
+    my $tpausevid;
     my $pausevid;
     if ( $opts{'s'} ) {
+      $tpausevid = "program.ogv";
       $pausevid = "fk-program.ogv";
     } else {
-      $pausevid = "test.mpeg";
+      $tpausevid = "ptest.mpeg";
+      $pausevid = "test.mpeg"
     }
 # Png input is broken in ffmpeg . Jpg works.
-    unlink($pausevid);
-    my @ffmpegcmd = ("ffmpeg", "-loop_input", "-t", "10", "-i", $tmpjpg, "-b", "1800",
+    unlink($tpausevid);
+    my @ffmpegcmd = ("ffmpeg", "-loop_input", "-t", "5", "-i", $tmpjpg, "-b", "1800",
 		     "-r", "25", "-s", "${palwidth}x${palheight}", "-f", "ogg",
-		     $pausevid);
+		     $tpausevid);
     print join(" ", @ffmpegcmd, "\n");
     system(@ffmpegcmd);
+    system("mv $tpausevid $pausevid");
     return $pausevid;
   } else {
     print "Unable to save temporary image file\n";

@@ -275,6 +275,12 @@ if ( $opts{"s"} ) {
   }
 
   #print Dumper(@events);
+  my $suicide_time = `date -d 23:59 +%s`;
+  Event->timer(at => $suicide_time,
+      data => {},
+      cb => sub {
+       die "Sucide at midnight\n";
+      });
   Event::loop();
   exit 0;
 }

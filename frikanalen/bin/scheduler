@@ -249,7 +249,7 @@ if ($opts{'g'}) {
     }
     if ( ! -f $filename) {
       print "info: Downloading '$url'.\n";
-      system("wget", "-O", $filename, $url);
+      system("wget", "-q", "-O", $filename, $url);
     } else {
       print "info: Not downloading '$url', file $filename exist.\n";
     }

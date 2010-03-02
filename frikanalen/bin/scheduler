@@ -50,6 +50,10 @@ use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 
 use vars qw(%opts %downloadreq);
 
+# How long it took to generate the program screen.  Used to calculate
+# when to start generating the screen before it is needed.
+my $programgenerationtime;
+
 # PAL 16:9
 my $palwidth = 720;
 my $palheight = 432;
@@ -292,6 +296,9 @@ if ( $opts{"s"} ) {
 {
   my $now = time();
   my $programogv = generate_program($vlc, $seq);
+  # Calculate how long it took, and double it to get some buffer
+  $programgenerationtime = (time() - $now) * 2;
+  print "PGT: ", $programgenerationtime, "\n";
   Event->timer(at => $now,
       data => {
       seq => $seq,
@@ -378,7 +385,7 @@ sub schedule_stream {
       plwrite($file) if $file;
       });
   my $stopstring = strftime("%H:%M", localtime($stoptime));
-  Event->timer(at => $stoptime - 30,
+  Event->timer(at => $stoptime - $programgenerationtime,
       data => {
       seq => $seq + 1,
       name => "Pause starting $stopstring",
@@ -394,7 +401,7 @@ sub schedule_stream {
       $nowstring = strftime("%H:%M:%S", localtime(time()));
       print "Done generating pause screen DV (now $nowstring)\n";
       my $duration = $stop - $start;
-      print "error: Generating pause screen took too long ($duration seconds)\n" if (30 < $duration);
+      print "error: Generating pause screen took too long ($duration seconds)\n" if ($programgenerationtime < $duration);
       Event->timer(at => $stoptime,
 	cb => sub {
 	my $now = time();
@@ -447,10 +454,12 @@ sub schedule_video {
 
       });
 
-# Generate pause screen 30 seconds before the movie stop, and play
-# this pause screen when the movie should stop.
+# Generate pause screen $programgenerationtime seconds before
+# the movie stop, and play this pause screen when the movie should
+# stop.
+
   my $stopstring = strftime("%H:%M", localtime($stoptime));
-  Event->timer(at => $stoptime - 30,
+  Event->timer(at => $stoptime - $programgenerationtime,
       data => {
       vlc => $vlc,
       seq => $seq + 1,
@@ -469,7 +478,7 @@ sub schedule_video {
       print "Done generating pause screen DV (now $nowstring)\n";
       my $duration = $stop - $start;
       print "error: Generating pause screen took too long ($duration seconds)\n"
-      if (30 < $duration);
+      if ($programgenerationtime < $duration);
       Event->timer(at => $stoptime,
 	cb => sub {
 	my $now = time();
@@ -555,6 +564,7 @@ sub generate_program {
 		     $tpausevid);
     print join(" ", @ffmpegcmd, "\n");
     system(@ffmpegcmd);
+    unlink ($jpg);
     system("mv $tpausevid $pausevid");
     return $pausevid;
   } else {

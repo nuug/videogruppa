@@ -55,8 +55,8 @@ my $palwidth = 720;
 my $palheight = 432;
 
 my $ezplaylist = "./frikanalen.m3u";
-#my $ezpid;
-my $ezpid = "4261" ;
+my $ezpid;
+#my $ezpid = "4261" ;
 my $ezcfg = new File::Temp( UNLINK => 0, SUFFIX => '.xml' );
 my $ezcfgname = $ezcfg->filename();
 
@@ -279,7 +279,9 @@ if ( $opts{"s"} ) {
   Event->timer(at => $suicide_time,
       data => {},
       cb => sub {
-       die "Sucide at midnight\n";
+       ezstream_stop();
+       Event::unloop_all();
+       #die "Suicide at midnight\n";
       });
   Event::loop();
   exit 0;

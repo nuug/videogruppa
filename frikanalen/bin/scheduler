@@ -279,7 +279,7 @@ if ( $opts{"s"} ) {
   }
 
   #print Dumper(@events);
-  my $suicide_time = `date -d 23:59 +%s`;
+  my $suicide_time = `date -d '03:00 + 1 day'`;
   Event->timer(at => $suicide_time,
       data => {},
       cb => sub {

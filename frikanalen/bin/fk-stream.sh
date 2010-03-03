@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 workdir="/stream/frikanalen-bin"
 

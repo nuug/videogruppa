@@ -262,7 +262,9 @@ if ($opts{'g'}) {
 my $seq = 0;
 
 if ( $opts{"s"} ) {
-  my $programogv = generate_program();
+  my $now = time();
+  my $programogv = generate_program("fjas",$seq);
+  $programgenerationtime = (time() - $now) * 2;
   ezstream_start($opts{"s"}) ;
   while ($seq < scalar @events) {
     my $event = $events[$seq];
@@ -396,7 +398,7 @@ sub schedule_stream {
       my $nowstring = strftime("%H:%M:%S", localtime(time()));
       print "Generate pause screen for $seq (now $nowstring)\n";
       my $start = time();
-      my $programogv = generate_program();
+      my $programogv = generate_program("fjas",$seq);
       my $stop = time();
       $nowstring = strftime("%H:%M:%S", localtime(time()));
       print "Done generating pause screen DV (now $nowstring)\n";

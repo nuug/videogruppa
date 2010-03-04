@@ -1,6 +1,6 @@
 #!/bin/bash
 
-workdir="/stream/frikanalen-bin"
+workdir="/home/jarle/svn/frikanalen-bin"
 
 cd ${workdir}
 if  [[ `pwd` == ${workdir} ]]

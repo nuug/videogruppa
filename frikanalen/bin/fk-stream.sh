@@ -1,10 +1,7 @@
 #!/bin/bash
 
-workdir="/stream/frikanalen-bin"
+workdir="/home/jarle/svn/frikanalen-bin/"
 
 cd ${workdir}
 
-if  [[ `pwd` == ${workdir} ]]
-then
 ./scheduler -s http://voip.nuug.no:8000/frikanalen.ogv > fk.log 2>&1
-fi

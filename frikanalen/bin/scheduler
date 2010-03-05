@@ -140,7 +140,7 @@ EOF
     close $ezcfg;  
   defined($ezpid = fork()) or die "unable to fork: $!\n";
   if ($ezpid == 0) { 
-    exec("$ezstream","-c","$ezcfgname");
+    exec("$ezstream","-q","-c","$ezcfgname");
     die "unable to exec: $!\n";
   }
 }

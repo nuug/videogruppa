@@ -16,11 +16,22 @@ use Encode ;
 use Data::Dumper;
 use XML::Simple;
 my $localvideo_dir = '/data/video/frikanalen';
-my $meta_subset = &get_frikanalen_meta_subset('MetaDataVideoId'); # Use 'Id' or 'MetaDataVideoId' as key
 #print Dumper($meta_subset);
+my $metafile = "$localvideo_dir/meta.xml";
+
+if ($ARGV[0] ) { 
+ $metafile = $ARGV[0]; 
+} else {
+ if ( ! -d $localvideo_dir ) {
+  print "$localvideo_dir does not exist\n";
+  exit 1;
+ }
+}
+
+my $meta_subset = &get_frikanalen_meta_subset('MetaDataVideoId'); # Use 'Id' or 'MetaDataVideoId' as key
 my $xml = XMLout($meta_subset);
 
-open METAFILE, "> $localvideo_dir/meta.xml" or die "Cannot open $localvideo_dir/meta.xml for write :$!";
+open METAFILE, "> $metafile" or die "Cannot open $metafile for write :$!";
 print METAFILE "$xml\n";
 close METAFILE;
 

@@ -103,7 +103,7 @@ sub plwrite {
   }
   sleep 5;
   open PL, ">$ezplaylist" or die "Cannot open $ezplaylist for write :$!";
-  print PL "fk-program.ogv\n"; 
+  print PL "fk-program.jpg\n"; 
   close PL;
   if ( $ezpid ) {
     kill SIGHUP => $ezpid; # Rearead playlist with pause screen, so that next loop
@@ -120,17 +120,22 @@ sub ezstream_start {
     <url>$url</url>
     <sourcepassword>secret</sourcepassword>
     <format>THEORA</format>
-    <stream_once>0</stream_once>
-    <filename>$ezplaylist</filename>
-    <svrinfoname>Frikanalen</svrinfoname>
-    <svrinfourl>http://www.frikanalen.no</svrinfourl>
-    <svrinfogenre></svrinfogenre>
-    <svrinfodescription></svrinfodescription>
-    <svrinfobitrate>200</svrinfobitrate>
-    <svrinfochannels>2</svrinfochannels>
-    <svrinfosamplerate>44100</svrinfosamplerate>
-    <svrinfopublic>0</svrinfopublic>
-    </ezstream>
+    <filename>frikanalen.m3u</filename>
+    <svrinfoname></svrinfoname>
+    <reencode>
+        <enable>1</enable>
+        <encdec>
+	<format>THEORA</format>
+	<match>.jpg</match>
+	<decode>ffmpeg -loop_input -i \"\@T\@\" -b 1800 -f ogg -s 720x432  -</decode>
+	</encdec>
+        <encdec>
+            <format>THEORA</format>
+            <match>.ogv</match>
+            <decode>cat  \"\@T\@\"</decode>
+        </encdec>
+    </reencode>
+</ezstream>
 EOF
     close $ezcfg;  
   defined($ezpid = fork()) or die "unable to fork: $!\n";
@@ -550,24 +555,21 @@ sub generate_program {
     print $jpg $im->jpeg;
     my $tmpjpg = $jpg->filename();
     close($jpg);
-    my $tpausevid;
+    my @ffmpegcmd;
     my $pausevid;
     if ( $opts{'s'} ) {
-      $tpausevid = "program.ogv";
-      $pausevid = "fk-program.ogv";
+      $pausevid = "./fk-program.jpg";
+      `mv $tmpjpg $pausevid`;
     } else {
-      $tpausevid = "ptest.mpeg";
-      $pausevid = "test.mpeg"
+      $pausevid = "test.mpeg";
+      @ffmpegcmd = ("ffmpeg", "-loop_input", "-t", "5", "-i", $tmpjpg, "-b", "1800",
+		     "-r", "25", "-s", "${palwidth}x${palheight}", "-f", "ogg",
+		     $pausevid);
+    system(@ffmpegcmd);
+    unlink ($tmpjpg);
     }
 # Png input is broken in ffmpeg . Jpg works.
-    unlink($tpausevid);
-    my @ffmpegcmd = ("ffmpeg", "-loop_input", "-t", "5", "-i", $tmpjpg, "-b", "1800",
-		     "-r", "25", "-s", "${palwidth}x${palheight}", "-f", "ogg",
-		     $tpausevid);
     print join(" ", @ffmpegcmd, "\n");
-    system(@ffmpegcmd);
-    unlink ($jpg);
-    system("mv $tpausevid $pausevid");
     return $pausevid;
   } else {
     print "Unable to save temporary image file\n";

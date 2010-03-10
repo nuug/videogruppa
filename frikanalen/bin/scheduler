@@ -507,11 +507,15 @@ sub generate_program {
   my $im = new GD::Image($palwidth,$palheight);
   my $white = $im->colorAllocate(255,255,255);
   my $black = $im->colorAllocate(  0,  0,  0);
+
+  # Shade of green from the green part of the Frikanalen logo
+  my $background = $im->colorAllocate(104,175,56);
+
   my $fontsize = 20;
   my $linespace = 1.3;
   my $left = 0;
   my $futurelines = 8;
-  $im->fill(50,50,$white);
+  $im->fill(50,50,$background);
   my @bounds = $im->stringFT($black,$gdfont,$fontsize*$linespace,$left,30,50,"Frikanalen");
 
   $bounds[1] += 80; # Move rest of the text down on the screen

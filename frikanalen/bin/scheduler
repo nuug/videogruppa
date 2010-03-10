@@ -61,28 +61,28 @@ my $palheight = 432;
 my $ezplaylist = "./frikanalen.m3u";
 my $ezpid;
 #my $ezpid = "4261" ;
-my $ezcfg = new File::Temp( UNLINK => 0, SUFFIX => '.xml' );
-my $ezcfgname = $ezcfg->filename();
+my $ezcfg ; 
+my $ezcfgname; 
 
 getopts("hogs:", \%opts);
 
 binmode STDOUT, ":utf8";
 
-if ($opts{'h'}) { usage();exit 1; };
+if ($opts{'h'}) { usage(); };
 
 my $vlc = vlc_start() unless ($opts{'g'} || $opts{'s'} );
 
-sub stream {
-  if ( exists $opts{'s'} ) { 
-    if ( $opts{'s'} eq "" ) { 
-      &usage; 
-    } else {
-      if ( $opts{'s'}=~/^http:\/\// ) {
-	&ezstream_start($opts{'s'}); 
-    } else { print "Not an url\n";&usage };
-    } 
-  }
-}
+#sub stream {
+#  if ( exists $opts{'s'} ) { 
+#    if ( $opts{'s'} eq "" ) { 
+#      &usage; 
+#    } else {
+#      if ( $opts{'s'}=~/^http:\/\// ) {
+#	&ezstream_start($opts{'s'}); 
+#    } else { print "Not an url\n";&usage };
+#    } 
+#  }
+#}
 
 sub usage {
   print "Usage: $0 [-g -o] | [-s icecast-url]\n";
@@ -113,6 +113,8 @@ sub plwrite {
 
 sub ezstream_start {
   my $ezstream = "/usr/bin/ezstream";
+  $ezcfg = new File::Temp( UNLINK => 0, SUFFIX => '.xml' );
+  $ezcfgname = $ezcfg->filename();
   my $url = shift;
   &plwrite("fk-program.jpg");
   print $ezcfg <<EOF if $ezcfg;

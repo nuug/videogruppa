@@ -10,5 +10,6 @@ all:
 install:
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) bin/scheduler $(DESTDIR)$(bindir)/frikanalen-scheduler
+	$(INSTALL) bin/frikanalen-tonostats $(DESTDIR)$(bindir)/frikanalen-tonostats
 
 clean:

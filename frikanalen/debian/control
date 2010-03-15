@@ -1,0 +1,14 @@
+Source: frikanalen
+Section: misc
+Priority: optional
+Maintainer: Petter Reinholdtsen <pere@debian.org>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.7.4
+Homepage: http://www.frikanalen.no/
+
+Package: frikanalen
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
+Description: Web based TV channel control system
+ Provide tools and services used for controling the Norweginan Open Channel
+ Frikanalen.

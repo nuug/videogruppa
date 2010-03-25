@@ -19,6 +19,7 @@ binmode STDOUT, ":utf8";
 
 my $query = new CGI;
 my $nuug_frikanalen_url = 'http://www.nuug.no/pub/video/frikanalen/';
+my $weburl = "";
 my $videoid = $query->param("videoId");
 my $playlist = $query->param("playlist");
 my $lengde;
@@ -69,11 +70,11 @@ if ($playlist) {
    <head>
    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
    <title>Frikanalen - med &aring;pne standarder</title>
-   <link href="style1.css" rel="stylesheet" type="text/css">
+   <link href="${weburl}style1.css" rel="stylesheet" type="text/css">
    </head>
    <body>
    <div id="page">
-   <div id="top"><img src="logo.png" alt="Frikanalen">
+   <div id="top"><img src="${weburl}logo.png" alt="Frikanalen">
    <p id="av"><span class="overskrift">TV FOR ALLE</span><br>
    Dette er en alternativ presentasjon av filmene som sendes p&aring;
    <a href="http://www.frikanalen.no/">Frikanalen</a> i Norge.
@@ -82,9 +83,9 @@ if ($playlist) {
    <table border="0" cellpadding="0" cellspacing="0" id="custom-menu">
      <tbody>
        <tr>
-         <td><a href="http://www.frikanalen.no/om"><img alt="OM FRIKANALEN" src="om.png"></a></td>
-         <td><a href="http://www.frikanalen.no/lage-tv"><img alt="LAGE TV P&Aring; FRIKANALEN" src="lage-tv.png"></a></td>
-         <td><a href="http://www.frikanalen.no/se"><img alt="SE P&Aring; FRIKANALEN" src="se.png"></a></td>
+         <td><a href="http://www.frikanalen.no/om"><img alt="OM FRIKANALEN" src="${weburl}om.png"></a></td>
+         <td><a href="http://www.frikanalen.no/lage-tv"><img alt="LAGE TV P&Aring; FRIKANALEN" src="${weburl}lage-tv.png"></a></td>
+         <td><a href="http://www.frikanalen.no/se"><img alt="SE P&Aring; FRIKANALEN" src="${weburl}se.png"></a></td>
        </tr>
      </tbody>
    </table>

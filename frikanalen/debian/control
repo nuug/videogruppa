@@ -8,7 +8,19 @@ Homepage: http://www.frikanalen.no/
 
 Package: frikanalen
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends},
+  libgd-gd2-perl,
+  smilutils,
+  ffmpeg,
+  ffmpeg2theora,
+  libevent-perl,
+  libxml-simple-perl,
+  libtimedate-perl,
+  libwww-perl,
+  vlc,
+  ezstream,
+  libsoap-lite-perl,
+  ttf-liberation
 Description: Web based TV channel control system
  Provide tools and services used for controling the Norweginan Open Channel
  Frikanalen.

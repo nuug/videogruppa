@@ -32,6 +32,8 @@ binary-arch: build
 	dh_installdirs
 
 	make install DESTDIR=${DESTDIR}
+	mkdir -p $(DESTDIR)/etc/apache/conf.d
+	cp debian/apache-conf $(DESTDIR)/etc/apache/conf.d/frikanalen
 	dh_install --sourcedir=${DESTDIR}
 
 	dh_installdocs

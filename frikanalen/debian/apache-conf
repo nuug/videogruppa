@@ -1,0 +1,19 @@
+#
+# New URL http://<host>/frikanalen/ for the front page, and
+# http://<host>/cgi-bin/frontpage.cgi and
+# http://<host>/cgi-bin/fetchvideo.cgi implementing it.
+#
+
+Alias /frikanalen /usr/share/frikanalen/www
+ScriptAlias /cgi-bin/frontpage.cgi /usr/lib/cgi-bin/frontpage.cgi
+ScriptAlias /cgi-bin/fetchvideo.cgi /usr/lib/cgi-bin/fetchvideo.cgi
+
+<Directory /usr/share/frikanalen/www>
+    AllowOverride None
+    Options +SymLinksIfOwnerMatch -MultiViews
+
+    # everyone have access
+    Order deny,allow
+    Deny from none
+    Allow from all
+</Directory>

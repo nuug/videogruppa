@@ -389,6 +389,7 @@ sub schedule_stream {
       }
       if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
 # XXX Should generate "Not allowed to play this" screen.
+	print "Skipping this event. It has tonorecords\n"; 
 	$file = "";
       }
       plwrite($file) if $file;

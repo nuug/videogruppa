@@ -150,7 +150,7 @@ EOF
 sub ezstream_stop {
   if ( $ezpid ) { kill SIGTERM => "$ezpid"; }
   if ( -f $ezcfgname ) { unlink $ezcfgname } ;
-  #if ( -f $ezplaylist ) { unlink $ezplaylist };
+  if ( -f $ezplaylist ) { unlink $ezplaylist };
 }
 
 sub vlc_stop {
@@ -168,7 +168,7 @@ sub tidy {
 }
 
 # Stop vlc on exit
-$Event::DIED =  \&tidy; 
+#$Event::DIED =  \&tidy; 
 
 #$Event::DebugLevel = 2;
 
@@ -287,7 +287,7 @@ if ( $opts{"s"} ) {
     $seq++;
   }
 
-  #print Dumper(@events);
+  print Dumper(@events);
   my $suicide_time = `date -d '03:00 + 1 day' +%s`;
   Event->timer(at => $suicide_time,
       data => {},
@@ -387,7 +387,7 @@ sub schedule_stream {
         print "info: Playing local broadcast-$id.ogv\n";
         $file = "broadcast-$id.ogv";
       }
-      if ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
+      if ($skiptonorecords && "true" eq $eventref->{'HasTonoRecords'}) {
 # XXX Should generate "Not allowed to play this" screen.
 	print "Skipping this event. It has tonorecords\n"; 
 	$file = "fk-program.jpg";

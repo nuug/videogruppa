@@ -502,6 +502,48 @@ sub schedule_video {
       } );
 }
 
+sub generate_tonoprogram {
+  my ($vlc, $startseq) = @_;
+
+  print "Generate TONO screen\n";
+
+  my $im = new GD::Image($palwidth,$palheight);
+  my $white = $im->colorAllocate(255,255,255);
+  my $black = $im->colorAllocate(  0,  0,  0);
+
+  # Shade of green from the green part of the Frikanalen logo
+  my $background = $im->colorAllocate(104,175,56);
+
+  my $fontsize = 20;
+  my $linespace = 1.3;
+  my $left = 0;
+
+  my @bounds;
+  $bounds[1] = 150;
+
+  $im->fill(50,50,$background);
+
+  my $event = $events[$startseq];
+  my $title = $event->{'title'};
+
+
+  for my $line (("Programmet '$title'",
+                 "kan ikke vises på grunn av",
+                 "Frikanalens avtale med Tono")) {
+      print "  $line\n";
+      @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100,
+                              $bounds[1] + $fontsize * $linespace, $line);
+  }
+  my $jpg = new File::Temp( UNLINK => 0, SUFFIX => '.jpg' );
+  if ($jpg) {
+    print $jpg $im->jpeg;
+    my $tmpjpg = $jpg->filename();
+    close($jpg);
+    return $jpg;
+  }
+  return undef;
+}
+
 sub generate_program {
   my ($vlc, $startseq) = @_;
 

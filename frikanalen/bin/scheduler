@@ -390,7 +390,7 @@ sub schedule_stream {
       if ($skiptonorecords && "true" eq $eventref->{'HasTonoRecords'}) {
 # XXX Should generate "Not allowed to play this" screen.
 	print "Skipping this event. It has tonorecords\n"; 
-	$file = "fk-program.jpg";
+	$file = generate_tonoprogram("foo",$seq);
       }
       plwrite($file) if $file;
       });

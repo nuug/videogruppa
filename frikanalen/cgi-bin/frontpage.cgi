@@ -23,7 +23,6 @@ use URI::Escape;
 
 my $query = new CGI;
 my $nuug_frikanalen_url = 'http://www.nuug.no/pub/video/frikanalen/';
-my $weburl = "";
 my $scripturl = url();
 my $category = $query->param("category");
 my $cat = $category ? "category=$category" : "";
@@ -36,7 +35,8 @@ my $ed = $editor ? "editor=$ed_escaped" : "";
 my $sort = $query->param("sort");
 my $sor = $sort ? "sort=$sort" : "";
 my $searchtype = $sort ? "$sort" : "MostRecent";
-my $page = $query->param("page");
+my $page = $query->param("page") ;
+if ( ! $page ) { $page = 0; } 
 my $video_count = 0;
 my $videos_per_page = 20;
 my $offset = $page ? $page * $videos_per_page : 0;
@@ -204,14 +204,14 @@ sub printheader {
  <head>
  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
  <title>Frikanalen - med &aring;pne standarder</title>
- <link href="${weburl}style1.css" rel="stylesheet" type="text/css">
- <script type="text/javascript" src="${weburl}hide.js"></script>
+ <link href="style1.css" rel="stylesheet" type="text/css">
+ <script type="text/javascript" src="hide.js"></script>
  </head>
 EOF
  print "<body onload=\"show_" . $menu . "();\">";
  print <<EOF;
  <div id="page">
- <div id="top"><img src="${weburl}logo.png" alt="Frikanalen">
+ <div id="top"><img src="logo.png" alt="Frikanalen">
  <p id="av"><span class="overskrift">TV FOR ALLE</span><br>
  Dette er en alternativ presentasjon av filmene som sendes p&aring;
  <a href="http://www.frikanalen.no/">Frikanalen</a> i Norge.
@@ -220,9 +220,9 @@ EOF
  <table border="0" cellpadding="0" cellspacing="0" id="custom-menu">
      <tbody>
        <tr>
-         <td><a href="http://www.frikanalen.no/om"><img alt="OM FRIKANALEN" src="${weburl}om.png"></a></td>
-         <td><a href="http://www.frikanalen.no/lage-tv"><img alt="LAGE TV P&Aring; FRIKANALEN" src="${weburl}lage-tv.png"></a></td>
-         <td><a href="http://www.frikanalen.no/se"><img alt="SE P&Aring; FRIKANALEN" src="${weburl}se.png"></a></td>
+         <td><a href="http://www.frikanalen.no/om"><img alt="OM FRIKANALEN" src="om.png"></a></td>
+         <td><a href="http://www.frikanalen.no/lage-tv"><img alt="LAGE TV P&Aring; FRIKANALEN" src="lage-tv.png"></a></td>
+         <td><a href="http://www.frikanalen.no/se"><img alt="SE P&Aring; FRIKANALEN" src="se.png"></a></td>
        </tr>
      </tbody>
    </table>
@@ -232,11 +232,11 @@ EOF
  # Kategorier
  print "<div id=\"kategorier\"><div class=\"list\"><h2>&nbsp;Kategorier</h2>";
  print "<div id=\"choose_cat\"><ul><li><a href=\"#\" onclick=\"show_cat();\">[ velg ]</a></li></ul></div>";
- my $all_cat = $category ? "<div id=\"list_cat\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_cat\"><ul><li class=\"active\"><img src=\"${weburl}bullet.png\" alt=\"&gt;\"> Alle</li>";
+ my $all_cat = $category ? "<div id=\"list_cat\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_cat\"><ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
  print "$all_cat";
  foreach my $cat (@{$categories}) {
    if (defined $category && $cat->{'Name'} eq $category) {
-     print "<li class=\"active\"><img src=\"${weburl}bullet.png\" alt=\"&gt;\"> $cat->{'Name'}</li>";
+     print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $cat->{'Name'}</li>";
    } else {
      print "<li><a href=\"$scripturl\?category=$cat->{'Name'};$sor\" >$cat->{'Name'}</a></li>";
    }
@@ -245,12 +245,12 @@ EOF
  # Organisasjoner
  print "<div class=\"list\"><h2>&nbsp;Organisasjoner</h2>";
  print "<div id=\"choose_org\"><ul><li><a href=\"#\" onclick=\"show_org();\">[ velg ]</a></li></ul></div>";
- my $all_org = $organization ? "<div id=\"list_org\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_org\"><ul><li class=\"active\"><img src=\"${weburl}bullet.png\" alt=\"&gt;\"> Alle</li>";
+ my $all_org = $organization ? "<div id=\"list_org\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_org\"><ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
  print "$all_org";
  foreach (@{$organizations}) {
     $org_escaped = uri_escape($_);
     if (defined $organization && $_ eq $organization){
-      print "<li class=\"active\"><img src=\"${weburl}bullet.png\" alt=\"&gt;\"> $_</li>";
+      print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $_</li>";
     } else {
       print "<li><a href=\"$scripturl\?organization=$org_escaped;$sor\" >$_</a></li>";
     }
@@ -259,12 +259,12 @@ EOF
  # Redaktører
  print "<div class=\"list\"><h2>&nbsp;Redakt&oslash;rer</h2>";
  print "<div id=\"choose_ed\"><ul><li><a href=\"#\" onclick=\"show_ed();\">[ velg ]</a></li></ul></div>";
- my $all_ed = $editor ? "<div id=\"list_ed\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_ed\"><ul><li class=\"active\"><img src=\"${weburl}bullet.png\" alt=\"&gt;\"> Alle</li>";
+ my $all_ed = $editor ? "<div id=\"list_ed\"><ul><li><a href=\"$scripturl?$sor\">Alle</a></li>" : "<div id=\"list_ed\"><ul><li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> Alle</li>";
  print "$all_ed";
  foreach (@{$editors}) {
     $ed_escaped = uri_escape($_);
     if (defined $editor && $_ eq $editor) {
-      print "<li class=\"active\"><img src=\"${weburl}bullet.png\" alt=\"&gt;\"> $_</li>";
+      print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $_</li>";
     } else {
       print "<li><a href=\"$scripturl\?editor=$ed_escaped;$sor\" >$_</a></li>";
     }
@@ -275,7 +275,7 @@ EOF
  print "<ul>";
   foreach $search (sort keys %searchtypes) {
     if ($searchtypes{$search} eq $searchtype) {
-      print "<li class=\"active\"><img src=\"${weburl}bullet.png\" alt=\"&gt;\"> $search</li>";
+      print "<li class=\"active\"><img src=\"bullet.png\" alt=\"&gt;\"> $search</li>";
     } else {
       print "<li><a href=\"$scripturl\?sort=$searchtypes{$search};$org\">$search</a></li>";
     }

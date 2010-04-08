@@ -536,7 +536,7 @@ sub generate_tonoprogram {
   for my $line (("Programmet '$title'",
                  "id  $videoId som sendes mellom $startstring og $stopstring",
                  "kan ikke vises i denne Internet-strømmen på",
-                 " grunn av Frikanalens avtale med Tono.")) {
+                 "grunn av Frikanalens avtale med Tono.")) {
       print "  $line\n";
       @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100,
                               $bounds[1] + $fontsize * $linespace, $line);

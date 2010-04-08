@@ -533,8 +533,8 @@ sub generate_tonoprogram {
   my $startstring = strftime("%H:%M", localtime($starttime));
   my $stopstring = strftime("%H:%M", localtime($stoptime));
 
-  for my $line (("Programmet '$title' ($videoId)",
-                 "som sendes mellom $startstring og stopstring",
+  for my $line (("Programmet '$title'",
+                 "id  $videoId som sendes mellom $startstring og $stopstring",
                  "kan ikke vises i denne Internet-strømmen på",
                  " grunn av Frikanalens avtale med Tono.")) {
       print "  $line\n";

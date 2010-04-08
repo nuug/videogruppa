@@ -525,11 +525,18 @@ sub generate_tonoprogram {
 
   my $event = $events[$startseq];
   my $title = $event->{'title'};
+  my $videoId = $event->{'contentId'};
+  my $start = $event->{'start'};
+  my $stop = $event->{'stop'};
+  my $starttime = str2time($start);
+  my $stoptime = str2time($stop);
+  my $startstring = strftime("%H:%M", localtime($starttime));
+  my $stopstring = strftime("%H:%M", localtime($stoptime));
 
-
-  for my $line (("Programmet '$title'",
-                 "kan ikke vises på grunn av",
-                 "Frikanalens avtale med Tono")) {
+  for my $line (("Programmet '$title' ($videoId)",
+                 "som sendes mellom $startstring og stopstring",
+                 "kan ikke vises i denne Internet-strømmen på",
+                 " grunn av Frikanalens avtale med Tono.")) {
       print "  $line\n";
       @bounds = $im->stringFT($black,$gdfont,$fontsize,$left, 100,
                               $bounds[1] + $fontsize * $linespace, $line);

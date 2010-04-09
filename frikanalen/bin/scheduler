@@ -30,6 +30,8 @@ my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.tt
 # Set to 0 if VLC should not play in full screen mode
 my $fullscreen = 1;
 my $skiptonorecords = 1;
+# Turn off buffering of output. 
+$| = 0;
 
 use strict;
 use warnings;
@@ -101,6 +103,7 @@ sub plwrite {
     kill SIGHUP => $ezpid;
     kill SIGUSR1 => $ezpid;
   }
+  print localtime()."$content written to playlist\n";
   #sleep 5;
   #open PL, ">$ezplaylist" or die "Cannot open $ezplaylist for write :$!";
   #print PL "fk-program.jpg\n";
@@ -389,7 +392,7 @@ sub schedule_stream {
       }
       if ($skiptonorecords && "true" eq $eventref->{'HasTonoRecords'}) {
 # XXX Should generate "Not allowed to play this" screen.
-        print "Skipping this event. It has tonorecords\n";
+        print localtime()."Skipping this event. It has tonorecords\n";
         $file = generate_tonoprogram("foo",$seq);
       }
       plwrite($file) if $file;

@@ -30,7 +30,7 @@ my $gdfont = "/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.tt
 # Set to 0 if VLC should not play in full screen mode
 my $fullscreen = 1;
 my $skiptonorecords = 1;
-# Turn off buffering of output. 
+# Turn off buffering of output.
 $| = 0;
 
 use strict;
@@ -563,7 +563,8 @@ sub generate_program {
   my $black = $im->colorAllocate(  0,  0,  0);
 
   # Shade of green from the green part of the Frikanalen logo
-  my $background = $im->colorAllocate(104,175,56);
+  # $im->colorAllocate(104,175,56);
+  my $background = $white;
 
   my $fontsize = 20;
   my $linespace = 1.3;

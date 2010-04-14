@@ -515,7 +515,8 @@ sub generate_tonoprogram {
   my $black = $im->colorAllocate(  0,  0,  0);
 
   # Shade of green from the green part of the Frikanalen logo
-  my $background = $im->colorAllocate(104,175,56);
+  # $im->colorAllocate(104,175,56);
+  my $background = $white;
 
   my $fontsize = 20;
   my $linespace = 1.3;

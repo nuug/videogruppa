@@ -2,8 +2,9 @@
 
 # Script for adding start/end poster and convert to frikanalen acceptable avi format anamporphic PAL with pillarboxing
 # Script is work in progress 2010-08-07 /JB
-# cat test.meta
 # metafile format is like this:
+# 
+# cat test.meta
 # title1=Dette er Tittlelen
 # title2=Dette er  andre linje i Tittlelen
 # title3=Dette er øæå 3. linje i Tittlelen
@@ -19,27 +20,33 @@ use Getopt::Std;
 use File::Temp;
 
 my %opts;
+my $intro_length = 2;
 
-getopts('m:o:b:', \%opts);
+getopts('i:m:o:b:s:e', \%opts);
 
 my $metafile;
+my $srcfile;
+my $srtfile;
 my $bgfile;
 my $outputfile;
+my $workdir = "./fk-temp";
 
 #foreach (keys %opts ) { print "$_\n"; };
-
+print "-";
 if ( $opts{'m'} ) { 
  $metafile = $opts{'m'} ; 
 } else { 
  usage();
  exit 1;
 }
+print "-";
 if ( $opts{'o'} ) { 
  $outputfile = $opts{'o'} ; 
 } else { 
  usage();
  exit 1;
 }
+print "-";
 
 if ( $opts{'b'} ) { 
  $bgfile = $opts{'b'} ; 
@@ -47,6 +54,26 @@ if ( $opts{'b'} ) {
  usage();
  exit 1;
 }
+print "-";
+
+if ( $opts{'i'} ) { 
+ $srcfile = $opts{'i'} ; 
+} else { 
+ usage();
+ exit 1;
+}
+print "-";
+
+if ( $opts{'s'} ) { 
+ $srtfile = $opts{'s'} ; 
+ print "Using subtitle file:  $srtfile \n";
+}
+
+if ( -d $workdir ) {
+ `rm -rf $workdir`;
+}
+
+`mkdir $workdir`;
 
 my $startposter = new File::Temp( UNLINK => 0, SUFFIX => '.png' );
 my $startposter_name = $startposter->filename();
@@ -56,12 +83,14 @@ my $endposter_name = $endposter->filename();
 $endposter->close();
 my $meta = read_meta();
 
-create_startposter();
+#create_startposter();
+#gen_intro_dv($startposter_name,5,"$workdir/front-test.dv");
+gen_video_body($srcfile,"$workdir/body-test.dv"); 
 
 #### Functions #########
 
 sub usage {
- print"Usage: $0 -m metafile -o outputfile -b bgfile\n";
+ print"Usage: $0 -e -i input-dvfile [-s subtitle_file] -m metafile -o outputfile -b bgfile\n";
 }
 
 sub read_meta {
@@ -82,3 +111,24 @@ sub create_startposter {
  print $f;
 }
 
+sub gen_intro_dv {
+my $png_file = shift;
+my $length = shift;
+my $outputvid = shift;
+`ffmpeg -loop_input -t $length -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -y $outputvid`;
+}
+
+sub gen_video_body {
+ my $source = shift; 
+ my $dest = shift;
+ my $cmd = "mencoder -oac pcm -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
+ if ( $opts{'e'} ) {
+   $cmd .= "-vf-add expand=960::::: -vf-add scale=720:576 ";
+ } 
+ if ( $srtfile ) {
+  $cmd .= " -sub $srtfile -utf8 ";
+ }
+ $cmd .= "-o $dest $source ";
+ print "Command= $cmd \n\n";
+ `$cmd`;
+}

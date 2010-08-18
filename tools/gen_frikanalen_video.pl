@@ -121,7 +121,7 @@ my $outputvid = shift;
 sub gen_video_body {
  my $source = shift; 
  my $dest = shift;
- my $cmd = "mencoder -oac pcm -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
+ my $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
  if ( $opts{'e'} ) {
    $cmd .= "-vf-add expand=960::::: -vf-add scale=720:576 ";
  } 
@@ -130,5 +130,5 @@ sub gen_video_body {
  }
  $cmd .= "-o $dest $source ";
  print "Command= $cmd \n\n";
- `$cmd`;
+ system("$cmd");
 }

@@ -83,14 +83,15 @@ my $endposter_name = $endposter->filename();
 $endposter->close();
 my $meta = read_meta();
 
-#create_startposter();
-#gen_intro_dv($startposter_name,5,"$workdir/front-test.dv");
-gen_video_body($srcfile,"$workdir/body-test.dv"); 
+my $front_poster_dv = gen_intro_dv($startposter_name,3);
+my $video_body_dv = gen_video_body($srcfile); 
+glue_dv($opts{'o'},$front_poster_dv,$video_body_dv);
 
 #### Functions #########
 
 sub usage {
- print"Usage: $0 -e -i input-dvfile [-s subtitle_file] -m metafile -o outputfile -b bgfile\n";
+ print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s subtitlefile.srt -e] \n";
+ print "-e option does pillarboxing of 4/3 content into anamorphic 4/3\n";
 }
 
 sub read_meta {
@@ -114,13 +115,19 @@ sub create_startposter {
 sub gen_intro_dv {
 my $png_file = shift;
 my $length = shift;
-my $outputvid = shift;
+my $outputvid = "$workdir/front-poster.dv";
+ create_startposter();
 `ffmpeg -loop_input -t $length -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -y $outputvid`;
+ return $outputvid;
 }
 
 sub gen_video_body {
  my $source = shift; 
- my $dest = shift;
+ my $dest = "$workdir/body.dv";
+ if ( ! $opts{'e'} && ! $opts{'s'} ) {
+  print "No encoding needed\n";
+  return $source;
+ }
  my $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
  if ( $opts{'e'} ) {
    $cmd .= "-vf-add expand=960::::: -vf-add scale=720:576 ";
@@ -131,4 +138,14 @@ sub gen_video_body {
  $cmd .= "-o $dest $source ";
  print "Command= $cmd \n\n";
  system("$cmd");
+ return $dest;
 }
+
+
+sub glue_dv {
+ my $outfile = shift;
+ my @infiles = @_;
+ my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
+ system($cmd);
+}
+

@@ -17,36 +17,34 @@ use warnings;
 
 use Data::Dumper;
 use Getopt::Std;
-use File::Temp;
 
 my %opts;
 my $intro_length = 2;
 
 getopts('i:m:o:b:s:e', \%opts);
 
+my $workdir = "./fk-temp";
+my $startposter = "$workdir/startposter.png";
+my $endposter = "$workdir/endposter.png";
+my $startposter_dv = "$workdir/startposter.dv";
+my $endposter_dv = "$workdir/endposter.dv";
 my $metafile;
 my $srcfile;
 my $srtfile;
 my $bgfile;
 my $outputfile;
-my $workdir = "./fk-temp";
+my $normalize_cmd = "/usr/local/bin/normalize";
+my $soundlevel_dbfs = '-18dBFS';
 
 #foreach (keys %opts ) { print "$_\n"; };
-print "-";
 if ( $opts{'m'} ) { 
  $metafile = $opts{'m'} ; 
 } else { 
  usage();
  exit 1;
 }
-print "-";
-if ( $opts{'o'} ) { 
- $outputfile = $opts{'o'} ; 
-} else { 
- usage();
- exit 1;
-}
-print "-";
+
+my $meta = read_meta();
 
 if ( $opts{'b'} ) { 
  $bgfile = $opts{'b'} ; 
@@ -54,7 +52,26 @@ if ( $opts{'b'} ) {
  usage();
  exit 1;
 }
-print "-";
+
+if ( -d $workdir ) {
+ `rm -rf $workdir`;
+}
+
+`mkdir -p $workdir`;
+
+if ( $ARGV[0] eq 'front' ) {
+ create_startposter_png($startposter,$bgfile);  
+ print "Frontpage in $startposter\n";
+ print "Check it out !\n";
+ exit ;
+}
+
+if ( $opts{'o'} ) { 
+ $outputfile = $opts{'o'} ; 
+} else { 
+ usage();
+ exit 1;
+}
 
 if ( $opts{'i'} ) { 
  $srcfile = $opts{'i'} ; 
@@ -62,36 +79,29 @@ if ( $opts{'i'} ) {
  usage();
  exit 1;
 }
-print "-";
 
 if ( $opts{'s'} ) { 
  $srtfile = $opts{'s'} ; 
  print "Using subtitle file:  $srtfile \n";
 }
 
-if ( -d $workdir ) {
- `rm -rf $workdir`;
-}
 
-`mkdir $workdir`;
 
-my $startposter = new File::Temp( UNLINK => 0, SUFFIX => '.png' );
-my $startposter_name = $startposter->filename();
-$startposter->close();
-my $endposter = new File::Temp( UNLINK => 0, SUFFIX => '.png' );
-my $endposter_name = $endposter->filename();
-$endposter->close();
-my $meta = read_meta();
 
-my $front_poster_dv = gen_intro_dv($startposter_name,3);
-my $video_body_dv = gen_video_body($srcfile); 
-glue_dv($opts{'o'},$front_poster_dv,$video_body_dv);
+create_startposter_png($startposter,$bgfile);
+create_endposter_png($endposter,$bgfile);
+gen_dv_from_png($startposter,3,$startposter_dv);
+gen_dv_from_png($endposter,3,$endposter_dv);
+my $normalized_video_body = gen_video_body($srcfile); 
+glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 
 #### Functions #########
 
 sub usage {
  print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s subtitlefile.srt -e] \n";
  print "-e option does pillarboxing of 4/3 content into anamorphic 4/3\n";
+ print "To only produce a frontpage png file to check layout:\n";
+ print "$0 -m metafile -b backgroundfile front\n\n";
 }
 
 sub read_meta {
@@ -106,39 +116,63 @@ sub read_meta {
  return $ret;
 }
 
-sub create_startposter {
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$meta->{'title1'}\'" -draw "text 450,380 \'$meta->{'title2'}\'" -draw "text 450,460 \'$meta->{'title3'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date-place'}\'" $startposter_name`;
- print "$startposter_name\n";
+sub create_startposter_png {
+ my $name = shift;
+ my $bgfile = shift;
+ my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$meta->{'title1'}\'" -draw "text 450,380 \'$meta->{'title2'}\'" -draw "text 450,460 \'$meta->{'title3'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date-place'}\'" $name`;
  print $f;
 }
 
-sub gen_intro_dv {
+sub create_endposter_png {
+ my $name = shift;
+ my $bgfile = shift;
+ my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'endnote1'}\'" -pointsize 60 -draw "text 450,300 \'$meta->{'endnote2'}\'" -draw "text 450,380 \'$meta->{'endnote3'}\'" -draw "text 450,460 \'$meta->{'endnote4'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date-place'}\'" $name`;
+ print $f;
+}
+
+sub gen_dv_from_png {
+
 my $png_file = shift;
 my $length = shift;
-my $outputvid = "$workdir/front-poster.dv";
- create_startposter();
+my $outputvid = shift;
 `ffmpeg -loop_input -t $length -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -y $outputvid`;
- return $outputvid;
 }
 
 sub gen_video_body {
  my $source = shift; 
- my $dest = "$workdir/body.dv";
- if ( ! $opts{'e'} && ! $opts{'s'} ) {
-  print "No encoding needed\n";
-  return $source;
+ my $mod_dv;
+ if ( $opts{'e'} || $opts{'s'} ) {
+   my $cmd ;
+   $mod_dv = "$workdir/mod.dv";
+   $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
+   if ( $opts{'e'} ) {
+     $cmd .= "-vf-add expand=960::::: -vf-add scale=720:576 ";
+   } 
+   if ( $srtfile ) {
+    $cmd .= " -sub $srtfile -utf8 ";
+   }
+   $cmd .= "-o $mod_dv $source ";
+   #print "Command= $cmd \n\n";
+   system("$cmd");
+   $source = $mod_dv;
  }
- my $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
- if ( $opts{'e'} ) {
-   $cmd .= "-vf-add expand=960::::: -vf-add scale=720:576 ";
- } 
- if ( $srtfile ) {
-  $cmd .= " -sub $srtfile -utf8 ";
- }
- $cmd .= "-o $dest $source ";
- print "Command= $cmd \n\n";
- system("$cmd");
+ my $dest = normalize_sound($source); 
  return $dest;
+}
+
+sub normalize_sound {
+ my $dvfile = shift;
+ my $new_dvfile = "$workdir/normalized-body.dv";
+ system("ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav");
+ system("$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav");
+ my $normret = ($? >> 8);
+ system("ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile");
+ my $ffret = ($? >> 8);
+ print "-- ". $ffret ." -- ". $normret ."\n";
+ if ( $ffret == 0 && $normret == 0 ) { 
+   system("rm $workdir/sound.wav $dvfile");
+ } else { die "Soundfile extraction or re-merge failed\n"; }
+ return $new_dvfile;
 }
 
 

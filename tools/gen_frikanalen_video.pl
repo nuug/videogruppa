@@ -179,7 +179,8 @@ sub normalize_sound {
 sub glue_dv {
  my $outfile = shift;
  my @infiles = @_;
- my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
+# my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
+ my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
  system($cmd);
 }
 

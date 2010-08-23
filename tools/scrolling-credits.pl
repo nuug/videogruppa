@@ -1,16 +1,15 @@
 #!/usr/bin/perl
 
 use GD; 
-use GD::Text;
 use strict;
 use warnings;
+#my $ref = new GD::Image->newTrueColor(100,100);
 
-#my $ref = new GD::Image(100,100);
 #my $white = $ref->colorAllocate(255,255,255);
 #my $black = $ref->colorAllocate(0,0,0);
-my $blankMap = new GD::Image(720,540);
-my $white = $blankMap->colorAllocate(255,255,255);
-my $black = $blankMap->colorAllocate(0,0,0);
+#my $blankMap = new GD::Image(720,540);
+#my $white = $blankMap->colorAllocate(255,255,255);
+#my $black = $blankMap->colorAllocate(0,0,0);
 
 my @positions = (); 
 my @elements = ();
@@ -22,21 +21,25 @@ my @bounds;
 $bounds[1] = 150;
 
 
-my $bgfile = "/home/jarle/svn/nuug-video/tools/lib/graphic/tv-bg-pal-size.png";
+my $bgfile = "./lib/graphic/tv-bg-pal-size.png";
 
-my $im = newFromPng GD::Image($bgfile);
+if ( $ARGV[0] ) {
+ $bgfile = $ARGV[0];
+}
+my $im = newFromPng GD::Image($bgfile,1);
+#my $im = newFromJpeg GD::Image($bgfile);
 
-#my $white = $im->colorAllocate(255,255,255);
+my $white = $im->colorAllocate(255,255,255);
 #my $black = $im->colorAllocate(  0,  0,  0);
-$im->interlaced(undef);
-$im->transparent(-1);
+#$im->interlaced(undef);
+#$im->transparent(-1);
 #$im->colorDeallocate($white);
 #$white = $im->colorAllocate(255,255,255);
 #$im->rectangle(0,0,99,99,$black);
 #$im->rectangle(0,0,59,99,$black);
 
 my $line = "Dette er en test på øæåØÆÅ";
-@bounds = $im->stringFT($black,$gdfont,$fontsize,0,220,130,$line);
+@bounds = $im->stringFT($white,$gdfont,$fontsize,0,220,130,$line);
 
 #$im->string(gdMediumBoldFont,200,300,$line,$white);
 

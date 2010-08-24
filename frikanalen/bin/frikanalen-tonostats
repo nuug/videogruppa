@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use vars qw(%opts %orgs);
+use Data::Dumper;
 
 use Getopt::Std;
 
@@ -39,6 +40,10 @@ sub get_tono_stats {
         if ("true" eq $video->{'HasTonoRecords'}) {
             $tono++;
             $orgs{$video->{'Organization'}}{tono}++;
+            push(@{$orgs{$video->{'Organization'}}{tonoids}},
+                 $video->{MetaDataVideoId});
+#            print Dumper($video);
+#            exit 0;
         } else {
             $notono++;
             $orgs{$video->{'Organization'}}{notono}++;
@@ -49,12 +54,15 @@ sub get_tono_stats {
 sub print_tono_stats {
     my ($with, $without) = get_tono_stats();
     printf("Innslag med tono-musikk:   %d (%.1f%%)\n",   $with, 100 * $with / ($with+$without));
-    printf("Innslag uten tonon-musikk: %d (%.1f%%)\n",$without, 100 *$without/($with+$without));
+    printf("Innslag uten tono-musikk:  %d (%.1f%%)\n",$without, 100 *$without/($with+$without));
 
     for my $org (sort tonoorder keys %orgs) {
         my $tono = $orgs{$org}{tono} || 0;
         my $notono = $orgs{$org}{notono} || 0;
-        print "$tono\t$notono\t$org\n";
+        my $frac = int(100 * $tono / ($tono+$notono));
+        print "$frac\t$tono\t$notono\t$org\n";
+        print join(" ", "  ", @{$orgs{$org}{tonoids}}), "\n"
+            if $opts{'i'} && exists $orgs{$org}{tonoids};
     }
 }
 
@@ -79,7 +87,7 @@ EOF
     }
 }
 
-getopts("m", \%opts);
+getopts("im", \%opts);
 
 if ($opts{'m'}) {
     munin_plugin(@ARGV);

@@ -73,6 +73,7 @@ sub tonoorder {
    }
    return $order;
 }
+
 sub munin_plugin {
     my @ARGV = @_;
     if (defined $ARGV[0] && "config" eq $ARGV[0]) {

@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use vars qw(%opts);
+use vars qw(%opts %orgs);
 
 use Getopt::Std;
 
@@ -38,8 +38,10 @@ sub get_tono_stats {
     foreach my $video (@{$res->{'Data'}->{'Video'}}) {
         if ("true" eq $video->{'HasTonoRecords'}) {
             $tono++;
+            $orgs{$video->{'Organization'}}{tono}++;
         } else {
             $notono++;
+            $orgs{$video->{'Organization'}}{notono}++;
         }
     }
     return ($tono, $notono);
@@ -48,6 +50,20 @@ sub print_tono_stats {
     my ($with, $without) = get_tono_stats();
     printf("Innslag med tono-musikk:   %d (%.1f%%)\n",   $with, 100 * $with / ($with+$without));
     printf("Innslag uten tonon-musikk: %d (%.1f%%)\n",$without, 100 *$without/($with+$without));
+
+    for my $org (sort tonoorder keys %orgs) {
+        my $tono = $orgs{$org}{tono} || 0;
+        my $notono = $orgs{$org}{notono} || 0;
+        print "$tono\t$notono\t$org\n";
+    }
+}
+
+sub tonoorder {
+   my $order = ($orgs{$b}{tono} || 0) <=> ($orgs{$a}{tono} || 0);
+   if (0 == $order) {
+      $order = ($orgs{$b}{notono} || 0) <=> ($orgs{$a}{notono} || 0);
+   }
+   return $order;
 }
 sub munin_plugin {
     my @ARGV = @_;

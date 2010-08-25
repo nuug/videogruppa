@@ -169,6 +169,9 @@ sub searchvids {
 
  unless ($obj->fault) {
    $res = $obj->result;
+      if ( ref($res->{'Data'}->{'Video'}) eq 'HASH') {
+       return [ $res->{'Data'}->{'Video'} ];
+      }
    return $res->{'Data'}->{'Video'};
  } else {
    print join ', ',

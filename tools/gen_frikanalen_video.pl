@@ -1,16 +1,20 @@
 #!/usr/bin/perl
 
 # Script for adding start/end poster and convert to frikanalen acceptable avi format anamporphic PAL with pillarboxing
-# Script is work in progress 2010-08-07 /JB
+# Script is work in progress 2010-09-04 /JB
+# standard backggrund for NUUG is in ./lib/graphic/tv-bg.png (relative to script location in svn-tree) 
 # metafile format is like this:
+#
+#presenter=Jørgen Fjeld
+#title=Ruby on Rails enterprise behov , en velidg lang tittel som jeg lurer på hvordan vil se ut på forsiden av NUUGS video sldf   lsdkfms msf 
+#date=2010-03-09
+#place=Oslo
+#url=http://www.nuug.no
+#endnote1=Redaktør:
+#endnote2=NUUG
+#endnote3=
+#endnote4=email: sekretariat@nuug.no
 # 
-# cat test.meta
-# title1=Dette er Tittlelen
-# title2=Dette er  andre linje i Tittlelen
-# title3=Dette er øæå 3. linje i Tittlelen
-# presenter=Even stikkbakken
-# date-place=2010-08-07 - Oslo
-# url=http://www.nuug.no
 
 use strict;
 use warnings;
@@ -20,10 +24,11 @@ use Getopt::Std;
 
 my %opts;
 my $intro_length = 2;
+my $pid = $$;
 
 getopts('i:m:o:b:s:e', \%opts);
 
-my $workdir = "./fk-temp";
+my $workdir = "./fk-temp-$pid";
 my $startposter = "$workdir/startposter.png";
 my $endposter = "$workdir/endposter.png";
 my $startposter_dv = "$workdir/startposter.dv";
@@ -34,6 +39,7 @@ my $srtfile;
 my $bgfile;
 my $outputfile;
 my $normalize_cmd = "/usr/local/bin/normalize";
+# http://normalize.nongnu.org/
 my $soundlevel_dbfs = '-18dBFS';
 
 #foreach (keys %opts ) { print "$_\n"; };
@@ -53,9 +59,6 @@ if ( $opts{'b'} ) {
  exit 1;
 }
 
-if ( -d $workdir ) {
- `rm -rf $workdir`;
-}
 
 `mkdir -p $workdir`;
 
@@ -89,11 +92,11 @@ if ( $opts{'s'} ) {
 
 
 create_startposter_png($startposter,$bgfile);
-#create_endposter_png($endposter,$bgfile);
-#gen_dv_from_png($startposter,3,$startposter_dv);
-#gen_dv_from_png($endposter,3,$endposter_dv);
-#my $normalized_video_body = gen_video_body($srcfile); 
-#glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
+create_endposter_png($endposter,$bgfile);
+gen_dv_from_png($startposter,3,$startposter_dv);
+gen_dv_from_png($endposter,3,$endposter_dv);
+my $normalized_video_body = gen_video_body($srcfile); 
+glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 
 #### Functions #########
 
@@ -116,10 +119,42 @@ sub read_meta {
  return $ret;
 }
 
+sub count_words_n_space {
+ my $word = shift;
+ my $count = 0;
+ while ( $word =~ /(.)/g ) { $count++; } 
+ $count++;
+ return $count;
+}
+
+sub break_title {
+ my $title = shift;
+ print $title;
+ my $cols = 30;
+ my $count = 0 ; 
+ my $ln = 0; 
+ my @lines;
+ my @words = split(" ",$title);
+ foreach my $word (@words) {
+  $count += count_words_n_space($word);
+  if ($count < $cols ) {
+   $lines[$ln] .= "$word ";
+  } else {
+   print "$lines[$ln]\n";
+   $count = 0;
+   $ln++;
+   $count += count_words_n_space($word);
+   $lines[$ln] .= "$word ";
+  }
+ }
+ return \@lines;
+} 
+
 sub create_startposter_png {
  my $name = shift;
+ my $title_lines = break_title($meta->{'title'});
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$meta->{'title1'}\'" -draw "text 450,380 \'$meta->{'title2'}\'" -draw "text 450,460 \'$meta->{'title3'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date'}-$meta->{'place'}\'" $name`;
+ my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$title_lines->[0]\'" -draw "text 450,380 \'$title_lines->[1]\'" -draw "text 450,460 \'$title_lines->[2]\'" -draw "text 450,540 \'$title_lines->[3]\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date'}-$meta->{'place'}\'" $name`;
  print $f;
 }
 
@@ -182,5 +217,8 @@ sub glue_dv {
  my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
 # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
  system($cmd);
+ if ( -d $workdir ) {
+   `rm -rf $workdir`;
+ }
 }
 

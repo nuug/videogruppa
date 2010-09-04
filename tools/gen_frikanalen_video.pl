@@ -89,11 +89,11 @@ if ( $opts{'s'} ) {
 
 
 create_startposter_png($startposter,$bgfile);
-create_endposter_png($endposter,$bgfile);
-gen_dv_from_png($startposter,3,$startposter_dv);
-gen_dv_from_png($endposter,3,$endposter_dv);
-my $normalized_video_body = gen_video_body($srcfile); 
-glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
+#create_endposter_png($endposter,$bgfile);
+#gen_dv_from_png($startposter,3,$startposter_dv);
+#gen_dv_from_png($endposter,3,$endposter_dv);
+#my $normalized_video_body = gen_video_body($srcfile); 
+#glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 
 #### Functions #########
 
@@ -119,7 +119,7 @@ sub read_meta {
 sub create_startposter_png {
  my $name = shift;
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$meta->{'title1'}\'" -draw "text 450,380 \'$meta->{'title2'}\'" -draw "text 450,460 \'$meta->{'title3'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date-place'}\'" $name`;
+ my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$meta->{'title1'}\'" -draw "text 450,380 \'$meta->{'title2'}\'" -draw "text 450,460 \'$meta->{'title3'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date'}-$meta->{'place'}\'" $name`;
  print $f;
 }
 
@@ -135,7 +135,7 @@ sub gen_dv_from_png {
 my $png_file = shift;
 my $length = shift;
 my $outputvid = shift;
-`ffmpeg -loop_input -t $length -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -y $outputvid`;
+`ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -y $outputvid`;
 }
 
 sub gen_video_body {
@@ -179,8 +179,8 @@ sub normalize_sound {
 sub glue_dv {
  my $outfile = shift;
  my @infiles = @_;
-# my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
- my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
+ my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
+# my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
  system($cmd);
 }
 

@@ -170,7 +170,7 @@ sub gen_dv_from_png {
 my $png_file = shift;
 my $length = shift;
 my $outputvid = shift;
-`ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -y $outputvid`;
+ `ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid`;
 }
 
 sub gen_video_body {
@@ -181,7 +181,7 @@ sub gen_video_body {
    $mod_dv = "$workdir/mod.dv";
    $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
    if ( $opts{'e'} ) {
-     $cmd .= "-vf-add expand=960::::: -vf-add scale=720:576 ";
+     $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
    } 
    if ( $srtfile ) {
     $cmd .= " -sub $srtfile -utf8 ";

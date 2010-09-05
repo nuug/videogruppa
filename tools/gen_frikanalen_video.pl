@@ -154,15 +154,15 @@ sub create_startposter_png {
  my $name = shift;
  my $title_lines = break_title($meta->{'title'});
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$title_lines->[0]\'" -draw "text 450,380 \'$title_lines->[1]\'" -draw "text 450,460 \'$title_lines->[2]\'" -draw "text 450,540 \'$title_lines->[3]\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date'}-$meta->{'place'}\'" $name`;
- print $f;
+ my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$title_lines->[0]\'" -draw "text 450,380 \'$title_lines->[1]\'" -draw "text 450,460 \'$title_lines->[2]\'" -draw "text 450,540 \'$title_lines->[3]\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date'}-$meta->{'place'}\'" $name || echo  -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub create_endposter_png {
  my $name = shift;
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'endnote1'}\'" -pointsize 60 -draw "text 450,300 \'$meta->{'endnote2'}\'" -draw "text 450,380 \'$meta->{'endnote3'}\'" -draw "text 450,460 \'$meta->{'endnote4'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date-place'}\'" $name`;
- print $f;
+ my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'endnote1'}\'" -pointsize 60 -draw "text 450,300 \'$meta->{'endnote2'}\'" -draw "text 450,380 \'$meta->{'endnote3'}\'" -draw "text 450,460 \'$meta->{'endnote4'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date-place'}\'" $name|| echo  -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub gen_dv_from_png {
@@ -170,7 +170,8 @@ sub gen_dv_from_png {
 my $png_file = shift;
 my $length = shift;
 my $outputvid = shift;
- `ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid`;
+my $f =  `ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid || echo  -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub gen_video_body {
@@ -188,7 +189,8 @@ sub gen_video_body {
    }
    $cmd .= "-o $mod_dv $source ";
    #print "Command= $cmd \n\n";
-   system("$cmd");
+   my $f = `$cmd  || echo  -n -1` ;
+    if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
    $source = $mod_dv;
  }
  my $dest = normalize_sound($source); 
@@ -198,15 +200,12 @@ sub gen_video_body {
 sub normalize_sound {
  my $dvfile = shift;
  my $new_dvfile = "$workdir/normalized-body.dv";
- system("ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav");
- system("$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav");
- my $normret = ($? >> 8);
- system("ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile");
- my $ffret = ($? >> 8);
- print "-- ". $ffret ." -- ". $normret ."\n";
- if ( $ffret == 0 && $normret == 0 ) { 
-   system("rm $workdir/sound.wav $dvfile");
- } else { die "Soundfile extraction or re-merge failed\n"; }
+ my $f = `ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav  || echo  -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ $f = `$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav || echo  -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ $f = `ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile || echo  -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  return $new_dvfile;
 }
 
@@ -216,7 +215,8 @@ sub glue_dv {
  my @infiles = @_;
  my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
 # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
- system($cmd);
+ my $f = `"$cmd  || echo  -n -1"`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  if ( -d $workdir ) {
    `rm -rf $workdir`;
  }

@@ -1,0 +1,37 @@
+#!/usr/bin/perl
+#
+# Author: Petter Reinholdtsen
+# Date: 2010-09-12
+# License: GNU General Public license v2 or later
+#
+# http://wiki.nuug.no/grupper/video/pubfrikanalen
+#
+# API description is at
+# https://admin.frikanalen.tv/ScheduleSite/ScheduleProxyWebService.asmx
+
+use strict;
+use warnings;
+
+use Getopt::Std;
+
+# SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
+use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, 'trace', 'debug';
+
+# First one need to log in with a valid user
+
+# Then one can ask for the schedule
+my $soap = new SOAP::Lite
+    -> uri('http://never.no')
+    -> proxy('https://admin.frikanalen.tv/ScheduleSite/ScheduleProxyWebService.asmx');
+$soap->readable(1);
+my $res;
+my $obj = $soap->GetItems(
+    SOAP::Data->name('startTimeUtc' => '2010-09-12T12:00:00'),
+    SOAP::Data->name('endTimeUtc' => '2010-09-12T15:00:00'));
+unless ($obj->fault) {
+    return $obj->result->{string};
+} else {
+#        print Dumper($obj);
+    print $obj->fault->{faultstring}, "\n";
+    return undef;
+}

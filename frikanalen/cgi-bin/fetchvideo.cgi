@@ -42,6 +42,12 @@ my $hours = int($length/3600);
 my $date = $ref->{$id}->{UploadDate};
 $date =~ s/T.+$//;
 my $tonoflag = $ref->{$id}->{HasTonoRecords};
+my $tonostatus;
+if ("false" eq $tonoflag) {
+    $tonostatus = "Innhold krever ikke tono-betaling";
+} else {
+    $tonostatus = "Innhold krever tono-betaling";
+}
 my $ogvurl = $ref->{$id}->{ogvUri};
 my $wmvurl = $ref->{$id}->{VideoUri};
 my $playlisturl = $nuug_frikanalen_url . url(-relative=>1) . "?playlist=$videoid.m3u" ;
@@ -108,7 +114,7 @@ if ($playlist) {
         <p><table cellpadding=5>
         <tr><td>Lengde:</td><td> $lengde </td></tr>
         <tr><td>Dato:</td><td> $date </td></tr>
-        <tr><td>Innhold krever tono-betaling:</td><td> $tonoflag </td></tr>
+        <tr><td rowspan="2">$tonostatus</td></tr>
         </table>
         <p>Dersom du ikke ser noe video p&aring; denne siden, har du en nettleser uten fungerende java-st&oslash;tte. F&oslash;lgende lenker kan benyttes dersom dette er tilfelle, eller du &oslash;nsker mere kontroll p&aring; s&oslash;king (playlist url) eller laste ned hele filen (Ogg Theora) . Vi har ogs&aring;  lagt inn direktelink til Windows Media url p&aring; frikanalen sin side.
         <p>Video URLs:

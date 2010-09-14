@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cmd=$(basename $0)
+cmd=${cmd%-avahi}
+
+if [ -z "$cmd" ] ; then
+    echo error: Unable to determine command name
+    exit 1
+fi
+
+# Dropping lines with : to avoid IPv6 addresses.  dvswitch do not
+# handle link local IPv6 addresses passed on from avahi.
+args=$(avahi-browse -tr -v _dvswitch._tcp 2>&1 | grep -v : | \
+    awk '/address = /{host = $3} /port = /{port = $3} END { if (host) { print "-h", host, "-p", port } }' | \
+    tr -d '[]')
+
+$cmd $args $@

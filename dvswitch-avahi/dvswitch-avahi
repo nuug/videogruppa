@@ -1,0 +1,18 @@
+#!/bin/sh
+
+port=12345
+
+avahi-publish-service -s 'DVSwitch mixer' _dvswitch._tcp $port &
+pid=$!
+
+sleep 2 # Need a moment to register the service
+
+# Dropping lines with : to avoid IPv6 addresses.  dvswitch do not handle
+# link local IPv6 addresses passed on from avahi.
+host=$(avahi-browse -tr -v _dvswitch._tcp 2>&1 | grep -v : | \
+    awk '/address = / { host = $3 } END {print host }' | tr -d '[]')
+
+echo "Starting dvswitch on host '$host'."
+dvswitch -h $host -p $port $@
+
+kill $pid

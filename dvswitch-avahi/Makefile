@@ -11,9 +11,13 @@ clean:
 
 install:
 	$(INSTALL) -d $(DESTDIR)$(bindir)
-	$(INSTALL) dvswitch-avahi dvsink-files-avahi $(DESTDIR)$(bindir)
+
+	$(INSTALL) dvswitch-avahi $(DESTDIR)$(bindir)/.
+
+	$(INSTALL) dvsink-files-avahi $(DESTDIR)$(bindir)/.
 	ln -s dvsink-files-avahi $(DESTDIR)$(bindir)/dvsink-command-avahi
-	ln -s dvsink-files-avahi $(DESTDIR)$(bindir)/dvsource-dvgrab-avahi
-	ln -s dvsink-files-avahi $(DESTDIR)$(bindir)/dvsource-firewire-avahi
-	ln -s dvsink-files-avahi $(DESTDIR)$(bindir)/dvsource-v4l2-dv-avahi
-	ln -s dvsink-files-avahi $(DESTDIR)$(bindir)/dvsource-alsa-avahi
+
+	$(INSTALL) dvsink-files-avahi $(DESTDIR)$(bindir)/dvsource-dvgrab-avahi
+	ln -s dvsource-dvgrab-avahi $(DESTDIR)$(bindir)/dvsource-firewire-avahi
+	ln -s dvsource-dvgrab-avahi $(DESTDIR)$(bindir)/dvsource-v4l2-dv-avahi
+	ln -s dvsource-dvgrab-avahi $(DESTDIR)$(bindir)/dvsource-alsa-avahi

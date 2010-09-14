@@ -5,7 +5,7 @@ export LC_ALL=C
 package=dvswitch-avahi
 
 debdir=$(shell pwd)/debian
-DESTDIR=${debdir}/$(package)
+DESTDIR=${debdir}/tmp
 
 build: build-stamp
 build-stamp:
@@ -32,7 +32,6 @@ binary-arch: build
 	dh_installdirs
 
 	make install DESTDIR=${DESTDIR}
-	mkdir -p $(DESTDIR)/etc/apache/conf.d
 	dh_install --sourcedir=${DESTDIR}
 
 	dh_installdocs
@@ -44,6 +43,8 @@ binary-arch: build
 	dh_fixperms
 	dh_installdeb
 	dh_shlibdeps
+	dh_installinit -pdvswitch-avahi --no-start -u"start 18 2 3 4 5 . stop 82 1 ."
+	dh_installinit -pdvsource-avahi --no-start -u"start 20 2 3 4 5 . stop 80 1 ."
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

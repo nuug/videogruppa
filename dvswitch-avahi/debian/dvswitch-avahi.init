@@ -1,0 +1,57 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          dvswitch-avahi
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Should-Start:      avahi
+# Should-Stop:       avahi
+# Default-Start:     2 3 4 5
+# Default-Stop:      1
+# Short-Description: Start dvswitch related scripts at boot time.
+# Description:       To enable this, set the appropriate boot argument
+#                    on the kernel command line.
+### END INIT INFO
+
+ENABLED=false
+
+. /lib/init/vars.sh # for $VERBOSE
+
+if grep -qw dvswitch /proc/cmdline ; then
+    ENABLED=true
+fi
+
+if [ -f /etc/default/dvswitch ] ; then
+    . /etc/default/dvswitch
+fi
+
+xsession() {
+    xterm -e bash -c "/usr/bin/dvswitch-avahi ; bash" &
+    sleep 5
+    twm
+}
+
+case "$1" in
+  start)
+    if [ true = "$ENABLED" ]; then
+        startx $0 xsession -- :0 &
+	# Wait for 5 seconds for the avahi announcement, to make sure dvsources started after this script
+	# will find the server
+        for f in 1 2 3 4 5 ; do
+            found=$(avahi-browse -tr -v _dvswitch._tcp 2>&1 | awk '/address = / { print $3 }')
+	    if [ "$found" ] ; then
+                sleep 5 # Give dvswitch process a chance to start too
+                break
+            fi
+        done
+    fi
+    ;;
+  stop)
+    ;;
+  restart)
+    ;;
+  force-reload)
+    ;;
+  xsession)
+    xsession
+    ;;
+esac

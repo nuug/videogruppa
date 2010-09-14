@@ -1,0 +1,48 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          dvsource-avahi
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Should-Start:      dvswitch-avahi avahi
+# Should-Stop:       dvswitch-avahi avahi
+# Default-Start:     2 3 4 5
+# Default-Stop:      1
+# Short-Description: Start dvswitch sources at boot time.
+# Description:       To enable this, set the appropriate boot argument
+#                    on the kernel command line.  Locates dvswitch server
+#                    using avahi.
+### END INIT INFO
+
+ENABLED=false
+
+. /lib/init/vars.sh # for $VERBOSE
+
+if grep -qw dvsource /proc/cmdline ; then
+    ENABLED=true
+fi
+
+if [ -f /etc/default/dvsource ] ; then
+    . /etc/default/dvsource
+fi
+
+case "$1" in
+  start)
+    if [ true = "$ENABLED" ] ; then
+        # How can we detect if a camera is attached?
+        [ "$VERBOSE" != no ] && log_action_begin_msg "Starting dvsource-firewire-avahi"
+        dvsource-firewire-avahi &
+        [ "$VERBOSE" != no ] && log_action_end_msg 0
+
+        # Can we detect USB cameras?  Until we know a way, just try to start and see if it work
+        [ "$VERBOSE" != no ] && log_action_begin_msg "Starting dvsource-v4l2-dv-avahi /dev/video0"
+        dvsource-v4l2-dv-avahi /dev/video0 &
+        [ "$VERBOSE" != no ] && log_action_end_msg 0
+    fi
+    ;;
+  stop)
+    ;;
+  restart)
+    ;;
+  force-reload)
+    ;;
+esac

@@ -1,0 +1,4 @@
+usr/bin/dvsource-v4l2-dv-avahi
+usr/bin/dvsource-firewire-avahi
+usr/bin/dvsource-dvgrab-avahi
+usr/bin/dvsource-alsa-avahi

@@ -10,19 +10,19 @@ Package: dvswitch-avahi
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends},
   dvswitch, avahi-utils
-Description: DVSwitch wrappers to find sinks and sources dynamically
+Description: DVSwitch wrapper to announce presence dynamically
  Use Avahi to find dvswitch sources and sinks.
 
 Package: dvsource-avahi
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends},
   dvsource, avahi-utils
-Description: DVSwitch wrappers to find sinks and sources dynamically
+Description: DVSwitch wrappers to connect sources dynamically
  Use Avahi to find dvswitch sources and sinks.
 
 Package: dvsink-avahi
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends},
   dvsink, avahi-utils
-Description: DVSwitch wrappers to find sinks and sources dynamically
+Description: DVSwitch wrappers to connect sinks dynamically
  Use Avahi to find dvswitch sources and sinks.

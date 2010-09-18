@@ -26,7 +26,7 @@ my %opts;
 my $intro_length = 2;
 my $pid = $$;
 
-getopts('i:m:o:b:s:e', \%opts);
+getopts('i:m:o:b:s', \%opts);
 
 my $workdir = "./fk-temp-$pid";
 #my $startposter = "$workdir/startposter.png";
@@ -40,7 +40,7 @@ my $srcfile;
 my $srtfile;
 my $bgfile;
 my $outputfile;
-my $normalize_cmd = "/usr/local/bin/normalize";
+my $normalize_cmd = "/usr/local/bin/normalize-audio";
 # http://normalize.nongnu.org/
 my $soundlevel_dbfs = '-18dBFS';
 
@@ -86,8 +86,7 @@ if ( $opts{'i'} ) {
 }
 
 if ( $opts{'s'} ) { 
- $srtfile = $opts{'s'} ; 
- print "Using subtitle file:  $srtfile \n";
+ $srtfile = getsrtfile();
 }
 
 
@@ -103,8 +102,9 @@ glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 #### Functions #########
 
 sub usage {
- print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s subtitlefile.srt -e] \n";
- print "-e option does pillarboxing of 4/3 content into anamorphic 4/3\n";
+ print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s /dir/where/srtfiles/are ] \n\n";
+ print "If -s is given it the script expects a file named <basename of raw file>.srt \n";
+ print "located in the path given as arg to -s option\n\n";
  print "To only produce a frontpage png file to check layout:\n";
  print "$0 -m metafile -b backgroundfile front\n\n";
 }
@@ -205,11 +205,11 @@ my $f =  `ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /de
 sub gen_video_body {
  my $source = shift; 
  my $mod_dv;
- if ( $opts{'e'} || $opts{'s'} ) {
+ if ( $meta->{'aspect'} eq "4:3" || $opts{'s'} ) {
    my $cmd ;
    $mod_dv = "$workdir/mod.dv";
    $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
-   if ( $opts{'e'} ) {
+   if ( $meta->{'aspect'} eq "4:3" ) {
      $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
    } 
    if ( $srtfile ) {
@@ -250,3 +250,9 @@ sub glue_dv {
  }
 }
 
+
+sub getsrtfile {
+ my $base = $opts{'i'};
+ $base =~ s/\..+$//; # Could be .dv or .avi or whatnot. This strips it off anyway.
+ return "$opts{'s'}/$base.srt";
+}

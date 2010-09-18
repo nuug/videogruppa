@@ -103,10 +103,8 @@ glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 
 sub usage {
  print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s /dir/where/srtfiles/are ] \n\n";
- print "If -s is given it the script expects a file named <basename of raw file>.srt \n";
+ print "If -s is given the script expects a file named <basename_of_raw_file>.srt \n";
  print "located in the path given as arg to -s option\n\n";
- print "To only produce a frontpage png file to check layout:\n";
- print "$0 -m metafile -b backgroundfile front\n\n";
 }
 
 sub read_meta {

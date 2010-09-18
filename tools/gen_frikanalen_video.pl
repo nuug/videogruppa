@@ -62,7 +62,7 @@ if ( $opts{'b'} ) {
 
 `mkdir -p $workdir`;
 
-if ( $ARGV[0] eq 'front' ) {
+if ( $ARGV[0] && $ARGV[0] eq 'front' ) {
  create_startposter_png($startposter,$bgfile);  
  print "Frontpage in $startposter\n";
  print "Check it out !\n";
@@ -93,6 +93,7 @@ if ( $opts{'s'} ) {
 
 create_startposter_png($startposter,$bgfile);
 create_endposter_png($endposter,$bgfile);
+exit;
 gen_dv_from_png($startposter,3,$startposter_dv);
 gen_dv_from_png($endposter,3,$endposter_dv);
 my $normalized_video_body = gen_video_body($srcfile); 
@@ -159,9 +160,35 @@ sub create_startposter_png {
 }
 
 sub create_endposter_png {
+ # $cmd_body .= " -draw "text $left_margin,$pos \'$n: $meta->{$n}\'"
+ my %keyword_map = ( 
+ 	"introduction" => "Introdusert av",
+ 	"editor" => "Redaktor",
+ 	"email" => "E-post",
+ 	"organizer" => "Organisert av",
+ 	"camera" => "Kamera-ansvarlig",
+ 	"sound" => "Lyd-ansvarlig",
+ 	"videomixer" => "Videomixer-ansvarlig",
+	);
+ my $line_distance = 52;
+ my $text_size = 40;
+ my $pos = 180;
+ my $left_margin = 450;
+ my $cmd_body = "";
+ my @endnotes;
+ my @endnote_tags = ("introduction","organizer","camera","sound","videomixer","editor","email" );
+ foreach my $n ( @endnote_tags ) {
+  if ($meta->{$n} ) {
+   push(@endnotes,"$keyword_map{$n}: $meta->{$n}");
+  } 
+ }
+ foreach my $line ( @endnotes ) {
+  $cmd_body .= "  -draw \"text $left_margin,$pos \'$line \'\"";
+  $pos += $line_distance;
+ }
  my $name = shift;
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'endnote1'}\'" -pointsize 60 -draw "text 450,300 \'$meta->{'endnote2'}\'" -draw "text 450,380 \'$meta->{'endnote3'}\'" -draw "text 450,460 \'$meta->{'endnote4'}\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date-place'}\'" $name|| echo  -n -1`;
+ my $f = `convert $bgfile -pointsize $text_size -fill white -gravity NorthWest $cmd_body -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'place'}: $meta->{'date'}\'" $name|| echo  -n -1`;
  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 

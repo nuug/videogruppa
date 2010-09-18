@@ -29,8 +29,10 @@ my $pid = $$;
 getopts('i:m:o:b:s:e', \%opts);
 
 my $workdir = "./fk-temp-$pid";
-my $startposter = "$workdir/startposter.png";
-my $endposter = "$workdir/endposter.png";
+#my $startposter = "$workdir/startposter.png";
+my $startposter = "$workdir/startposter.jpg";
+#my $endposter = "$workdir/endposter.png";
+my $endposter = "$workdir/endposter.jpg";
 my $startposter_dv = "$workdir/startposter.dv";
 my $endposter_dv = "$workdir/endposter.dv";
 my $metafile;

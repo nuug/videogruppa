@@ -93,7 +93,6 @@ if ( $opts{'s'} ) {
 
 create_startposter_png($startposter,$bgfile);
 create_endposter_png($endposter,$bgfile);
-exit;
 gen_dv_from_png($startposter,3,$startposter_dv);
 gen_dv_from_png($endposter,3,$endposter_dv);
 my $normalized_video_body = gen_video_body($srcfile); 

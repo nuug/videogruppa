@@ -40,7 +40,7 @@ my $srcfile;
 my $srtfile;
 my $bgfile;
 my $outputfile;
-my $normalize_cmd = "/usr/local/bin/normalize-audio";
+my $normalize_cmd = "/usr/bin/normalize-audio";
 # http://normalize.nongnu.org/
 my $soundlevel_dbfs = '-18dBFS';
 

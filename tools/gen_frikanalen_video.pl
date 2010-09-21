@@ -178,6 +178,10 @@ sub create_endposter_png {
  my @endnote_tags = ("introduction","organizer","camera","sound","videomixer","editor","email" );
  foreach my $n ( @endnote_tags ) {
   if ($meta->{$n} ) {
+
+   # Only show organizer if introduction and organizer are identical.
+   next if ("introduction" eq $n && $meta->{$n} eq $meta->{'organizer'});
+
    push(@endnotes,"$keyword_map{$n}: $meta->{$n}");
   }
  }

@@ -2,11 +2,11 @@
 
 # Script for adding start/end poster and convert to frikanalen acceptable avi format anamporphic PAL with pillarboxing
 # Script is work in progress 2010-09-04 /JB
-# standard backggrund for NUUG is in ./lib/graphic/tv-bg.png (relative to script location in svn-tree)
+# standard backggrund for NUUG is in ./lib/graphic/tv-bg.png (relative to script location in svn-tree) 
 # metafile format is like this:
 #
 #presenter=Jørgen Fjeld
-#title=Ruby on Rails enterprise behov , en velidg lang tittel som jeg lurer på hvordan vil se ut på forsiden av NUUGS video sldf   lsdkfms msf
+#title=Ruby on Rails enterprise behov , en velidg lang tittel som jeg lurer på hvordan vil se ut på forsiden av NUUGS video sldf   lsdkfms msf 
 #date=2010-03-09
 #place=Oslo
 #url=http://www.nuug.no
@@ -14,7 +14,7 @@
 #endnote2=NUUG
 #endnote3=
 #endnote4=email: sekretariat@nuug.no
-#
+# 
 
 use strict;
 use warnings;
@@ -23,7 +23,6 @@ use Data::Dumper;
 use Getopt::Std;
 
 my %opts;
-my $intro_length = 3;
 my $pid = $$;
 
 getopts('i:m:o:b:s', \%opts);
@@ -45,18 +44,18 @@ my $normalize_cmd = "/usr/bin/normalize-audio";
 my $soundlevel_dbfs = '-18dBFS';
 
 #foreach (keys %opts ) { print "$_\n"; };
-if ( $opts{'m'} ) {
- $metafile = $opts{'m'} ;
-} else {
+if ( $opts{'m'} ) { 
+ $metafile = $opts{'m'} ; 
+} else { 
  usage();
  exit 1;
 }
 
 my $meta = read_meta();
 
-if ( $opts{'b'} ) {
- $bgfile = $opts{'b'} ;
-} else {
+if ( $opts{'b'} ) { 
+ $bgfile = $opts{'b'} ; 
+} else { 
  usage();
  exit 1;
 }
@@ -65,27 +64,27 @@ if ( $opts{'b'} ) {
 `mkdir -p $workdir`;
 
 if ( $ARGV[0] && $ARGV[0] eq 'front' ) {
- create_startposter_png($startposter,$bgfile);
+ create_startposter_png($startposter,$bgfile);  
  print "Frontpage in $startposter\n";
  print "Check it out !\n";
  exit ;
 }
 
-if ( $opts{'o'} ) {
- $outputfile = $opts{'o'} ;
-} else {
+if ( $opts{'o'} ) { 
+ $outputfile = $opts{'o'} ; 
+} else { 
  usage();
  exit 1;
 }
 
-if ( $opts{'i'} ) {
- $srcfile = $opts{'i'} ;
-} else {
+if ( $opts{'i'} ) { 
+ $srcfile = $opts{'i'} ; 
+} else { 
  usage();
  exit 1;
 }
 
-if ( $opts{'s'} ) {
+if ( $opts{'s'} ) { 
  $srtfile = getsrtfile();
 }
 
@@ -94,9 +93,9 @@ if ( $opts{'s'} ) {
 
 create_startposter_png($startposter,$bgfile);
 create_endposter_png($endposter,$bgfile);
-gen_dv_from_png($startposter,$intro_length,$startposter_dv);
-gen_dv_from_png($endposter,$intro_length,$endposter_dv);
-my $normalized_video_body = gen_video_body($srcfile);
+gen_dv_from_png($startposter,10,$startposter_dv);
+gen_dv_from_png($endposter,10,$endposter_dv);
+my $normalized_video_body = gen_video_body($srcfile); 
 glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 
 #### Functions #########
@@ -122,7 +121,7 @@ sub read_meta {
 sub count_words_n_space {
  my $word = shift;
  my $count = 0;
- while ( $word =~ /(.)/g ) { $count++; }
+ while ( $word =~ /(.)/g ) { $count++; } 
  $count++;
  return $count;
 }
@@ -131,8 +130,8 @@ sub break_title {
  my $title = shift;
  print $title;
  my $cols = 30;
- my $count = 0 ;
- my $ln = 0;
+ my $count = 0 ; 
+ my $ln = 0; 
  my @lines;
  my @words = split(" ",$title);
  foreach my $word (@words) {
@@ -148,27 +147,27 @@ sub break_title {
   }
  }
  return \@lines;
-}
+} 
 
 sub create_startposter_png {
  my $name = shift;
  my $title_lines = break_title($meta->{'title'});
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$title_lines->[0]\'" -draw "text 450,380 \'$title_lines->[1]\'" -draw "text 450,460 \'$title_lines->[2]\'" -draw "text 450,540 \'$title_lines->[3]\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'place'}: $meta->{'date'}\'" $name || echo  -n -1`;
+ my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$title_lines->[0]\'" -draw "text 450,380 \'$title_lines->[1]\'" -draw "text 450,460 \'$title_lines->[2]\'" -draw "text 450,540 \'$title_lines->[3]\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'date'}-$meta->{'place'}\'" $name || echo  -n -1`;
  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub create_endposter_png {
  # $cmd_body .= " -draw "text $left_margin,$pos \'$n: $meta->{$n}\'"
- my %keyword_map = (
-        "introduction" => "Introdusert av",
-        "editor" => "Redaktor",
-        "email" => "E-post",
-        "organizer" => "Organisert av",
-        "camera" => "Kamera-ansvarlig",
-        "sound" => "Lyd-ansvarlig",
-        "videomixer" => "Videomixer-ansvarlig",
-        );
+ my %keyword_map = ( 
+ 	"introduction" => "Introdusert av",
+ 	"editor" => "Redaktor",
+ 	"email" => "E-post",
+ 	"organizer" => "Organisert av",
+ 	"camera" => "Kamera-ansvarlig",
+ 	"sound" => "Lyd-ansvarlig",
+ 	"videomixer" => "Videomixer-ansvarlig",
+	);
  my $line_distance = 52;
  my $text_size = 40;
  my $pos = 180;
@@ -178,12 +177,8 @@ sub create_endposter_png {
  my @endnote_tags = ("introduction","organizer","camera","sound","videomixer","editor","email" );
  foreach my $n ( @endnote_tags ) {
   if ($meta->{$n} ) {
-
-   # Only show organizer if introduction and organizer are identical.
-   next if ("introduction" eq $n && $meta->{$n} eq $meta->{'organizer'});
-
    push(@endnotes,"$keyword_map{$n}: $meta->{$n}");
-  }
+  } 
  }
  foreach my $line ( @endnotes ) {
   $cmd_body .= "  -draw \"text $left_margin,$pos \'$line \'\"";
@@ -205,7 +200,7 @@ my $f =  `ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /de
 }
 
 sub gen_video_body {
- my $source = shift;
+ my $source = shift; 
  my $mod_dv;
  if ( $meta->{'aspect'} eq "4:3" || $opts{'s'} ) {
    my $cmd ;
@@ -213,7 +208,7 @@ sub gen_video_body {
    $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
    if ( $meta->{'aspect'} eq "4:3" ) {
      $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
-   }
+   } 
    if ( $srtfile ) {
     $cmd .= " -sub $srtfile -utf8 ";
    }
@@ -223,7 +218,7 @@ sub gen_video_body {
     if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
    $source = $mod_dv;
  }
- my $dest = normalize_sound($source);
+ my $dest = normalize_sound($source); 
  return $dest;
 }
 
@@ -243,9 +238,12 @@ sub normalize_sound {
 sub glue_dv {
  my $outfile = shift;
  my @infiles = @_;
- my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
+ my $cat = 'cat '.join(' ',@infiles)." > $workdir/complete.dv ";
+ my $f = `$cat || echo -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
 # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
- my $f = `$cmd  || echo  -n -1`;
+ $f = `$ffmpeg  || echo  -n -1`;
  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  if ( -d $workdir ) {
    `rm -rf $workdir`;

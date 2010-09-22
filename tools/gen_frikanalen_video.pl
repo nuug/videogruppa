@@ -23,7 +23,7 @@ use Data::Dumper;
 use Getopt::Std;
 
 my %opts;
-my $intro_length = 3;
+my $intro_length = 5;
 my $pid = $$;
 
 getopts('i:m:o:b:s', \%opts);
@@ -243,9 +243,12 @@ sub normalize_sound {
 sub glue_dv {
  my $outfile = shift;
  my @infiles = @_;
- my $cmd = 'cat '.join(' ',@infiles).' |  ffmpeg -i -  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y '.$outfile.' -f avi'  ;
-# my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
- my $f = `$cmd  || echo  -n -1`;
+ my $cat = 'cat '.join(' ',@infiles)." > $workdir/complete.dv ";
+ my $f = `$cat || echo -n -1`;
+ if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
+ # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
+ $f = `$ffmpeg  || echo  -n -1`;
  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  if ( -d $workdir ) {
    `rm -rf $workdir`;

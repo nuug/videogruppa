@@ -23,7 +23,7 @@ use Data::Dumper;
 use Getopt::Std;
 
 my %opts;
-my $intro_length = 2;
+my $intro_length = 3;
 my $pid = $$;
 
 getopts('i:m:o:b:s', \%opts);
@@ -94,8 +94,8 @@ if ( $opts{'s'} ) {
 
 create_startposter_png($startposter,$bgfile);
 create_endposter_png($endposter,$bgfile);
-gen_dv_from_png($startposter,3,$startposter_dv);
-gen_dv_from_png($endposter,3,$endposter_dv);
+gen_dv_from_png($startposter,$intro_length,$startposter_dv);
+gen_dv_from_png($endposter,$intro_length,$endposter_dv);
 my $normalized_video_body = gen_video_body($srcfile);
 glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 

@@ -249,11 +249,21 @@ sub glue_dv {
  my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
+ savetemp();
  if ( -d $workdir ) {
    `rm -rf $workdir`;
  }
 }
 
+
+sub savetemp {
+ my $outfile_base = $opts{'o'};
+ $outfile_base =~ s/.+\.avi$//;
+  my $f = `mv $workdir/startposter.dv $outfile_base-starposter.dv|| echo  -n -1`;
+  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ $f = `mv $workdir/endposter.dv $outfile_base-endposter.dv|| echo  -n -1`;
+  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+}
 
 sub getsrtfile {
  my $base = $opts{'i'};

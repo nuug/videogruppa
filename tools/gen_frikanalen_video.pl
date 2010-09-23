@@ -96,6 +96,7 @@ create_startposter_png($startposter,$bgfile);
 create_endposter_png($endposter,$bgfile);
 gen_dv_from_png($startposter,$intro_length,$startposter_dv);
 gen_dv_from_png($endposter,$intro_length,$endposter_dv);
+exit;
 my $normalized_video_body = gen_video_body($srcfile);
 glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 
@@ -162,7 +163,7 @@ sub create_endposter_png {
  # $cmd_body .= " -draw "text $left_margin,$pos \'$n: $meta->{$n}\'"
  my %keyword_map = (
         "introduction" => "Introdusert av",
-        "editor" => "Redaktor",
+        "editor" => "Redaktør",
         "email" => "E-post",
         "organizer" => "Organisert av",
         "camera" => "Kamera-ansvarlig",

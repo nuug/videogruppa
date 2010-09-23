@@ -27,7 +27,6 @@ my $intro_length = 5;
 my $pid = $$;
 
 getopts('i:m:o:b:s', \%opts);
-
 my $workdir = "./fk-temp-$pid";
 #my $startposter = "$workdir/startposter.png";
 my $startposter = "$workdir/startposter.jpg";
@@ -259,9 +258,10 @@ sub glue_dv {
 sub savetemp {
  my $outfile_base = $opts{'o'};
  $outfile_base =~ s/.+\.avi$//;
-  my $f = `mv $workdir/startposter.dv $outfile_base-starposter.dv|| echo  -n -1`;
+ print $outfile_base;
+  my $f = `mv "$workdir/startposter.dv" "$outfile_base-starposter.dv"|| echo  -n -1`;
   if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- $f = `mv $workdir/endposter.dv $outfile_base-endposter.dv|| echo  -n -1`;
+ $f = `mv "$workdir/endposter.dv" "$outfile_base-endposter.dv"|| echo  -n -1`;
   if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 

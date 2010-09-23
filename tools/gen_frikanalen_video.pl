@@ -248,7 +248,7 @@ sub glue_dv {
  my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
- savetemp();
+ #savetemp();
  if ( -d $workdir ) {
    `rm -rf $workdir`;
  }

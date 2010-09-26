@@ -163,6 +163,7 @@ sub create_endposter_png {
  my %keyword_map = (
         "introduction" => "Introdusert av",
         "editor" => "Redaktør",
+        "venue" => "Lokaler",
         "email" => "E-post",
         "organizer" => "Organisert av",
         "camera" => "Kamera-ansvarlig",
@@ -175,7 +176,7 @@ sub create_endposter_png {
  my $left_margin = 450;
  my $cmd_body = "";
  my @endnotes;
- my @endnote_tags = ("introduction","organizer","camera","sound","videomixer","editor","email" );
+ my @endnote_tags = ("introduction","organizer", "venue","camera","sound","videomixer","editor","email" );
  foreach my $n ( @endnote_tags ) {
   if ($meta->{$n} ) {
 

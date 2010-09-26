@@ -166,9 +166,9 @@ sub create_endposter_png {
         "venue" => "Lokaler",
         "email" => "E-post",
         "organizer" => "Organisert av",
-        "camera" => "Kamera-ansvarlig",
-        "sound" => "Lyd-ansvarlig",
-        "videomixer" => "Videomixer-ansvarlig",
+        "camera" => "Kamera",
+        "sound" => "Lydoppsett",
+        "videomixer" => "Videomiks",
         );
  my $line_distance = 52;
  my $text_size = 40;

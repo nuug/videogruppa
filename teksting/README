@@ -2,3 +2,6 @@ The subtitles in here can be created using the gnome-subtitles program.
 The name of the subtitle file _must_ be <basename_of_raw_dv_file>.srt in 
 order for subsequent processing to match subtitle files to source video. 
 
+cleanternet.srt is based on 
+http://cleanternet.org/subs/cleanternet_eng.srt and
+http://cleanternet.org/subs/cleanternet_swe.srt .

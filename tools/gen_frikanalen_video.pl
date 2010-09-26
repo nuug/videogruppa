@@ -26,7 +26,8 @@ my %opts;
 my $intro_length = 5;
 my $pid = $$;
 
-getopts('i:m:o:b:s', \%opts);
+getopts('di:m:o:b:s', \%opts);
+my $debug = $opts{d} || 0;
 my $workdir = "./fk-temp-$pid";
 #my $startposter = "$workdir/startposter.png";
 my $startposter = "$workdir/startposter.jpg";
@@ -153,8 +154,8 @@ sub create_startposter_png {
  my $name = shift;
  my $title_lines = break_title($meta->{'title'});
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$title_lines->[0]\'" -draw "text 450,380 \'$title_lines->[1]\'" -draw "text 450,460 \'$title_lines->[2]\'" -draw "text 450,540 \'$title_lines->[3]\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'place'}: $meta->{'date'}\'" $name || echo  -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ my $f = "convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw "text 450,167 \'$meta->{'presenter'}:\'" -pointsize 60 -draw "text 450,300 \'$title_lines->[0]\'" -draw "text 450,380 \'$title_lines->[1]\'" -draw "text 450,460 \'$title_lines->[2]\'" -draw "text 450,540 \'$title_lines->[3]\'" -pointsize 36 -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'place'}: $meta->{'date'}\'" $name";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub create_endposter_png {
@@ -190,8 +191,8 @@ sub create_endposter_png {
  }
  my $name = shift;
  my $bgfile = shift;
- my $f = `convert $bgfile -pointsize $text_size -fill white -gravity NorthWest $cmd_body -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'place'}: $meta->{'date'}\'" $name|| echo  -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ my $f = "convert $bgfile -pointsize $text_size -fill white -gravity NorthWest $cmd_body -pointsize 36 -draw "text 52,790 \'$meta->{'url'}\'" -draw "text 750,640 \'$meta->{'place'}: $meta->{'date'}\'" $name";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub gen_dv_from_png {
@@ -199,8 +200,8 @@ sub gen_dv_from_png {
 my $png_file = shift;
 my $length = shift;
 my $outputvid = shift;
-my $f =  `ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid || echo  -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+my $f = "ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub gen_video_body {
@@ -217,9 +218,7 @@ sub gen_video_body {
     $cmd .= " -sub $srtfile -utf8 ";
    }
    $cmd .= "-o $mod_dv $source ";
-   #print "Command= $cmd \n\n";
-   my $f = `$cmd  || echo  -n -1` ;
-    if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+    if ( !runcmd($cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
    $source = $mod_dv;
  }
  my $dest = normalize_sound($source);
@@ -229,12 +228,12 @@ sub gen_video_body {
 sub normalize_sound {
  my $dvfile = shift;
  my $new_dvfile = "$workdir/normalized-body.dv";
- my $f = `ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav  || echo  -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- $f = `$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav || echo  -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- $f = `ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile || echo  -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ my $f = "ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ $f = "$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ $f = "ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  return $new_dvfile;
 }
 
@@ -243,11 +242,9 @@ sub glue_dv {
  my $outfile = shift;
  my @infiles = @_;
  my $cat = 'cat '.join(' ',@infiles)." > $workdir/complete.dv ";
- my $f = `$cat || echo -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ if ( !runcmd($cat) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
- $f = `$ffmpeg || echo -n -1`;
- if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ if ( !runcmd($ffmpeg) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
  # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
  #savetemp();
  if ( -d $workdir ) {
@@ -260,14 +257,22 @@ sub savetemp {
  my $outfile_base = $opts{'o'};
  $outfile_base =~ s/.+\.avi$//;
  print $outfile_base;
-  my $f = `mv "$workdir/startposter.dv" "$outfile_base-starposter.dv"|| echo  -n -1`;
-  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- $f = `mv "$workdir/endposter.dv" "$outfile_base-endposter.dv"|| echo  -n -1`;
-  if ( $f eq -1 ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ my $f = "mv \"$workdir/startposter.dv\" \"$outfile_base-starposter.dv\"";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+ $f = "mv \"$workdir/endposter.dv\" \"$outfile_base-endposter.dv\"";
+ if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub getsrtfile {
  my $base = $opts{'i'};
  $base =~ s/\..+$//; # Could be .dv or .avi or whatnot. This strips it off anyway.
  return "$opts{'s'}/$base.srt";
+}
+
+sub runcmd {
+ my ($cmd) = @_;
+ print "Cmd: $cmd\n" if $debug;
+ my $f = `$cmd  || echo  -n -1`;
+ return 0 if ( $f eq -1 );
+ return 1;
 }

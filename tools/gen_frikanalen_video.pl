@@ -28,7 +28,7 @@ use Data::Dumper;
 use Getopt::Std;
 
 my %opts;
-my $intro_length = 5;
+my $intro_length = 10;
 my $pid = $$;
 
 getopts('di:m:o:b:s', \%opts);

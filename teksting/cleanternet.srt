@@ -1,4 +1,4 @@
-1
+﻿1
 00:00:00,500 --> 00:00:06,100
 Når du bruker Internet nå for tiden, ser du nettsider fulle av barnepornografi overalt.
 
@@ -68,7 +68,7 @@ Og det finnes en annen fordel med å lage våre egen liste med lenker til ulovli
 
 18
 00:01:19,000 --> 00:01:30,533
-Med tiden vil til og med pedofile som utestenges av vårt blokkeringssystem få rede på hvilke nettsteder som definitivt ikke er tillatte.
+Med tiden vil til og med de pedofile som utestenges av vårt blokkeringssystem få rede på hvilke nettsteder som definitivt ikke er tillatt.
 
 19
 00:01:30,333 --> 00:01:33,934
@@ -143,7 +143,7 @@ Cleanternet
 For et renere og tryggere Internet.
 
 37
-00:02:26,667 --> 00:02:29,166
+00:02:27,500 --> 00:02:30,366
 cleanternet.org
 
 38

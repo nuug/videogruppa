@@ -143,7 +143,7 @@ Cleanternet
 For et renere og tryggere Internet.
 
 37
-00:02:27,500 --> 00:02:30,366
+00:02:28,240 --> 00:02:30,366
 cleanternet.org
 
 38
@@ -158,3 +158,4 @@ Alle europeiske land må bli tvunget til å sloss for et renere og tryggere Inte
 00:02:50,000 --> 00:02:52,500
 Bokmålstekst av Petter Reinholdtsen.
 Bruksvilkår er CC-BY 3.0.
+

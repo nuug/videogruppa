@@ -155,6 +155,6 @@ Cleanternet er en kampanje for å støtte EU-kommisjoner Cecilia Malmström med 
 Alle europeiske land må bli tvunget til å sloss for et renere og tryggere Internet.
 
 40
-00:02:40,000 --> 00:02:45,000
-Bokmålstekst av Petter Reinholdtsen, tidskoder av Clodo og Petter Reinholdtsen.
-
+00:02:50,000 --> 00:02:52,500
+Bokmålstekst av Petter Reinholdtsen.
+Bruksvilkår er CC-BY 3.0.

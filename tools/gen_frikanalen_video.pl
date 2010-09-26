@@ -5,15 +5,20 @@
 # standard backggrund for NUUG is in ./lib/graphic/tv-bg.png (relative to script location in svn-tree)
 # metafile format is like this:
 #
-#presenter=Jørgen Fjeld
-#title=Ruby on Rails enterprise behov , en velidg lang tittel som jeg lurer på hvordan vil se ut på forsiden av NUUGS video sldf   lsdkfms msf
-#date=2010-03-09
+#title=Radioamatørenes sporingssystem
+#presenter=Øyvind Hanssen
+#date=2009-03-17
 #place=Oslo
-#url=http://www.nuug.no
-#endnote1=Redaktør:
-#endnote2=NUUG
-#endnote3=
-#endnote4=email: sekretariat@nuug.no
+#venue=Høgskolen i Oslo
+#url=http://www.nuug.no/
+#organizer=Petter Reinholdtsen
+#introduction=Petter Reinholdtsen
+#email=sekretariat@nuug.no
+#aspect=4:3
+#camera=Stian Hübener, Hans Petter Fjeld
+#videomixer=Ole Kristian Lien
+#sound=?
+#spokenlanguage=no
 #
 
 use strict;

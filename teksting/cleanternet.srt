@@ -147,14 +147,18 @@ For et renere og tryggere Internet.
 cleanternet.org
 
 38
-00:02:31,067 --> 00:02:35,000
-Cleanternet er en kampanje for å støtte EU-kommisjonær Cecilia Malmström med hennes planer for å introdusere et europeisk system for å blokkere nettsteder.
+00:02:31,000 --> 00:02:33,500
+Cleanternet er en kampanje for å støtte EU-kommisjonær Cecilia Malmström
 
 39
-00:02:35,000 --> 00:02:39,700
-Alle europeiske land må bli tvunget til å slåss for et renere og tryggere Internet.
+00:02:33,500 --> 00:02:36,000
+med hennes planer for å introdusere et europeisk system for å blokkere nettsteder.
 
 40
+00:02:36,000 --> 00:02:39,700
+Alle europeiske land må bli tvunget til å slåss for et renere og tryggere Internet.
+
+41
 00:02:50,000 --> 00:02:52,500
 Undertekster av Petter Reinholdtsen (v1.1). Bruksvilkår for underteksten er CC-BY 3.0.
 

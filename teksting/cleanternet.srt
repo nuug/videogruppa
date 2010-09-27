@@ -1,5 +1,5 @@
 ﻿1
-00:00:00,500 --> 00:00:06,100
+00:00:00,200 --> 00:00:06,000
 Når du bruker Internet nå for tiden, ser du nettsider fulle av barnepornografi overalt.
 
 2
@@ -44,7 +44,7 @@ Men de fleste barnepornosiderne befinner seg i veldig fattige land  De har gansk
 
 12
 00:00:51,500 --> 00:00:55,500
-Forespørsel om fjerning ville være veldig vanskelig.
+Å forsøke å fjerne nettsteder her vil væræ veldig vanskelig.
 
 13
 00:00:55,734 --> 00:00:58,667
@@ -143,16 +143,16 @@ Cleanternet
 For et renere og tryggere Internet.
 
 37
-00:02:28,240 --> 00:02:30,366
+00:02:26,800 --> 00:02:30,366
 cleanternet.org
 
 38
 00:02:31,067 --> 00:02:35,000
-Cleanternet er en kampanje for å støtte EU-kommisjoner Cecilia Malmström med hennes planer for å introdusere et europeisk system for å blokkere nettsteder.
+Cleanternet er en kampanje for å støtte EU-kommisjonær Cecilia Malmström med hennes planer for å introdusere et europeisk system for å blokkere nettsteder.
 
 39
-00:02:35,000 --> 00:02:39,500
-Alle europeiske land må bli tvunget til å sloss for et renere og tryggere Internet.
+00:02:35,000 --> 00:02:39,700
+Alle europeiske land må bli tvunget til å slåss for et renere og tryggere Internet.
 
 40
 00:02:50,000 --> 00:02:52,500

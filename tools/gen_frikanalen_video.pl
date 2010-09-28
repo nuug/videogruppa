@@ -314,7 +314,7 @@ sub getsrtfile {
 }
 
 sub runcmd {
-  my $cmd = join(" ", @_)
+  my $cmd = join(" ", @_);
   print "Cmd: $cmd\n" if $debug;
   my $f = `$cmd  || echo  -n -1`;
   return 0 if ( $f eq -1 );

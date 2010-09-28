@@ -118,6 +118,7 @@ sub read_meta {
   # Set some default values
   $ret->{'url'} = 'http://www.nuug.no/';
   $ret->{'email'} = 'sekretariat@nuug.no';
+  $ret->{'editor'} = 'Jarle Bjørgeengen';
 
   open M, "$metafile" or die "Cannot open $metafile for read :$!";
   while (<M>) {

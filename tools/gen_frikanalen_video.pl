@@ -179,6 +179,7 @@ sub create_startposter_png {
        "-draw", "\"text 450,620 \'$title_lines->[3]\'\"",
        "-pointsize", "36",
        "-draw", "\"text 52,790 \'$meta->{'url'}\'\"",
+       "-draw", "\"text 52,826 \'$meta->{'email'}\'\"",
        "-draw", "\"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name");
 
   if ( !runcmd(@cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
@@ -190,7 +191,6 @@ sub create_endposter_png {
       "introduction" => "Introdusert av",
       "editor" => "Redaktør",
       "venue" => "Lokaler",
-      "email" => "E-post",
       "organizer" => "Organisert av",
       "camera" => "Kamera",
       "sound" => "Lydoppsett",
@@ -202,7 +202,7 @@ sub create_endposter_png {
   my $left_margin = 450;
   my $cmd_body = "";
   my @endnotes;
-  my @endnote_tags = ("introduction","organizer", "venue","camera","sound","videomixer","editor","email" );
+  my @endnote_tags = ("introduction","organizer", "venue","camera","sound","videomixer","editor" );
   foreach my $n ( @endnote_tags ) {
     if ($meta->{$n} ) {
 
@@ -225,8 +225,9 @@ sub create_endposter_png {
        "-gravity", "NorthWest",
        "$cmd_body",
        "-pointsize", "36",
-       "-draw \"text 52,790 \'$meta->{'url'}\'\"",
-       "-draw \"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name");
+       "-draw", "\"text 52,790 \'$meta->{'url'}\'\"",
+       "-draw", "\"text 52,826 \'$meta->{'email'}\'\"",
+       "-draw", "\"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name");
   if ( !runcmd(@cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 

@@ -218,8 +218,16 @@ sub create_endposter_png {
   }
   my $name = shift;
   my $bgfile = shift;
-  my $f = "convert $bgfile -pointsize $text_size -fill white -gravity NorthWest $cmd_body -pointsize 36 -draw \"text 52,790 \'$meta->{'url'}\'\" -draw \"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name";
-  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  my @cmd =
+      ("convert", "$bgfile",
+       "-pointsize", "$text_size",
+       "-fill", "white",
+       "-gravity", "NorthWest",
+       "$cmd_body",
+       "-pointsize", "36",
+       "-draw \"text 52,790 \'$meta->{'url'}\'\"",
+       "-draw \"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name");
+  if ( !runcmd(@cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub gen_dv_from_png {

@@ -51,47 +51,47 @@ my $soundlevel_dbfs = '-18dBFS';
 
 #foreach (keys %opts ) { print "$_\n"; };
 if ( $opts{'m'} ) {
- $metafile = $opts{'m'} ;
+  $metafile = $opts{'m'} ;
 } else {
- usage();
- exit 1;
+  usage();
+  exit 1;
 }
 
 my $meta = read_meta();
 
 if ( $opts{'b'} ) {
- $bgfile = $opts{'b'} ;
+  $bgfile = $opts{'b'} ;
 } else {
- usage();
- exit 1;
+  usage();
+  exit 1;
 }
 
 
 `mkdir -p $workdir`;
 
 if ( $ARGV[0] && $ARGV[0] eq 'front' ) {
- create_startposter_png($startposter,$bgfile);
- print "Frontpage in $startposter\n";
- print "Check it out !\n";
- exit ;
+  create_startposter_png($startposter,$bgfile);
+  print "Frontpage in $startposter\n";
+  print "Check it out !\n";
+  exit ;
 }
 
 if ( $opts{'o'} ) {
- $outputfile = $opts{'o'} ;
+  $outputfile = $opts{'o'} ;
 } else {
- usage();
- exit 1;
+  usage();
+  exit 1;
 }
 
 if ( $opts{'i'} ) {
- $srcfile = $opts{'i'} ;
+  $srcfile = $opts{'i'} ;
 } else {
- usage();
- exit 1;
+  usage();
+  exit 1;
 }
 
 if ( $opts{'s'} ) {
- $srtfile = getsrtfile();
+  $srtfile = getsrtfile();
 }
 
 
@@ -107,178 +107,187 @@ glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
 #### Functions #########
 
 sub usage {
- print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s /dir/where/srtfiles/are ] \n\n";
- print "If -s is given the script expects a file named <basename_of_raw_file>.srt \n";
- print "located in the path given as arg to -s option\n\n";
+  print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s /dir/where/srtfiles/are ] \n\n";
+  print "If -s is given the script expects a file named <basename_of_raw_file>.srt \n";
+  print "located in the path given as arg to -s option\n\n";
 }
 
 sub read_meta {
- my $ret;
- open M, "$metafile" or die "Cannot open $metafile for read :$!";
- while (<M>) {
-  chomp;
-  my @l = split("=",$_);
-  $ret->{$l[0]} = $l[1];
- }
- close M;
- return $ret;
+  my $ret;
+  open M, "$metafile" or die "Cannot open $metafile for read :$!";
+  while (<M>) {
+    chomp;
+    my @l = split("=",$_);
+    $ret->{$l[0]} = $l[1];
+  }
+  close M;
+  return $ret;
 }
 
 sub count_words_n_space {
- my $word = shift;
- my $count = 0;
- while ( $word =~ /(.)/g ) { $count++; }
- $count++;
- return $count;
+  my $word = shift;
+  my $count = 0;
+  while ( $word =~ /(.)/g ) { $count++; }
+  $count++;
+  return $count;
 }
 
 sub break_title {
- my $title = shift;
- print $title;
- my $cols = 30;
- my $count = 0 ;
- my $ln = 0;
- my @lines;
- my @words = split(" ",$title);
- foreach my $word (@words) {
-  $count += count_words_n_space($word);
-  if ($count < $cols ) {
-   $lines[$ln] .= "$word ";
-  } else {
-   print "$lines[$ln]\n";
-   $count = 0;
-   $ln++;
-   $count += count_words_n_space($word);
-   $lines[$ln] .= "$word ";
+  my $title = shift;
+  print $title;
+  my $cols = 30;
+  my $count = 0 ;
+  my $ln = 0;
+  my @lines;
+  my @words = split(" ",$title);
+  foreach my $word (@words) {
+    $count += count_words_n_space($word);
+    if ($count < $cols ) {
+      $lines[$ln] .= "$word ";
+    } else {
+      print "$lines[$ln]\n";
+      $count = 0;
+      $ln++;
+      $count += count_words_n_space($word);
+      $lines[$ln] .= "$word ";
+    }
   }
- }
- return \@lines;
+  return \@lines;
 }
 
 sub create_startposter_png {
- my $name = shift;
- my $title_lines = break_title($meta->{'title'});
- my $bgfile = shift;
- my $f = "convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw \"text 450,167 \'$meta->{'presenter'}\'\" -pointsize 60 -draw \"text 450,300 \'$title_lines->[0]\'\" -draw \"text 450,380 \'$title_lines->[1]\'\" -draw \"text 450,460 \'$title_lines->[2]\'\" -draw \"text 450,540 \'$title_lines->[3]\'\" -pointsize 36 -pointsize 36 -draw \"text 52,790 \'$meta->{'url'}\'\" -draw \"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  my $name = shift;
+  my $title_lines = break_title($meta->{'title'});
+  my $bgfile = shift;
+  my $f = "convert $bgfile -pointsize 72 -fill white -gravity NorthWest -draw \"text 450,167 \'$meta->{'presenter'}\'\" -pointsize 60 -draw \"text 450,300 \'$title_lines->[0]\'\" -draw \"text 450,380 \'$title_lines->[1]\'\" -draw \"text 450,460 \'$title_lines->[2]\'\" -draw \"text 450,540 \'$title_lines->[3]\'\" -pointsize 36 -pointsize 36 -draw \"text 52,790 \'$meta->{'url'}\'\" -draw \"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name";
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub create_endposter_png {
- # $cmd_body .= " -draw "text $left_margin,$pos \'$n: $meta->{$n}\'"
- my %keyword_map = (
-        "introduction" => "Introdusert av",
-        "editor" => "Redaktør",
-        "venue" => "Lokaler",
-        "email" => "E-post",
-        "organizer" => "Organisert av",
-        "camera" => "Kamera",
-        "sound" => "Lydoppsett",
-        "videomixer" => "Videomiks",
-        );
- my $line_distance = 52;
- my $text_size = 40;
- my $pos = 180;
- my $left_margin = 450;
- my $cmd_body = "";
- my @endnotes;
- my @endnote_tags = ("introduction","organizer", "venue","camera","sound","videomixer","editor","email" );
- foreach my $n ( @endnote_tags ) {
-  if ($meta->{$n} ) {
+# $cmd_body .= " -draw "text $left_margin,$pos \'$n: $meta->{$n}\'"
+  my %keyword_map = (
+      "introduction" => "Introdusert av",
+      "editor" => "Redaktør",
+      "venue" => "Lokaler",
+      "email" => "E-post",
+      "organizer" => "Organisert av",
+      "camera" => "Kamera",
+      "sound" => "Lydoppsett",
+      "videomixer" => "Videomiks",
+      );
+  my $line_distance = 52;
+  my $text_size = 40;
+  my $pos = 180;
+  my $left_margin = 450;
+  my $cmd_body = "";
+  my @endnotes;
+  my @endnote_tags = ("introduction","organizer", "venue","camera","sound","videomixer","editor","email" );
+  foreach my $n ( @endnote_tags ) {
+    if ($meta->{$n} ) {
 
-   # Only show organizer if introduction and organizer are identical.
-   next if ("introduction" eq $n && $meta->{$n} eq $meta->{'organizer'});
+# Only show organizer if introduction and organizer are identical.
+      next if ("introduction" eq $n && $meta->{$n} eq $meta->{'organizer'});
 
-   push(@endnotes,"$keyword_map{$n}: $meta->{$n}");
+      push(@endnotes,"$keyword_map{$n}: $meta->{$n}");
+    }
   }
- }
- foreach my $line ( @endnotes ) {
-  $cmd_body .= "  -draw \"text $left_margin,$pos \'$line \'\"";
-  $pos += $line_distance;
- }
- my $name = shift;
- my $bgfile = shift;
- my $f = "convert $bgfile -pointsize $text_size -fill white -gravity NorthWest $cmd_body -pointsize 36 -draw \"text 52,790 \'$meta->{'url'}\'\" -draw \"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  foreach my $line ( @endnotes ) {
+    $cmd_body .= "  -draw \"text $left_margin,$pos \'$line \'\"";
+    $pos += $line_distance;
+  }
+  my $name = shift;
+  my $bgfile = shift;
+  my $f = "convert $bgfile -pointsize $text_size -fill white -gravity NorthWest $cmd_body -pointsize 36 -draw \"text 52,790 \'$meta->{'url'}\'\" -draw \"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name";
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub gen_dv_from_png {
 
-my $png_file = shift;
-my $length = shift;
-my $outputvid = shift;
-my $f = "ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  my $png_file = shift;
+  my $length = shift;
+  my $outputvid = shift;
+  my $f = "ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid";
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub gen_video_body {
- my $source = shift;
- my $mod_dv;
- if ( $meta->{'aspect'} eq "4:3" || $opts{'s'} ) {
-   my $cmd ;
-   $mod_dv = "$workdir/mod.dv";
-   $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
-   if ( $meta->{'aspect'} eq "4:3" ) {
-     $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
-   }
-   if ( $srtfile ) {
-    $cmd .= " -sub $srtfile -utf8 ";
-   }
-   $cmd .= "-o $mod_dv $source ";
+  my $source = shift;
+  my $mod_dv;
+  if ( $meta->{'aspect'} eq "4:3" || $opts{'s'} ) {
+    my $cmd ;
+    $mod_dv = "$workdir/mod.dv";
+    $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
+    if ( $meta->{'aspect'} eq "4:3" ) {
+      $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
+    }
+    if ( $srtfile ) {
+      $cmd .= " -sub $srtfile -utf8 ";
+    }
+    $cmd .= "-o $mod_dv $source ";
     if ( !runcmd($cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-   $source = $mod_dv;
- }
- my $dest = normalize_sound($source);
- return $dest;
+    $source = $mod_dv;
+  }
+  my $dest = normalize_sound($source);
+  return $dest;
 }
 
 sub normalize_sound {
- my $dvfile = shift;
- my $new_dvfile = "$workdir/normalized-body.dv";
- my $f = "ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- $f = "$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- $f = "ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- return $new_dvfile;
+  my $dvfile = shift;
+  my $new_dvfile = "$workdir/normalized-body.dv";
+  my $f = "ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav";
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  $f = "$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav";
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  $f = "ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile";
+  if ( !runcmd($f) ) { 
+    if ( -f  "$workdir/_normAAAAAA" ) {
+      print "$normalize_cmd was not able to move $workdir/_normAAAAAA to $workdir/sound.wav.\n";
+      print "Forcing by deleting $workdir/sound.wav first.\n";
+      if ( !runcmd("rm  $workdir/sound.wav") ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; } 
+      if ( !runcmd("mv $workdir/_normAAAAAA $workdir/sound.wav") ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; } 
+    } else {
+      die "Failed to execute system command in" . (caller(0))[3] ."\n"; 
+    }
+  }
+  return $new_dvfile;
 }
 
 
 sub glue_dv {
- my $outfile = shift;
- my @infiles = @_;
- my $cat = 'cat '.join(' ',@infiles)." > $workdir/complete.dv ";
- if ( !runcmd($cat) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
- if ( !runcmd($ffmpeg) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
- #savetemp();
- if ( -d $workdir ) {
-   `rm -rf $workdir`;
- }
+  my $outfile = shift;
+  my @infiles = @_;
+  my $cat = 'cat '.join(' ',@infiles)." > $workdir/complete.dv ";
+  if ( !runcmd($cat) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
+  if ( !runcmd($ffmpeg) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+# my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
+#savetemp();
+# if ( -d $workdir ) {
+#   `rm -rf $workdir`;
+# }
 }
 
 
 sub savetemp {
- my $outfile_base = $opts{'o'};
- $outfile_base =~ s/.+\.avi$//;
- print $outfile_base;
- my $f = "mv \"$workdir/startposter.dv\" \"$outfile_base-starposter.dv\"";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
- $f = "mv \"$workdir/endposter.dv\" \"$outfile_base-endposter.dv\"";
- if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  my $outfile_base = $opts{'o'};
+  $outfile_base =~ s/.+\.avi$//;
+  print $outfile_base;
+  my $f = "mv \"$workdir/startposter.dv\" \"$outfile_base-starposter.dv\"";
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+  $f = "mv \"$workdir/endposter.dv\" \"$outfile_base-endposter.dv\"";
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub getsrtfile {
- my $base = $opts{'i'};
- $base =~ s/\..+$//; # Could be .dv or .avi or whatnot. This strips it off anyway.
- return "$opts{'s'}/$base.srt";
+  my $base = $opts{'i'};
+  $base =~ s/\..+$//; # Could be .dv or .avi or whatnot. This strips it off anyway.
+    return "$opts{'s'}/$base.srt";
 }
 
 sub runcmd {
- my ($cmd) = @_;
- print "Cmd: $cmd\n" if $debug;
- my $f = `$cmd  || echo  -n -1`;
- return 0 if ( $f eq -1 );
- return 1;
+  my ($cmd) = @_;
+  print "Cmd: $cmd\n" if $debug;
+  my $f = `$cmd  || echo  -n -1`;
+  return 0 if ( $f eq -1 );
+  return 1;
 }

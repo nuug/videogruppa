@@ -169,7 +169,7 @@ sub create_startposter_png {
       ("convert", "$bgfile",
        "-fill", "white", "-gravity", "NorthWest",
        "-pointsize", "36",
-       "-draw", "\"text 450,167 \'NUUG presenterer\'\"",
+       "-draw", "\"text 450,167 \'Foreningen NUUG presenterer\'\"",
        "-pointsize", "72",
        "-draw", "\"text 450,247 \'$meta->{'presenter'}\'\"",
        "-pointsize", "60",

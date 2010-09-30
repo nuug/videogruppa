@@ -269,16 +269,7 @@ sub normalize_sound {
   $f = "$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav";
   if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
   $f = "ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile";
-  if ( !runcmd($f) ) {
-    if ( -f  "$workdir/_normAAAAAA" ) {
-      print "$normalize_cmd was not able to move $workdir/_normAAAAAA to $workdir/sound.wav.\n";
-      print "Forcing by deleting $workdir/sound.wav first.\n";
-      if ( !runcmd("rm  $workdir/sound.wav") ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-      if ( !runcmd("mv $workdir/_normAAAAAA $workdir/sound.wav") ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-    } else {
-      die "Failed to execute system command in" . (caller(0))[3] ."\n";
-    }
-  }
+  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
   return $new_dvfile;
 }
 

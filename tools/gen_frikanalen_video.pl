@@ -20,6 +20,8 @@
 #sound=?
 #spokenlanguage=no
 #
+# PS: IF this script is used on an sshfs mounted filesystem, the option sshfs -o workaround=rename must be used . 
+# If not, normalize-audio will just silently fail and no audio normalization will take place. 
 
 use strict;
 use warnings;

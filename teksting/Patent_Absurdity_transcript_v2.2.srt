@@ -1,0 +1,1347 @@
+﻿1
+00:00:08,776 --> 00:00:14,314
+These people are lined up to hear the oral
+argument in the first software patent case
+to be brought before the Supreme Court
+in almost 30 years
+
+2
+00:00:14,564 --> 00:00:16,990
+<i>- Do you guys want to introduce yourselves
+and spell your names?</i>
+
+3
+00:00:17,882 --> 00:00:21,729
+- Yeah, uh, uh, Bernie Bilski. B - I - L - S - K - I
+
+4
+00:00:24,180 --> 00:00:30,302
+- Rand - R - A - N - D, Warsaw - W-A-R-S-A-W
+
+5
+00:00:30,552 --> 00:00:33,268
+<i>- Could you guys tell us in a nutshell
+what you've invent?</i>
+
+6
+00:00:33,318 --> 00:00:39,498
+- The invention is a guaranteed energy bill,
+which is like a budget bill without a true-up,-
+
+7
+00:00:39,748 --> 00:00:46,768
+-and it's a method of hedging both sides in the
+transaction. So, behind giving consumers,-
+
+8
+00:00:47,018 --> 00:00:50,518
+-energy consumers are guaranteed energy bill.
+There's a lot of mechanics.
+
+9
+00:00:50,768 --> 00:00:54,468
+And the mechanics involve financial transactions
+between energy consumption,
+
+10
+00:00:54,718 --> 00:00:58,218
+or energy consumers, and the energy providers.
+
+11
+00:00:58,468 --> 00:01:03,830
+THESE MEN HOPE TO GAIN A PATENT ON
+A BUSINESS METHOD OF HEDGING
+COMMODITY RISK
+
+12
+00:01:04,066 --> 00:01:08,994
+And that's what the invention is in a nutshell.
+It's a method of generating guaranteed bills-
+
+13
+00:01:09,244 --> 00:01:12,744
+-for consumers and, also, for protecting
+energy company earnings.
+
+14
+00:01:12,994 --> 00:01:16,743
+The outcome of the case will have profound
+implications for software
+
+15
+00:01:17,020 --> 00:01:22,190
+- The Bilski Case itself is someone applied for a
+patent on a business method or software,-
+
+16
+00:01:22,440 --> 00:01:27,396
+-and patent office rejected it. And now this is
+that person suing the patent office, saying-
+
+17
+00:01:27,396 --> 00:01:30,390
+-"You have to grant me that patent."
+
+18
+00:01:30,640 --> 00:01:34,140
+This case is about what does it mean to be
+a patentable process.
+
+19
+00:01:34,390 --> 00:01:38,913
+And so, since software patents fall under the
+category of processes, because they are not-
+
+20
+00:01:39,163 --> 00:01:43,166
+-the machine, and they're not a composition of
+matter, which are some of the other categories-
+
+21
+00:01:43,413 --> 00:01:47,357
+-of things that are patentable. This case will
+define what it means to be a patentable process.
+
+22
+00:01:52,257 --> 00:01:54,276
+<i>- What about justice Roberts? He said, you know,</i>
+
+23
+00:01:54,468 --> 00:01:57,452
+<i>basically your patent involves people picking
+up the phone and calling other people.</i>
+
+24
+00:01:57,770 --> 00:02:03,065
+- It could be reduced to that level, as the certain acts
+that are performed, but it's much more than that.
+
+25
+00:02:03,365 --> 00:02:08,438
+It has to do with selling commodity that effects
+price to one party, selling to a different party
+
+26
+00:02:08,738 --> 00:02:12,706
+at a different fixed price,
+identifying counter risk positions.
+
+27
+00:02:12,956 --> 00:02:18,668
+If you look at claim four in the patent, we have things
+called claims which describes what the invention is, -
+
+28
+00:02:18,668 --> 00:02:25,318
+-there's a long mathematical formula in there, that
+didn't exist in nature or anywhere in the literature,
+
+29
+00:02:25,502 --> 00:02:28,110
+that these very inventive folks come up with.
+
+30
+00:02:28,352 --> 00:02:32,052
+<i>- Once upon a time math was not patentable.
+And nowadays we can have someone -</i>
+
+31
+00:02:32,302 --> 00:02:37,812
+-like Bilski coming in and saying: "You know,
+I worked hard on this mathematical equation -"
+
+32
+00:02:38,012 --> 00:02:41,564
+"- and therefor I should have a patent on this
+information processing method here."
+
+33
+00:02:41,814 --> 00:02:45,249
+<i>- You mention in your claim that there's a very long
+calculation shown there.</i>
+
+34
+00:02:45,464 --> 00:02:50,710
+<i>Do you think a strong calculation or good math
+is a basis for a patent?</i>
+
+35
+00:02:50,910 --> 00:02:51,714
+- It can be.
+
+36
+00:02:51,964 --> 00:02:57,710
+- The basic process of writing software is that you
+take a broad algorithm of some sort, you know, -
+
+37
+00:02:57,960 --> 00:03:01,760
+-some means of doing something with abstract data,
+and then you apply variable names.
+
+38
+00:03:02,010 --> 00:03:05,910
+- So for our first derivation let's start with a simple
+matrix, a matrix of values.
+
+39
+00:03:06,160 --> 00:03:11,830
+And we'll find the mean of each column, mu one,
+mu two, mu three.
+
+40
+00:03:12,030 --> 00:03:21,184
+And we're gonna define Y to be X minus
+mu for each column.
+
+41
+00:03:21,434 --> 00:03:29,468
+Now if we have some other factor, X, we can take
+X dot S and find the projection of X onto this space.
+
+42
+00:03:29,718 --> 00:03:31,950
+This is called the singular value decomposition (SVD).
+
+43
+00:03:32,200 --> 00:03:41,609
+Now, here's the trick. Here's the great part. Let's
+say that this first row, X1, equals sexuality.
+
+44
+00:03:41,859 --> 00:03:45,359
+Let's say X2 equals "Do you own cats?"
+
+45
+00:03:47,126 --> 00:03:51,836
+And X3 equals, I dunno, affection.
+
+46
+00:03:55,022 --> 00:04:05,502
+Ok, so, now we'll also say that, let's take a factor
+J1 equals Jane's responses on this survey.
+
+47
+00:04:05,752 --> 00:04:10,086
+Let's say J2 equals Joe's responses.
+
+48
+00:04:10,336 --> 00:04:21,308
+Now let's do the same projections as we did before.
+We're gonna take J1 dot S subtract J2 dot S.
+
+49
+00:04:21,558 --> 00:04:27,062
+We're gonna find the distance between these two
+points, and we're gonna call that compatibility.
+
+50
+00:04:28,414 --> 00:04:35,901
+And in that simple step, we've derived patent
+number 6 735 568.
+
+51
+00:04:37,750 --> 00:04:44,286
+The trick of our derivation was that before with
+the SVD, we had abstract numbers.
+
+52
+00:04:44,536 --> 00:04:49,974
+What the guys at eHarmony did to get this patent,
+was to assign names to our variables.
+
+53
+00:04:50,224 --> 00:04:55,870
+So instead of an abstract X1 we have sexuality,
+instead of X2 we have a preference for cats.
+
+54
+00:04:56,120 --> 00:04:59,948
+And by making those assignments, by
+setting variable names in this matter, -
+
+55
+00:05:00,198 --> 00:05:05,390
+-they were able to take an abstract concept
+and turn it into a patentable device.
+
+56
+00:05:06,440 --> 00:05:13,569
+- What we want to do according to the heads of
+our patent institutions, is take mathematics and
+
+57
+00:05:13,819 --> 00:05:18,246
+slice it up into as many slices as possible, and hand
+those slices out. And, say, if you do a
+
+58
+00:05:18,496 --> 00:05:26,238
+principle component analysis, if you multiply matrices
+for dating sites, we'll give that to eHarmony.
+
+59
+00:05:26,488 --> 00:05:31,532
+If it's for equities we'll give that to State Street. And
+so on and so forth.
+
+60
+00:05:31,782 --> 00:05:39,718
+And what we're giving out is basically
+exclusive rights to use mathematics, -
+
+61
+00:05:40,083 --> 00:05:44,883
+-to use a law of nature, in whatever context.
+And what we get in return is basically nothing.
+
+62
+00:05:45,733 --> 00:05:52,121
+- The patents is a government grant, in the US it
+arises out of the constitution.
+
+63
+00:05:52,471 --> 00:05:58,721
+- The Framers included the provision for granting
+exclusive rights to inventors in our constitution,
+
+64
+00:05:58,971 --> 00:06:06,093
+and the belief was that that was important in order
+to reward people who had made technological -
+
+65
+00:06:06,243 --> 00:06:09,343
+- advances that would benefit society.
+
+66
+00:06:13,272 --> 00:06:18,156
+- The rights that they are granted are not the rights
+to do the things that they invent, -
+
+67
+00:06:18,406 --> 00:06:21,409
+-but the right to exclude others from doing
+that thing.
+
+68
+00:06:21,659 --> 00:06:28,345
+- So the idea was you have a machine or a thing,
+which is not previously described in any literature, -
+
+69
+00:06:28,595 --> 00:06:34,449
+-and which no skilled mechanic could figure out
+how to make given what is described in literature, -
+
+70
+00:06:34,699 --> 00:06:36,457
+-and for that you get a patent.
+
+71
+00:06:36,707 --> 00:06:42,550
+- The basis for determining what is patentable
+subject matter has continued to evolve -
+
+72
+00:06:42,800 --> 00:06:46,300
+- over the last 200 years of our national existence.
+
+73
+00:06:46,550 --> 00:06:54,588
+- In 1953 the Patent Act was modified by Congress,
+to add the words "or processes" to the word -
+
+74
+00:06:54,838 --> 00:06:57,697
+- "product" in describing what could be patented.
+
+75
+00:07:04,760 --> 00:07:10,833
+The Congress which did that was plainly thinking of
+processes of industrial manufacture. Processes -
+
+76
+00:07:11,083 --> 00:07:19,481
+- that produced something at the other end. Float
+glass on molten tin, and it'll become flat, or whatever.
+
+77
+00:07:19,731 --> 00:07:25,065
+- And it's unlikely that anybody thought of process
+at that time in terms of computer software, -
+
+78
+00:07:25,315 --> 00:07:33,748
+-because we didn't have applications on computer
+software for many years after that last revision -
+
+79
+00:07:33,998 --> 00:07:36,998
+- of the Patent Act.
+
+80
+00:07:46,267 --> 00:07:52,282
+- Back in the late 70s the patent law was interpreted
+such that you couldn't patent software. It was -
+
+81
+00:07:52,532 --> 00:07:55,449
+- considered a mathematical algorithm,
+a law of nature.
+
+82
+00:08:01,821 --> 00:08:09,430
+The legal world changed. The environment was
+quite different starting with some decisions by-
+
+83
+00:08:09,649 --> 00:08:11,254
+- the Supreme Court, like Diamond v. Diehr.
+
+84
+00:08:11,504 --> 00:08:17,905
+- The patent applicant was coming in with a new
+process for curing rubber. The temperature, and-
+
+85
+00:08:18,155 --> 00:08:23,873
+- the preciseness of the temperature is essentials
+in curing rubber well. And the innovation -
+
+86
+00:08:24,123 --> 00:08:30,753
+-that was being patented in this case was an
+algorithm to monitor a thermometer -
+
+87
+00:08:31,003 --> 00:08:37,038
+- that was basically in the process and determined
+when the rubber needs to be released and cooled.
+
+88
+00:08:37,288 --> 00:08:42,505
+- And they said "Processes for curing rubber are
+patentable, there's nothing new about that, -"
+
+89
+00:08:42,755 --> 00:08:47,526
+"- the fact that they use a computer in implementing
+it shouldn't change anything."
+
+90
+00:08:55,602 --> 00:09:00,070
+- The Supreme Court makes it clear that you can't
+patent software, because it's only a set of -
+
+91
+00:09:00,320 --> 00:09:09,300
+- instructions, or an algorithm. Abstract laws of nature,
+algorithms, are unpatentable in the US itself.
+
+92
+00:09:09,550 --> 00:09:17,209
+However, then there was the creation of the
+Court of Appeals of the Federal Circuit.
+
+93
+00:09:17,459 --> 00:09:24,657
+- The problem being solved, in some sense, begins
+with the fact that trial court judges always -
+
+94
+00:09:24,907 --> 00:09:27,180
+- hate patent cases.
+
+95
+00:09:27,430 --> 00:09:35,310
+And the reason they hate patent cases is, for a single
+trial judge, a lawyer who has spent his/her life-
+
+96
+00:09:35,560 --> 00:09:43,914
+-doing litigation, a patent case in which she/he is going
+to be required to find detailed facts about how paint is-
+
+97
+00:09:44,164 --> 00:09:52,713
+-made or how computers work or how radio broadcast-
+ing operates, is an opportunity just to made into a fool.
+
+98
+00:10:00,133 --> 00:10:05,369
+- Congress is attempting to change the system in which
+patent cases are litigated.
+
+99
+00:10:05,619 --> 00:10:11,934
+But instead of changing who tried patent cases,
+Congress left a non-specialist district judge-
+
+100
+00:10:12,184 --> 00:10:17,326
+-in charge of the trial. And then created a new court of
+appeals called the Federal Circuit,-
+
+101
+00:10:17,576 --> 00:10:22,081
+-who's job it was to hear all appeals from patent cases.
+
+102
+00:10:22,331 --> 00:10:25,313
+Rapidly, of course, this court filled up with
+patent lawyers.
+
+103
+00:10:25,563 --> 00:10:32,622
+And the patent lawyers then made the law in the court
+of appeals that applied to all those district judges-
+
+104
+00:10:32,872 --> 00:10:37,556
+-who were still making non-specialist decisions of
+which they were afraid.
+
+105
+00:10:37,806 --> 00:10:42,721
+Naturally the Federal Circuit turned out to be a place
+which loved patents.
+
+106
+00:10:42,971 --> 00:10:49,537
+And it's chief judge, Giles Rich, who lived to be very
+very old and died in his late 90s,-
+
+107
+00:10:49,787 --> 00:10:53,068
+-was a man who particularly loved patents on
+everything.
+
+108
+00:10:53,318 --> 00:11:00,273
+The Federal Circuit court under Giles Rich sort of broke
+Diamond against Diehr lose from it's original meaning,-
+
+109
+00:11:00,523 --> 00:11:05,068
+-and came to the conclusion that software itself
+could be patented.
+
+110
+00:11:05,318 --> 00:11:09,609
+- The Supreme Court basically left everything to
+this court to decide.
+
+111
+00:11:09,859 --> 00:11:16,473
+- The PTO actually used to reject patents on software,
+like in the early 1990s, and they did not allowed them.
+
+112
+00:11:16,723 --> 00:11:20,223
+And the applicants would appeal those
+rejections to the Federal Circuit.
+
+113
+00:11:43,280 --> 00:11:46,798
+- In the world of machines you show the Patent Office
+the machine,-
+
+114
+00:11:47,048 --> 00:11:51,697
+-and you've got a Patent Office who's claims were
+"I claim this machine."
+
+115
+00:11:52,946 --> 00:11:56,636
+In the world of computer software there was no way
+of defining what the unit was.
+
+116
+00:11:56,886 --> 00:12:03,777
+I don't claim a program, I claim a technique that any
+number of programs doing any number of things could-
+
+117
+00:12:04,027 --> 00:12:11,492
+-possibly use. The consequence of which is very rapidly
+we began to build up as real estate that somebody-
+
+118
+00:12:11,742 --> 00:12:19,014
+-owned and could exclude other people from a whole
+lot of basic techniques in computer programming.
+
+119
+00:12:19,314 --> 00:12:24,516
+- What happened was, starting in the mid-90s, the
+number of patents on software started soaring.
+
+120
+00:12:24,766 --> 00:12:27,806
+An industry attitude started changing too.
+
+121
+00:12:28,056 --> 00:12:32,558
+So you had Microsoft, which originally didn't deal
+with software patents very much at all,-
+
+122
+00:12:32,808 --> 00:12:36,885
+-I guess they got sued in the early 90s
+by Stac and lost a, uh,-
+
+123
+00:12:37,085 --> 00:12:40,817
+-significant judgment against them,
+they started patenting.
+
+124
+00:12:41,067 --> 00:12:43,932
+- They're gonna have their own set of patents.
+
+125
+00:12:44,182 --> 00:12:49,116
+So that if a major patent holder threatens them,
+they can fire back.
+
+126
+00:12:49,366 --> 00:12:55,382
+- Gradually companies like Oracle were forced to set
+up patent departments just for defensive reasons.
+
+127
+00:12:55,632 --> 00:13:00,481
+They had to patent their stuff so that they had some-
+thing to trade with the companies that had patents.
+
+128
+00:13:00,731 --> 00:13:10,945
+<i>Mark Webbink:
+- And so the arsenal started to develop. By year 2001
+Microsoft now holds thousands of software patents.</i>
+
+129
+00:13:11,195 --> 00:13:15,350
+<i>Oracle was probably approaching a thousand software
+patents. Adobe...</i>
+
+130
+00:13:15,600 --> 00:13:19,713
+<i>James Bessen:
+- All of them become more and more aggressive.
+Patenters and some of the ones who were against-</i>
+
+131
+00:13:19,963 --> 00:13:25,516
+<i>-software patents ended up suing other companies,
+and so what you had is an explosion of patenting first-</i>
+
+132
+00:13:25,766 --> 00:13:27,729
+<i>-and then an explosion of litigation.</i>
+
+133
+00:13:32,484 --> 00:13:37,404
+By the late 90s about a quarter of all patents
+granted were software patents.
+
+134
+00:13:38,551 --> 00:13:44,233
+About a third of all litigation, patent litigation,
+involves software patents.
+
+135
+00:13:44,483 --> 00:13:50,329
+About 40% of the cost of litigation is
+attributable to software patents.
+
+136
+00:13:50,579 --> 00:13:52,631
+And those numbers have been going up.
+
+137
+00:13:52,881 --> 00:13:59,270
+So Charles Freeny invented a kiosk that goes in retail
+stores, and the idea is you'd come in,-
+
+138
+00:13:59,520 --> 00:14:05,306
+-you could select the music selection, swipe your
+credit card, put in a blank 9 track tape,-
+
+139
+00:14:05,556 --> 00:14:10,917
+-and this is is how long ago this patent was, and it
+would write that music selection onto the tape-
+
+140
+00:14:11,167 --> 00:14:13,988
+-and you could go away with it.
+
+141
+00:14:14,238 --> 00:14:21,649
+The patent was drafted in a very vague language so
+there were terms like "point of sale location",-
+
+142
+00:14:21,899 --> 00:14:25,060
+-and "information manufacturing machine".
+
+143
+00:14:25,310 --> 00:14:32,902
+And Freeny eventually sold this patent to somebody
+who wanted to interpret those terms very broadly.
+
+144
+00:14:33,352 --> 00:14:36,652
+To basically cover e-commerce.
+
+145
+00:14:36,902 --> 00:14:44,956
+So here was this very limited invention for this kiosk,
+and he wanted to interpret those terms in such a-
+
+146
+00:14:45,206 --> 00:14:50,102
+-broad way so that it would cover transactions that
+took place over the Internet,-
+
+147
+00:14:50,352 --> 00:14:56,228
+-you could make them in your office, in your
+bedroom, in your house, anywhere.
+
+148
+00:14:56,478 --> 00:15:00,817
+And so it covered virtually all of e-commerce.
+
+149
+00:15:01,067 --> 00:15:08,382
+The courts initially didn't agree with that interpretation
+but they appealed it, and the appellant court largely-
+
+150
+00:15:08,632 --> 00:15:16,254
+agreed with them, and they were able to extract some
+settlements out of well over a hundred companies.
+
+151
+00:15:16,504 --> 00:15:23,452
+But the significant thing is, here is this patent you
+can't tell what it's boundaries were until you get to-
+
+152
+00:15:23,702 --> 00:15:29,236
+-the appellant court. What most people thought
+it's boundaries were turned out to be wrong.
+
+153
+00:15:29,486 --> 00:15:32,644
+- One of the key properties of programming languages
+is they're very very precise.
+
+154
+00:15:32,894 --> 00:15:39,292
+You can look at any program language in any language,
+in C, Python, any language like this,-
+
+155
+00:15:39,542 --> 00:15:43,910
+-and you know exactly what it's doing. You can look
+at two pieces of service code and you can say-
+
+156
+00:15:44,160 --> 00:15:48,662
+"Are this doing the same thing or different things?"
+And we do this because computers are very picky-
+
+157
+00:15:48,912 --> 00:15:53,801
+-and we need to tell the computer exactly what we
+need to do in order to accomplish some task.
+
+158
+00:15:54,051 --> 00:15:57,551
+The language patent lawyers use is almost the opposite.
+
+159
+00:15:57,801 --> 00:16:03,001
+There's an advantage in being vague, and being broad,
+being non-specific, because the broader your language-
+
+160
+00:16:03,251 --> 00:16:06,751
+-the more things you, sort of, catch in your net.
+
+161
+00:16:07,001 --> 00:16:12,361
+- So it is a large problem in our patent system just
+defining simply what is the context or the borders-
+
+162
+00:16:12,611 --> 00:16:16,148
+-of the patent. And what does it cover,
+and what does it not cover.
+
+163
+00:16:16,398 --> 00:16:21,658
+And that ambiguity causes a lot of chilling effects,
+because people are going to avoid doing anything-
+
+164
+00:16:21,908 --> 00:16:27,013
+-that could possibly be covered by the patent, even if in
+reality the patent wouldn't cover what they wanna do.
+
+165
+00:16:27,263 --> 00:16:33,406
+- Let's imagine that in the 1700s the governments of
+Europe had decided to promote the progress of-
+
+166
+00:16:33,656 --> 00:16:41,162
+-symphonic music, or as they thought, promote it.
+Will a system of musical idea patents, meaning-
+
+167
+00:16:41,412 --> 00:16:48,306
+-anybody who could describe a new musical idea in
+words could get a patent which would be a monopoly-
+
+168
+00:16:48,556 --> 00:16:54,998
+-on that idea and then he could sue anybody else
+that implemented that idea in a piece of music.
+
+169
+00:16:55,248 --> 00:17:09,121
+So a rhythmic pattern could be patented, or a sequence
+of chords, or a set of instruments to use together,-
+
+170
+00:17:09,371 --> 00:17:17,212
+-or any idea you could describe in words. Now imagine
+it's 1800 and you're Beethoven, and you want to write-
+
+171
+00:17:17,462 --> 00:17:23,748
+-a symphony. You're gonna find it's harder to write a
+symphony that you won't get sued for, than write-
+
+172
+00:17:23,998 --> 00:17:29,102
+-a symphony that sounds good. Because to write a
+symphony and not get sued you're gonna have to-
+
+173
+00:17:29,302 --> 00:17:34,638
+-tread your way around thousands of
+musical idea patents.
+
+174
+00:17:34,888 --> 00:17:40,388
+And if you complained about this, saying it's getting in
+the way of your creativity, the patent holders would-
+
+175
+00:17:40,638 --> 00:17:44,484
+-say "Oh, Beethoven you're just jealous because we
+had these ideas before you."
+
+176
+00:17:44,651 --> 00:17:46,873
+"Why should you steal our ideas?"
+
+177
+00:17:47,123 --> 00:17:52,634
+- People have been making music for thousands of
+years. There were never any need for patents in-
+
+178
+00:17:52,884 --> 00:18:01,148
+-the field of music. And since the computer industry
+has made programming possible, people have been-
+
+179
+00:18:01,398 --> 00:18:07,054
+-developing software as well, since right from its
+beginning, there was never a need to have patents-
+
+180
+00:18:07,304 --> 00:18:10,516
+-in this field in order for the activity to happen.
+
+181
+00:18:10,766 --> 00:18:20,582
+- Almost everything we were doing back before 1980,
+1981, in those things, patent played no role in it.
+
+182
+00:18:20,832 --> 00:18:30,324
+Cut & paste, the embedded ruler in a word processing,
+word wrapping, a lot of the things that are real-
+
+183
+00:18:30,574 --> 00:18:37,566
+-important and we take for granted, and that are much
+more innovative in many ways than patents we have-
+
+184
+00:18:37,816 --> 00:18:44,198
+-today, 'cos patents can be on some very minute
+things, that's the way the law works.
+
+185
+00:18:44,448 --> 00:18:49,841
+Those things happened, we had great
+advances without patents.
+
+186
+00:18:50,091 --> 00:18:54,100
+- One of the world's most respected computer scientists,
+
+187
+00:18:54,350 --> 00:19:02,422
+Donald Knuth, has said that if software patents had
+been available in the 1960s and 70s when he was-
+
+188
+00:19:02,672 --> 00:19:07,084
+-doing his work, that it's probably the case that
+computer science wouldn't be where it is today.
+
+189
+00:19:07,334 --> 00:19:15,164
+There would be blockades on innovation that could've
+seriously prevented the kinds of technical solutions-
+
+190
+00:19:15,414 --> 00:19:17,942
+-that we take for granted today.
+
+191
+00:19:18,192 --> 00:19:24,137
+- The programmer writing a long program might
+conceivably need to check whether 500 or-
+
+192
+00:19:24,387 --> 00:19:28,622
+-thousand different techniques are patented, and there
+is no way that she possibly could.
+
+193
+00:19:28,872 --> 00:19:35,590
+- The Patent Office issues hundreds of software patents
+all the time. Every Tuesday they issue 3,500 patents-
+
+194
+00:19:35,790 --> 00:19:41,032
+-and a large number of those relate to software. It's
+just impossible to review all those patents every week-
+
+195
+00:19:41,232 --> 00:19:43,580
+-to make sure you're not doing something that could
+infringe them.
+
+196
+00:19:43,830 --> 00:19:53,505
+- So there's a provision in the US patent laws that
+basically holds patent infringers, ahem, at I guess-
+
+197
+00:19:53,755 --> 00:20:01,117
+-a greater liability if they are shown to willfully
+infringe. So basically the idea is that if you knew-
+
+198
+00:20:01,367 --> 00:20:07,094
+-about a patent and you infringed on it, you should
+have a stricter penalty than if you didn't know about it.
+
+199
+00:20:07,344 --> 00:20:14,356
+But what this results in is a situation where there is a
+real disincentive to follow what patent has been made-
+
+200
+00:20:14,606 --> 00:20:21,228
+-and what new inventions there has been through the
+patent system, because if you read every patent or-
+
+201
+00:20:21,478 --> 00:20:28,070
+-there's evidence to show that you have read patents,
+then you are liable for willful infringement, you knew-
+
+202
+00:20:28,320 --> 00:20:32,737
+-about the patent and you infringed it anyway, and the
+penalty is triple damages.
+
+203
+00:20:32,987 --> 00:20:39,137
+<i>- A number of people suggested that software
+should be removed from the-</i>
+
+204
+00:20:39,387 --> 00:20:40,760
+<i>-scope of patentability. Can you comment on that?</i>
+
+205
+00:20:41,010 --> 00:20:45,894
+- Yes, well, I obviously disagree with that. And I don't
+believe that software should ever be removed.
+
+206
+00:20:46,144 --> 00:20:51,441
+It's one of our greatest sources of technical innovation
+in this country. And to come up with a test that would-
+
+207
+00:20:51,691 --> 00:20:55,230
+-somehow eliminate software would,
+I think, be a disaster for the economy.
+
+208
+00:20:55,480 --> 00:21:01,852
+WOULD IT THOUGH?
+- Mike and I estimate that outside of pharmaceuticals
+and chemicals the patents, sort of, are acting like-
+
+209
+00:21:02,102 --> 00:21:10,454
+-10 or 20 percent tax. You know, the small developer
+developing something, down the road he has to pay-
+
+210
+00:21:10,704 --> 00:21:18,892
+-that tax. And every small company I know in software,
+as long as they've been around a few years and hit-
+
+211
+00:21:19,142 --> 00:21:26,950
+-the market, somebody is asserting a patent against
+them, they're running into some potential difficulties.
+
+212
+00:21:27,200 --> 00:21:31,609
+They very frequently feel obligated to get patent
+themselves for defensive purposes.
+
+213
+00:21:31,859 --> 00:21:40,646
+So all of that activity is a tax. It's not something that's
+helping them innovate, it's an unnecessary activity.
+
+214
+00:21:40,896 --> 00:21:47,313
+- The primary thing we do is an issue tracking system
+called RT, or Request Tracker, so it's customer service,-
+
+215
+00:21:47,563 --> 00:21:53,506
+-help desk, bug tracking, network operations, anything
+where you've got a whole bunch of tasks that need to-
+
+216
+00:21:53,756 --> 00:21:58,089
+-get kept track of. And you need to know what
+happened, what didn't happen, who did it,-
+
+217
+00:21:58,339 --> 00:22:04,609
+-who didn't do it, when. It's kind of a to do list on
+steroids designed for a whole organization.
+
+218
+00:22:04,859 --> 00:22:10,297
+Pretty much everything is open source or free software,
+under one license or another.
+
+219
+00:22:10,547 --> 00:22:18,009
+We'll get consulting customers or support costumers
+who add indemnification language to our standard-
+
+220
+00:22:18,259 --> 00:22:27,038
+-contract or need us to sign theirs. And it says, in the
+standard legalese, it's gonna say something like-
+
+221
+00:22:27,288 --> 00:22:34,324
+-we indemnify and hold them harmless and agree to
+pay their legal fees and sacrifice our first-born, if-
+
+222
+00:22:34,574 --> 00:22:41,468
+-something happens and someone discover that our
+software is violating a somebody else's patent.
+
+223
+00:22:41,718 --> 00:22:46,276
+It's very very rarely the case that we end up signing
+something that has that kind of language in it.
+
+224
+00:22:46,526 --> 00:22:48,476
+But it eats up a lot of legal fees.
+
+225
+00:22:48,726 --> 00:22:59,648
+- Look at the innovative people in software in ICT,
+and ask "Would they be better of if the patent system-
+
+226
+00:22:59,898 --> 00:23:03,161
+-was abolished?" The answer is probable "Yes".
+
+227
+00:23:03,411 --> 00:23:11,472
+- Who's benefiting? Patent lawyers is number one.
+Number two, you've a small number of so called-
+
+228
+00:23:11,722 --> 00:23:17,822
+-trolls who are benefiting, but it's not clear even most
+of them is making much money.
+
+229
+00:23:18,072 --> 00:23:25,580
+You're seeing more recently, in the last 4 or 5 years,
+companies like Intellectual Ventures and-
+
+230
+00:23:25,830 --> 00:23:32,364
+-hedge fonds who are acquiring large volumes of these
+trash patents and using them to extract hundreds-
+
+231
+00:23:32,614 --> 00:23:38,129
+-of millions of dollars from companies. They're
+benefiting, they maybe the biggest beneficiaries.
+
+232
+00:23:38,379 --> 00:23:42,872
+- There's a lot of bad press in the last few years
+about the harm that's caused by software patents.
+
+233
+00:23:43,122 --> 00:23:49,268
+And we think that's had a political influence on the PTO
+to get them to slow down their issuance and start-
+
+234
+00:23:49,518 --> 00:23:51,444
+-rejecting them, and that's what has
+resulted in the Bilski case.
+
+235
+00:24:00,270 --> 00:24:07,630
+- Well the biggest, first bad press story was the
+Blackberry patents, where all the Congressional-
+
+236
+00:24:07,880 --> 00:24:12,228
+-representatives have their Blackberrys and there was
+a company called NTP that sued the manufacture of-
+
+237
+00:24:12,478 --> 00:24:17,425
+-Blackberry saying that all Blackberrys infringed it's
+patent. Well, NTP was this company which is just a-
+
+238
+00:24:17,675 --> 00:24:22,532
+-one person holding company, they didn't make any
+products or services themselves, and so-
+
+239
+00:24:22,782 --> 00:24:29,764
+-this got a lot of attention in the Wall street Journal and
+Washington Post, and Congress persons were really-
+
+240
+00:24:30,014 --> 00:24:34,039
+-upset that they may lose their Blackberrys and they
+may not be able to communicate efficiently.
+
+241
+00:24:34,289 --> 00:24:40,950
+So that caused a lot of attention, then you had all these
+patents on banking methods and imaging for checks,-
+
+242
+00:24:41,200 --> 00:24:44,188
+-those patent holders were asserting against the
+banking industry, and the banking industry has-
+
+243
+00:24:44,438 --> 00:24:47,686
+-a lot of influence on Capitol Hill, and so they've been
+going down there and saying "Look, these types of-
+
+244
+00:24:47,936 --> 00:24:52,553
+-patents are causing us lots of harm." Then you add
+into that the whole patent troll phenomenon in-
+
+245
+00:24:52,803 --> 00:24:58,457
+-Eastern District of Texas, with small patent holders
+suing large IT companies like Google, Microsoft-
+
+246
+00:24:58,707 --> 00:25:04,293
+-IBM and Hewlett Packard. And all these companies
+also have legislative influence, and they've said-
+
+247
+00:25:04,543 --> 00:25:08,612
+-"These types of patents are causing real harm to our
+business, they're costing us jobs, they're increasing-
+
+248
+00:25:08,862 --> 00:25:13,881
+-the price of products and services that we offer to our
+customers, and you need to do something about it."
+
+249
+00:25:21,620 --> 00:25:27,428
+- The situation we find ourselves in is that the lower
+court, the Court of Appeals of the Federal Circuit,-
+
+250
+00:25:27,678 --> 00:25:32,140
+-is essentially a court for patents,
+for hearing patent cases.
+
+251
+00:25:32,390 --> 00:25:40,741
+And this is the first time the Supreme Court has
+taken up that scope of patentability.
+
+252
+00:25:40,991 --> 00:25:47,852
+And specifically this test that was implemented by
+lower court, does talk to software patents.
+
+253
+00:25:48,102 --> 00:25:55,724
+And so, it's basically a 20 year history of software
+patents being granted due to the lower court.
+
+254
+00:25:55,974 --> 00:26:01,286
+And so, we're hoping that the Supreme Court will
+clear up the mess that the lower courts created.
+
+255
+00:26:01,536 --> 00:26:06,065
+And restamp it's authority which basically said that
+you cannot have software patents.
+
+256
+00:26:06,315 --> 00:26:12,078
+- When you saw the arguments that where brought
+by Bilski's lawyer, the patent bar is in some sense-
+
+257
+00:26:12,328 --> 00:26:21,238
+-an organized lobby. And an expansive subject matter
+that's available to be patented is in their interest.
+
+258
+00:26:21,488 --> 00:26:26,406
+And it's clear that that was frustrating to some of the
+justices. Some of them were frustrated by how-
+
+259
+00:26:26,656 --> 00:26:28,685
+-expansive patentable subject matter has become.
+
+260
+00:26:28,935 --> 00:26:34,553
+- They seem somewhat dismissive of the idea that
+you could patent this particular idea.
+
+261
+00:26:34,803 --> 00:26:40,169
+- I think people has a hard time getting over the idea
+that you can get a patent on hedging commodity-
+
+262
+00:26:40,419 --> 00:26:45,580
+-risk. But if you actually look at the claims and look
+at what's in there, it is a process and it's no-
+
+263
+00:26:45,830 --> 00:26:50,080
+-different than any other process. It just may be
+that it's not the way that they thought of patent-
+
+264
+00:26:50,330 --> 00:26:51,817
+-law in the past.
+
+265
+00:26:52,067 --> 00:26:56,321
+- We were encouraged by the comments by the
+justices which showed that they were skeptical-
+
+266
+00:26:56,571 --> 00:27:02,630
+-and which suggested that they understood that
+software is little more than a series of steps,-
+
+267
+00:27:02,880 --> 00:27:08,441
+-that could be written out as mathematical formula,
+or written out on a piece of paper, or, as was-
+
+268
+00:27:08,659 --> 00:27:11,638
+-mentioned by one of the justices,
+typed out on a typewriter.
+
+269
+00:27:11,809 --> 00:27:17,117
+- Software patents on a general purpose computer
+have never been explicitly endorsed by this court.
+
+270
+00:27:17,367 --> 00:27:23,798
+And this court has also shown no compunction about
+reversing rules that've held for a very a long time.
+
+271
+00:27:24,048 --> 00:27:27,662
+They clearly thought that the petitioners here was
+trying to get a patent on something very basic,-
+
+272
+00:27:27,912 --> 00:27:29,924
+-some basic forms of human activity.
+
+273
+00:27:30,174 --> 00:27:34,861
+MORE THAN 200,000 SOFTWARE PATENTS
+HAVE BEEN GRANTED IN THE U.S.
+
+274
+00:27:35,611 --> 00:27:42,489
+PROGRAMMERS FIND IT INCREASINGLY DIFFICULT
+TO WRITE SOFTWARE THEY WON'T BE LIABLE
+TO BE SUED FOR
+
+275
+00:27:42,739 --> 00:27:46,239
+NOW IMAGINE...
+
+276
+00:28:39,908 --> 00:28:46,257
+Transcript version 2.2 by Martin Karlsson.
+Licensed under CC-BY 3.0
+

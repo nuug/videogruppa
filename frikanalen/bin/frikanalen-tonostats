@@ -56,11 +56,12 @@ sub print_tono_stats {
     printf("Innslag med tono-musikk:   %d (%.1f%%)\n",   $with, 100 * $with / ($with+$without));
     printf("Innslag uten tono-musikk:  %d (%.1f%%)\n",$without, 100 *$without/($with+$without));
 
+    print "Andel\tmed\tuten\tnavn\n";
     for my $org (sort tonoorder keys %orgs) {
         my $tono = $orgs{$org}{tono} || 0;
         my $notono = $orgs{$org}{notono} || 0;
-        my $frac = int(100 * $tono / ($tono+$notono));
-        print "$frac\t$tono\t$notono\t$org\n";
+        my $frac = 100 * $tono / $with;
+        printf "%4.1f\t%d\t%d\t%s\n", $frac, $tono, $notono, $org;
         print join(" ", "  ", @{$orgs{$org}{tonoids}}), "\n"
             if $opts{'i'} && exists $orgs{$org}{tonoids};
     }

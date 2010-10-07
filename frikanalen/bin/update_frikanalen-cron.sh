@@ -12,12 +12,13 @@ c=0
 while true ; do 
  c=$(expr $c + 1 )
  echo "Take $c"
- $bindir/update_meta_xml.pl $htmldir/meta.xml
+ $bindir/update_meta_xml.pl $htmldir/meta_new.xml
 
  # Verify a successfull download
  if [ "$(wc -l < $htmldir/meta.xml)" -lt 50 ]; then
   sleep 30
  else
+  mv $htmldir/meta_new.xml $htmldir/meta.xml
   break
  fi
 done

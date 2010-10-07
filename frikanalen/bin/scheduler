@@ -120,6 +120,7 @@ sub ezstream_start {
   $ezcfgname = $ezcfg->filename();
   my $url = shift;
   &plwrite("fk-program.jpg");
+            #<decode>ffmpeg2theora -o /dev/stdout \"\@T\@\" --width 360 --height 240 </decode>
   print $ezcfg <<EOF if $ezcfg;
   <ezstream>
     <url>$url</url>
@@ -137,7 +138,7 @@ sub ezstream_start {
         <encdec>
             <format>THEORA</format>
             <match>.ogv</match>
-            <decode>cat  \"\@T\@\"</decode>
+            <decode>cat \"\@T\@\" </decode>
         </encdec>
     </reencode>
 </ezstream>

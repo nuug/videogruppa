@@ -8,10 +8,15 @@ use XML::Simple;
 use POSIX;
 use Date::Parse;
 use Data::Dumper;
+use Getopt::Std;
 
-my $debug = 0;
+my %opts;
 
-my $org = 'NUUG';
+getopts("do:", \%opts);
+
+my $debug = $opts{d} || 0;
+
+my $targetorg = $opts{o} || '';
 
 my $listref = Frikanalen::getEpgUrls();
 for my $url (@{$listref}) {
@@ -22,20 +27,26 @@ for my $url (@{$listref}) {
     my $epgref = XMLin($res->content);
     my $lastday = "";
     for my $event (@{$epgref->{event}}) {
-        if (exists $event->{organisation}
-            && $org eq $event->{organisation}) {
-            print Dumper($event) if $debug;
+        next if ($targetorg && $targetorg ne ($event->{organisation} || ""));
 
-            my $title = $event->{title};
-            my $start = $event->{start};
-            my $starttime = str2time($start);
-            my $startstring = strftime("%H:%M", localtime($starttime));
-            my $daystring = strftime("%Y-%m-%d", localtime($starttime));
-            if ($lastday ne $daystring) {
-                print "$daystring\n";
-                $lastday = $daystring;
-            }
-            print "  $startstring $title\n";
+        print Dumper($event) if $debug;
+        my $title = $event->{title};
+        my $org = $event->{organisation} || '[ukjent/privat]';
+        my $category = $event->{category};
+
+        my $start = $event->{start};
+        my $starttime = str2time($start);
+        my $startstring = strftime("%H:%M", localtime($starttime));
+
+        my $stop = $event->{stop};
+        my $stoptime = str2time($stop);
+        my $stopstring = strftime("%H:%M", localtime($stoptime));
+
+        my $daystring = strftime("%Y-%m-%d", localtime($starttime));
+        if ($lastday ne $daystring) {
+            print "\n$daystring\n";
+            $lastday = $daystring;
         }
+        print "  $startstring-$stopstring $title;$org;$category\n";
     }
 }

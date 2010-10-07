@@ -15,7 +15,7 @@ while true ; do
  $bindir/update_meta_xml.pl $htmldir/meta_new.xml
 
  # Verify a successfull download
- if [ "$(wc -l < $htmldir/meta.xml)" -lt 50 ]; then
+ if [ "$(wc -l < $htmldir/meta_new.xml)" -lt 50 ]; then
   sleep 30
  else
   mv $htmldir/meta_new.xml $htmldir/meta.xml

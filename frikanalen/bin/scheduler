@@ -46,6 +46,7 @@ use GD;
 use POSIX;
 use Event;
 use File::Temp;
+use Frikanalen;
 
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
@@ -178,7 +179,7 @@ sub tidy {
 
 my @events = ();
 
-my $listref = get_epglist();
+my $listref = Frikanalen::getEpgUrls();
 for my $url (@{$listref}) {
 #    print "Loading '$url'\n";
   my $ua = new LWP::UserAgent;

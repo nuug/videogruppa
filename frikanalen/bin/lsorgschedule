@@ -1,0 +1,41 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+
+use Frikanalen;
+use XML::Simple;
+use POSIX;
+use Date::Parse;
+use Data::Dumper;
+
+my $debug = 0;
+
+my $org = 'NUUG';
+
+my $listref = Frikanalen::getEpgUrls();
+for my $url (@{$listref}) {
+    print "Loading '$url'\n" if $debug;
+    my $ua = new LWP::UserAgent;
+    my $req = new HTTP::Request GET => $url;
+    my $res = $ua->request($req);
+    my $epgref = XMLin($res->content);
+    my $lastday = "";
+    for my $event (@{$epgref->{event}}) {
+        if (exists $event->{organisation}
+            && $org eq $event->{organisation}) {
+            print Dumper($event) if $debug;
+
+            my $title = $event->{title};
+            my $start = $event->{start};
+            my $starttime = str2time($start);
+            my $startstring = strftime("%H:%M", localtime($starttime));
+            my $daystring = strftime("%Y-%m-%d", localtime($starttime));
+            if ($lastday ne $daystring) {
+                print "$daystring\n";
+                $lastday = $daystring;
+            }
+            print "  $startstring $title\n";
+        }
+    }
+}

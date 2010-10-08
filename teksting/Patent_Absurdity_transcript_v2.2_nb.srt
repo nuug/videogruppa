@@ -170,55 +170,63 @@ er et grunnlag for en patent?</i>
 
 36
 00:02:51,964 --> 00:02:57,710
-
+- Den grunnleggende prossesen med å skrive programvare er å
+ta en bred algoritme av noe slag, -
 
 37
 00:02:57,960 --> 00:03:01,760
-
+- en måte å gjøre noe med et utdrag av data,
+og så tildeler du variabler navn.
 
 38
 00:03:02,010 --> 00:03:05,910
-
+- Så for vår første derivasjon la oss starte med en enkel
+matrise, en matrise med verdier. ($SJEKK)
 
 39
 00:03:06,160 --> 00:03:11,830
-
+Også finner vi medianen for hver kollone, my en,
+my to, my tre.
 
 40
 00:03:12,030 --> 00:03:21,184
-
+Også definerer vi Y to å være X minus my for hver kollone.
 
 41
 00:03:21,434 --> 00:03:29,468
-
+Nå om vi har en annen faktor, X, så kan vi ta
+X punk S og prosjektere posisjonen til X på dette planet. ($SJEKK)
 
 42
 00:03:29,718 --> 00:03:31,950
-
+Dette kalles singulærverdi dekomponering (SVD).
 
 43
 00:03:32,200 --> 00:03:41,609
-
+Nå, her er trikset. Her er den flotte delen. La
+oss først si at denne første raden, X1, er seksualitet.
 
 44
 00:03:41,859 --> 00:03:45,359
-
+La oss si X2 er "Liker du katter?"
 
 45
 00:03:47,126 --> 00:03:51,836
-
+Og X3 er, jeg vet ikke, medfølelse.
 
 46
 00:03:55,022 --> 00:04:05,502
-
+Ok, så, nå sier vi også at vi tar en faktor
+J1 som er Jane sine svar på dette spørreskjemaet.
 
 47
 00:04:05,752 --> 00:04:10,086
-
+La oss si at J2 er Joe sine svar.
 
 48
 00:04:10,336 --> 00:04:21,308
-
+La oss nå gjøre den samme prosjekteringen som vi gjorde tidligere.
+Vi tar J1 punkt S subtraherer J2 punkt S.
 
 49
 00:04:21,558 --> 00:04:27,062

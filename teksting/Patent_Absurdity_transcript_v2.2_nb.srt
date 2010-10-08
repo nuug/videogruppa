@@ -103,59 +103,70 @@ definere hva det betyr å være en patenterbar prossess.
 
 22
 00:01:52,257 --> 00:01:54,276
-<i></i>
+<i>- Hva med dommer Roberts? Han sa at</i>
 
 23
 00:01:54,468 --> 00:01:57,452
-<i></i>
+<i>patenten deres hovedsaklig handler om
+at folk plukker opp telefonen og ringer til andre folk.</i>
 
 24
 00:01:57,770 --> 00:02:03,065
-
+- Det er mulig å redusere det ned til det nivået, som viser
+selve handlingene som utføret, men det er mye mer enn det.
 
 25
 00:02:03,365 --> 00:02:08,438
-
+Det har å gjøre med å selge hyllevare som påvirker
+prisen til en part, som selger det til en annen part
 
 26
 00:02:08,738 --> 00:02:12,706
-
+til en fast pris,
+som identifiserer en motvirkende risikoposisjon. ($SJEKK)
 
 27
 00:02:12,956 --> 00:02:18,668
-
+Hvis du ser på krav fire i patentent, så har vi ting
+som kalles krav som beskriver hva oppfinnelsen er, -
 
 28
 00:02:18,668 --> 00:02:25,318
-
+- det er en lang matematisk formel inni der, som
+ikke eksisterte i naturen eller andre steder i literaturen,
 
 29
 00:02:25,502 --> 00:02:28,110
-
+som disse veldig oppfinnsomme folkene kom frem til.
 
 30
 00:02:28,352 --> 00:02:32,052
-<i></i>
+<i>- En gang i tiden var ikke matematikk patenterbart.
+Og nåtildags kan vi ha noen -</i>
 
 31
 00:02:32,302 --> 00:02:37,812
-
+- som Bilski kommende inn å si: "Vet du,
+jeg har jobbet hardt med denne matematiske ligningen -"
 
 32
 00:02:38,012 --> 00:02:41,564
-
+"- og derfor burde jeg få en patent på denne
+metoden for å prossessere informasjon." ($SJEKK)
 
 33
 00:02:41,814 --> 00:02:45,249
-<i></i>
+<i>Du nevner i ditt krav at det er en veldig lang
+kalkulasjon vist der.</i>
 
 34
 00:02:45,464 --> 00:02:50,710
-<i></i>
+<i>Tenker du at en sterk kalkulering eller god matematikk
+er et grunnlag for en patent?</i>
 
 35
 00:02:50,910 --> 00:02:51,714
-
+- Det kan det være.
 
 36
 00:02:51,964 --> 00:02:57,710

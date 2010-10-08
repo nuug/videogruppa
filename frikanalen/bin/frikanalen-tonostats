@@ -46,7 +46,7 @@ sub get_tono_stats {
 #            exit 0;
         } else {
             $notono++;
-            $orgs{$video->{'Organization'}}{notono}++;
+            $orgs{$video->{'Organization'} || ""}{notono}++;
         }
     }
     return ($tono, $notono);

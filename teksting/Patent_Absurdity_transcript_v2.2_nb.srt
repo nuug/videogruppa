@@ -230,7 +230,8 @@ Vi tar J1 punkt S subtraherer J2 punkt S.
 
 49
 00:04:21,558 --> 00:04:27,062
-
+Vi skal finne avstanden mellom disse to
+punktene, og vi kommer til å kalle det for kompatabilitet.
 
 50
 00:04:28,414 --> 00:04:35,901

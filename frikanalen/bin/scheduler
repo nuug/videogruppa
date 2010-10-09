@@ -299,6 +299,7 @@ if ( $opts{"s"} ) {
       cb => sub {
        ezstream_stop();
        Event::unloop_all();
+       exit;
        #die "Suicide at midnight\n";
       });
   Event::loop();

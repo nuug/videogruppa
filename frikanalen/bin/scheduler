@@ -103,6 +103,7 @@ sub plwrite {
   if ( $ezpid ) {
     kill SIGHUP => $ezpid;
     kill SIGUSR1 => $ezpid;
+    my $f = `pkill -P $ezpid ffmpeg`;
   }
   print localtime()."$content written to playlist\n";
   #sleep 5;

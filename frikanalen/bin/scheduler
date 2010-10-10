@@ -103,7 +103,9 @@ sub plwrite {
   if ( $ezpid ) {
     kill SIGHUP => $ezpid;
     kill SIGUSR1 => $ezpid;
-    my $f = `pkill -P $ezpid ffmpeg`;
+    if ( $content =~ /^.+\.ogv$/ ) {
+     my $f = `pkill -P $ezpid ffmpeg`;
+    }
   }
   print localtime()."$content written to playlist\n";
   #sleep 5;
@@ -128,7 +130,7 @@ sub ezstream_start {
     <url>$url</url>
     <sourcepassword>secret</sourcepassword>
     <format>THEORA</format>
-    <filename>frikanalen.m3u</filename>
+    <filename>$ezplaylist</filename>
     <svrinfoname></svrinfoname>
     <reencode>
         <enable>1</enable>
@@ -148,14 +150,17 @@ EOF
     close $ezcfg;
   defined($ezpid = fork()) or die "unable to fork: $!\n";
   if ($ezpid == 0) {
-    #exec("$ezstream","-q","-c","$ezcfgname");
-    exec("$ezstream","-c","$ezcfgname");
+    exec("$ezstream","-q","-c","$ezcfgname");
+    #exec("$ezstream","-c","$ezcfgname");
     die "unable to exec: $!\n";
   }
 }
 
 sub ezstream_stop {
-  if ( $ezpid ) { kill SIGTERM => "$ezpid"; }
+  if ( $ezpid ) { 
+   kill SIGTERM => "$ezpid"; 
+   `pkill -P $ezpid ffmpeg`;
+  }
   if ( -f $ezcfgname ) { unlink $ezcfgname } ;
   if ( -f $ezplaylist ) { unlink $ezplaylist };
 }

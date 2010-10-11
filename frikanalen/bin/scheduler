@@ -120,6 +120,7 @@ sub plwrite {
 
 sub ezstream_start {
   my $ezstream = "/usr/bin/ezstream";
+  #my $ezstream = "/video/jarle/frikanalen-bin/bin/ezstream";
   $ezcfg = new File::Temp( UNLINK => 0, SUFFIX => '.xml' );
   $ezcfgname = $ezcfg->filename();
   my $url = shift;
@@ -395,16 +396,17 @@ sub schedule_stream {
       my $stopstring = short_time($eventref->{'stop'}, 1);
       my $nowstring = strftime("%H:%M:%S", localtime(time()));
       my $file = "";
+      if ($skiptonorecords && "true" eq $eventref->{'HasTonoRecords'}) { return; }
       print "Playing '$title' $startstring-$stopstring (now $nowstring)\n";
       if ( -f "broadcast-$id.ogv") {
         print "info: Playing local broadcast-$id.ogv\n";
         $file = "broadcast-$id.ogv";
       }
-      if ($skiptonorecords && "true" eq $eventref->{'HasTonoRecords'}) {
+      #if ($skiptonorecords && "true" eq $eventref->{'HasTonoRecords'}) {
 # XXX Should generate "Not allowed to play this" screen.
-        print localtime()."Skipping this event. It has tonorecords\n";
-        $file = generate_tonoprogram("foo",$seq);
-      }
+      #  print localtime()."Skipping this event. It has tonorecords\n";
+      #  $file = generate_tonoprogram("foo",$seq);
+      #}
       plwrite($file) if $file;
       });
   my $stopstring = strftime("%H:%M", localtime($stoptime));
@@ -610,7 +612,7 @@ sub generate_program {
 # Should we skip entries with tono records?
     my $infostring;
     if ("true" eq $event->{'HasTonoRecords'}) {
-      $infostring = "$startstring-$stopstring * $title";
+      $infostring = "$startstring-$stopstring - $title (TONO)";
     } else {
       $infostring = "$startstring-$stopstring - $title";
     }

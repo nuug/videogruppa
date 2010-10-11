@@ -285,9 +285,9 @@ sub glue_dv {
   if ( !runcmd($ffmpeg) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 # my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
 #savetemp();
-# if ( -d $workdir ) {
-#   `rm -rf $workdir`;
-# }
+ if ( -d $workdir ) {
+   `rm -rf $workdir`;
+ }
 }
 
 

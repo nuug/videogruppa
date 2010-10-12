@@ -293,7 +293,9 @@ if ( $opts{"s"} ) {
     my $starttime = str2time($start);
     my $stoptime = str2time($event->{stop});
     if ($starttime >= $now) {
+     unless  ($skiptonorecords && "true" eq $event->{'HasTonoRecords'}) {
       schedule_stream( $seq, int($starttime), int($stoptime));
+     }
     } elsif ($stoptime >= $now && $starttime <= $now) {
       schedule_stream( $seq, $now, int($stoptime));
     }

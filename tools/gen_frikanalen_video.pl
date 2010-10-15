@@ -33,7 +33,7 @@ my %opts;
 my $intro_length = 10;
 my $pid = $$;
 
-getopts('di:m:o:b:s', \%opts);
+getopts('di:m:o:b:s:', \%opts);
 my $debug = $opts{d} || 0;
 my $workdir = "./fk-temp-$pid";
 #my $startposter = "$workdir/startposter.png";
@@ -302,9 +302,8 @@ sub savetemp {
 }
 
 sub getsrtfile {
-  my $base = $opts{'i'};
-  $base =~ s/\..+$//; # Could be .dv or .avi or whatnot. This strips it off anyway.
-    return "$opts{'s'}/$base.srt";
+    $opts{'i'} =~ /.+\/(.+)\..+$/; # Could be .dv or .avi or whatnot. This strips it off anyway.
+    return "$opts{'s'}/$1.srt";
 }
 
 sub runcmd {

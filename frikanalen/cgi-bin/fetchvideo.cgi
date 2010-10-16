@@ -64,7 +64,7 @@ if ($playlist) {
    my $id = "id_$1";
    my $ogvurl = $ref->{$id}->{ogvUri};
    print "Content-type: audio/x-mpegurl\n\n";
-   print "$ogvurl";
+   print "$ogvurl\n";
    exit 0;
 } else {
 

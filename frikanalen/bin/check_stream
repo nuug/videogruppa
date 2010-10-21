@@ -1,0 +1,66 @@
+#!/usr/bin/perl
+#
+# This check is based on a proposal written by Morten Bekkelund and
+# found on <URL:http://www.sladder.org/?p=236> The test has been
+# slightly rewritten to use mencoder and a 5 second download sequence
+# as we want to check a live stream and not a simple download,
+# rewritten to drop the temp file, and changed to check size against a
+# minimum instead of a fixed size.
+
+use warnings;
+use strict;
+
+use Getopt::Long;
+
+use vars qw($url $expected_size);
+
+my %ERRORS =
+    (
+     'OK'        => 0,
+     'WARNING'   => 1,
+     'CRITICAL'  => 2,
+     'UNKNOWN'   => 3,
+     'DEPENDENT' => 4,
+    );
+
+sub print_usage {
+    print <<EOF;
+Usage: check_xstream -u <url> -s <minimum size of stream output>
+Example: ./check_xstream -u mms://streamserver/stream -s 4533646
+EOF
+}
+
+sub help {
+    print_usage();
+}
+
+Getopt::Long::Configure ("bundling");
+GetOptions(
+    'u:s'  => \$url,           'url'  => \$url,
+    's:i'  => \$expected_size, 'size' => \$expected_size
+);
+
+if(!$url or !$expected_size) {
+    print_usage();
+    exit $ERRORS{"UNKNOWN"};
+}
+
+my $file_size =
+    `mencoder  "$url" -oac copy -ovc copy -endpos 10 -o - 2>/dev/null | wc -c`;
+chomp $file_size;
+
+if(!$file_size) {
+    print "UNKNOWN: Cannot find dumped stream using mencoder $url.\n";
+    exit $ERRORS{"UNKNOWN"};
+}
+
+if($file_size < $expected_size) {
+    print "CRITICAL: The size of the stream ($file_size) is smaller than the expected size ($expected_size). Streaming doesnt appear to work correctly.\n";
+    exit $ERRORS{"CRITICAL"};
+} else {
+    print "OK: The size of the stream ($file_size) is higher than $expected_size. Streaming appears to work correctly.\n";
+    exit $ERRORS{"OK"};
+}
+
+print "UNKNOWN: Something really fishy is going on here"."\n";
+exit $ERRORS{"UNKNOWN"};

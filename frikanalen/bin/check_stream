@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #
 # This check is based on a proposal written by Morten Bekkelund and
-# found on <URL:http://www.sladder.org/?p=236> The test has been
+# found on <URL: http://www.sladder.org/?p=236 > The test has been
 # slightly rewritten to use mencoder and a 5 second download sequence
 # as we want to check a live stream and not a simple download,
 # rewritten to drop the temp file, and changed to check size against a

@@ -10,12 +10,18 @@ use strict;
 
 use Getopt::Std;
 use Text::Wrap qw($columns);
+use POSIX
 
 print "Startet Makefront, laget for NUUG 2009.\n";
 
 use vars qw($type $presenter $title $time $place $editor %opts);
 
-getopts("o:p:t:w:l:e:", \%opts);
+getopts("o:p:t:w:l:e:h", \%opts);
+
+if ($opts{h}) {
+    print "Usage: makefront [-o output] [-p presenter] [-t title] [-w time] [-l location] [-e editor] [-h]\n";
+    exit 0;
+}
 
 if ($opts{e}) {
     $editor = $opts{e};
@@ -59,6 +65,7 @@ if ($editor) {
 } else {
 
 #Spør om input til variabler
+$time = POSIX::strftime( "%d. %B %Y", localtime());
 $presenter =
     prompt($opts{'p'},
            "Skriv inn navnet på foredragsholder (maks 25 tegn):\n");
@@ -67,14 +74,11 @@ $title =
            "Skriv inn tittelen til foredraget (maks 25 tegn):\n");
 $time =
     prompt($opts{'w'},
-           "Skriv inn tid for foredraget: (`date +%d.\ %B\ %Y`):\n");
+           "Skriv inn tid for foredraget: ($time):\n");
 $place =
     prompt($opts{'l'},
            "Skriv inn sted for foredraget:\n");
 
-unless ($time) {
-    $time=`date +%d.\ %B\ %Y`;
-}
 
 my $timeplace;
 unless ($place) {

@@ -1,5 +1,5 @@
 == Intro-scriptet makefront ==
-Makefront, et simpelt lite bash-script som skal lage intro til foredrag holdt av NUUG, skrevet av en som egentlig ikke kan bash-scripting, på besøk hjemme hos oklien en sein lørdagskveld, sluppet med CC-BY-SA-lisens.
+Makefront, et simpelt lite script som skal lage intro til foredrag holdt av NUUG, sluppet med CC-BY-SA-lisens.
 
 Kildefilene cc-by-sa.png, NUUG-logo-2-150.png og NUUG-vid_bg.png er med for å gjøre endringer lettere senere. Det regnes med at man har lyst til å endre på elementer i fremtiden.
 
@@ -7,19 +7,17 @@ Kildefilene cc-by-sa.png, NUUG-logo-2-150.png og NUUG-vid_bg.png er med for å g
 Pakken til "ImageMagick", http://www.imagemagick.org
 
 == Bruk ==
+Usage: makefront [-o output] [-p presenter] [-t title] [-w time] [-l location] [-e editor] [-h]
+
 Kjør makefront.sh med de tre medfølgende bildene i samme mappe, og skriv inn informasjonen som blir forespurt. Dette spytter ut bildet NUUG-vid_front<TALL>.png. Kjøres scriptet igjen og <TALL> økes til neste ledige. Det du skriver er det som kommer på bildet, enkelt og greit.
 
-== Konvertering av png til DV-strøm ==
 
-ffmpeg -loop_input -f image2 -i <PATH TO IMAGE> -target pal-dv - | dvsource-file /dev/stdin
 
-== To do ==
- * Lage mulighet for parametre fra kommandolinjen.
- {{{
- echo -e "Lille Trille\nFalltekniker i praksis\n14. januar 2009\nHiO"|sh makefront.sh
- evnt. http://tldp.org/LDP/abs/html/string-manipulation.html#GETOPTSIMPLE
-}}}
- 
+
+
+
+
+
 == Plassering av elemtenter ==
 Her forklares hvordan man regner ut plasseringen av et bilde. Delvis fordi jeg syntes matte er artig og delvis fordi jeg vil dele dette med andre dersom de ikke vet det fra før av.
 

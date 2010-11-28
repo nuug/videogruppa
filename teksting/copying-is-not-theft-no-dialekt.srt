@@ -70,3 +70,6 @@ e koffør vi syns kopiering
 00:00:48,000 --> 00:00:50,500
 e Gøy!
 
+19
+00:00:55,000 --> 00:00:58,500
+Tekst av Magnus Holla Sivertsen

@@ -1,5 +1,5 @@
 1
-00:00:01,350 --> 00:00:04,800
+00:00:02,500 --> 00:00:04,800
 Kopiering er ikke tyveri
 
 2
@@ -27,7 +27,7 @@ Kopiering er ikke tyveri
 Hvis jeg kopierer, så har du fortsatt din
 
 8
-00:00:22,200 --> 00:00:24,750
+00:00:22,200 --> 00:00:24,650
 En til meg og en til deg
 
 9
@@ -43,7 +43,7 @@ Hvis jeg stjeler sykkelen din
 så må du ta bussen.
 
 12
-00:00:32,250 --> 00:00:34,900
+00:00:32,250 --> 00:00:34,800
 Men hvis jeg lager en kopi,
 
 13

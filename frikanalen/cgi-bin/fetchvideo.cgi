@@ -102,7 +102,7 @@ if ($playlist) {
         <p><b>Organisasjon:</b> <a href="frontpage.cgi?organization=$org_escaped">$organization</a></p>
         <applet code="com.fluendo.player.Cortado.class"
         archive="http://www.nuug.no/pub/video/frikanalen/bin/cortado-unsigned-20100814.jar"
-        width="640" height="320">
+        width="640" height="360">
         <param name="url" value="$ogvurl"/>
         <param name="local" value="false"/>
         <param name="showStatus" value="show"/>

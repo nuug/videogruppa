@@ -255,179 +255,216 @@ istedet for X2 har vi preferansen for katter.
 
 54
 00:04:56,120 --> 00:04:59,948
-
+Og ved å gjøre disse tildelingene, ved
+å sette forskjellige navn på denne måten,
 
 55
 00:05:00,198 --> 00:05:05,390
-
+var det mulig for dem å ta et abstrakt konsept
+og gjøre det om til en patenterbar enhet.
 
 56
 00:05:06,440 --> 00:05:13,569
-
+Hva vi har lyst til å gjøre i følge lederne av
+vår patentinstutisjon, er å ta matematikk og
 
 57
 00:05:13,819 --> 00:05:18,246
-
+dele den opp i så mange små deler som mulig, og gi
+de delene ut. Og, si, dersom du gjør en
 
 58
 00:05:18,496 --> 00:05:26,238
-
+prinsippkomponentanalyse, ($SJEKK) dersom du multipliserer matriser
+for sjekkesider, så gir vi den delen til eHarmony.
 
 59
 00:05:26,488 --> 00:05:31,532
-
+Dersom det er for aksjer så gir vi den delen til State Street.
+Og så videre.
 
 60
 00:05:31,782 --> 00:05:39,718
-
+Og det vi gir ut er i bunn og grunn
+ekslusive rettigheter til å bruke matematikk,
 
 61
 00:05:40,083 --> 00:05:44,883
-
+til å bruke en naturlov, i hvilken som helst sammeneheng.
+Og det vi for til gjengjeld er i bunn og grunn ingenting.
 
 62
 00:05:45,733 --> 00:05:52,121
-
+Patentene er en statlig bevilgning, i USA
+oppstår den ut fra grunnloven.
 
 63
 00:05:52,471 --> 00:05:58,721
-
+USAs landsfedre inkluderte bestemmelsen for å tildele
+ekslusive rettigheter til oppfinnere i vår grunnlov,
 
 64
 00:05:58,971 --> 00:06:06,093
-
+og troen var at det var viktig for å kunne belønne
+de personene som gjorde teknologiske
 
 65
 00:06:06,243 --> 00:06:09,343
-
+fremskritt som er til samfunnets nytte.
 
 66
 00:06:13,272 --> 00:06:18,156
-
+De rettighetene de blir tildelt er ikke rettighetene
+til å gjøre de tingene de finner opp,
 
 67
 00:06:18,406 --> 00:06:21,409
-
+men det er rettigheten til å eksludere andre fra å
+gjøre det.
 
 68
 00:06:21,659 --> 00:06:28,345
-
+Så ideen var at du hadde en maskin eller en ting,
+som ikke tidligere er beskrevet i litteratur,
 
 69
 00:06:28,595 --> 00:06:34,449
-
+og som ingen belært mekaniker kunne skjønne
+hvordan man lager ut fra hva som er beskrevet i litteratur,
 
 70
 00:06:34,699 --> 00:06:36,457
-
+og for det kan du få en patent.
 
 71
 00:06:36,707 --> 00:06:42,550
-
+Grunnlaget for å bestemme hva som er pattenterbare
+emner har fortsatt å utvikle seg
 
 72
 00:06:42,800 --> 00:06:46,300
-
+gjennom de siste 200 årene av vår eksistens.
 
 73
 00:06:46,550 --> 00:06:54,588
-
+I 1953 ble patentloven endret av kongressen,
+for å legge ordene "eller prosesser" til ordet
 
 74
 00:06:54,838 --> 00:06:57,697
-
+"produkt" for å beskrive det som kan bli patentert.
 
 75
 00:07:04,760 --> 00:07:10,833
-
+Kongressen som gjorde det tenkte var rett og slett på
+prosesser av industriell produksjon. Prosesser
 
 76
 00:07:11,083 --> 00:07:19,481
-
+som produserte noe i den andre enden. Flyt
+glass på smeltet tinn, og det vil bli flatt, eller noe slikt.
 
 77
 00:07:19,731 --> 00:07:25,065
-
+Og det er lite sannsynlig at noen tenkte på prosessen
+på den tiden i form av dataprogrammer,
 
 78
 00:07:25,315 --> 00:07:33,748
-
+fordi vi ikke hadde søknader om datamaskin-
+programvare på mange år etter at forrige revisjon
 
 79
 00:07:33,998 --> 00:07:36,998
-
+av patentloven.
 
 80
 00:07:46,267 --> 00:07:52,282
-
+Tilbake i slutten av 70-tallet ble patentloven tolket
+slik at du kunne ikke patentere programvare. Det var
 
 81
 00:07:52,532 --> 00:07:55,449
-
+ansett som en matematisk algoritme,
+en naturlov.
 
 82
 00:08:01,821 --> 00:08:09,430
-
+Den juridiske verden forandret seg. Miljøet
+var ganske annerledes etter noen avgjørelser i
 
 83
 00:08:09,649 --> 00:08:11,254
-
+Høyesterett, som Diamond mot Diehr.
 
 84
 00:08:11,504 --> 00:08:17,905
-
+Patentsøkerene kom inn med en ny
+prosess for herding gummi. Temperaturen, og
 
 85
 00:08:18,155 --> 00:08:23,873
-
+presisjonens av temperaturen er vesentlig
+i bra herding av gummi. Og innovasjonen
 
 86
 00:08:24,123 --> 00:08:30,753
-
+som ble patentert i dette tilfellet var en
+algoritme for å overvåke et termometer
 
 87
 00:08:31,003 --> 00:08:37,038
-
+som i utgangspunktet var i prosessen og bestemte
+når gummi trengte å bli utgitt og avkjølt.
 
 88
 00:08:37,288 --> 00:08:42,505
-
+Og de sa "Prosesser for herding gummi er
+patenterbar, er det ingenting nytt om det, -"
 
 89
 00:08:42,755 --> 00:08:47,526
-
+"- det faktum at de bruker en datamaskin for å implementere
+det bør ikke endre noe."
 
 90
 00:08:55,602 --> 00:09:00,070
-
+Høyesterett gjør det klart at du ikke kan
+patentere programvare, fordi det er kun ett sett av
 
 91
 00:09:00,320 --> 00:09:09,300
-
+instrukser, eller en algoritme. Abstrakte naturlover,
+algoritmer, er ikke patenterbare i USA selv.
 
 92
 00:09:09,550 --> 00:09:17,209
-
+Men så var det etableringen av
+Court of Appeals av Federal Circuit. ($SJEKK)
 
 93
 00:09:17,459 --> 00:09:24,657
-
+Problemet som løses, på en måte, begynner
+med det faktum at dommere ($SJEKK) alltid
 
 94
 00:09:24,907 --> 00:09:27,180
-
+hater patent-saker.
 
 95
 00:09:27,430 --> 00:09:35,310
-
+Og grunnen til at de hater patent-saker er, for en enkelt
+dommer, en advokat som har brukt hans/hennes liv
 
 96
 00:09:35,560 --> 00:09:43,914
-
+på å gjøre søksmål ($SJEKK), en patent-sak der hun/han blir nødt
+til å finne detaljerte fakta om hvordan maling blir
 
 97
 00:09:44,164 --> 00:09:52,713
-
+laget eller hvordan datamaskiner fungerer eller hvordan radio
+fungerer, er en mulighet bare til å gjøres om til en tosk.
 
 98
 00:10:00,133 --> 00:10:05,369

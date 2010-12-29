@@ -468,15 +468,18 @@ fungerer, er en mulighet bare til å gjøres om til en tosk.
 
 98
 00:10:00,133 --> 00:10:05,369
-
+Kongressen forsøker å endre systemet der
+patentsaker er prosedert ($SJEKK).
 
 99
 00:10:05,619 --> 00:10:11,934
-
+Men i stedet for å endre hvem som prøvde patentsaker,
+overlot kongressen en ikke-spesialisert distrikt-dommer
 
 100
 00:10:12,184 --> 00:10:17,326
-
+med ansvar for rettssaken. Og så opprettet en ny
+ankedomstol ($SJEKK) kalt Federal Circuit,
 
 101
 00:10:17,576 --> 00:10:22,081

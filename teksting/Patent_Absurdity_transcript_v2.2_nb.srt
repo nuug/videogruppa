@@ -474,64 +474,73 @@ patentsaker er prosedert ($SJEKK).
 99
 00:10:05,619 --> 00:10:11,934
 Men i stedet for å endre hvem som prøvde patentsaker,
-overlot kongressen en ikke-spesialisert distrikt-dommer
+overlot kongressen det til en ikke-spesialisert distrikt-dommer
 
 100
 00:10:12,184 --> 00:10:17,326
-med ansvar for rettssaken. Og så opprettet en ny
+å ta seg av rettssaken. Og så opprettet de en ny
 ankedomstol ($SJEKK) kalt Federal Circuit,
 
 101
 00:10:17,576 --> 00:10:22,081
-
+sin jobb det var å høre alle anker fra patentsaker.
 
 102
 00:10:22,331 --> 00:10:25,313
-
+Disse domstolene ble selvfølgelig raskt fylt opp med patentadvokater.
 
 103
 00:10:25,563 --> 00:10:32,622
-
+Og patentadvokatene lagde loven i ankedomstolen
+som gjaldt for alle de distrikstdommerne ($SJEKK)
 
 104
 00:10:32,872 --> 00:10:37,556
-
+som fortsatt utførte ikke-spesialiserte avgjørelser som de var redde for.
 
 105
 00:10:37,806 --> 00:10:42,721
-
+Naturlig nok ble Federal Circuit ($SJEKK) et sted
+som elsket patenter.
 
 106
 00:10:42,971 --> 00:10:49,537
-
+Og sjefsdommeren ($SJEKK), Giles Rich, som levde til han ble
+virkelig gammel og døde i slutten av 90-årene sine,
 
 107
 00:10:49,787 --> 00:10:53,068
-
+var en mann som spesielt elsket patenter
+på alt.
 
 108
 00:10:53,318 --> 00:11:00,273
-
+Federal Circuit ($SJEKK) domstolen under Giles Rich brøt på en måte
+Diamond mot Diehrs tap fra sin orginale betydning,
 
 109
 00:11:00,523 --> 00:11:05,068
-
+og kom til den konklusjonen at programvare i seg selv
+kunne patenteres.
 
 110
 00:11:05,318 --> 00:11:09,609
-
+Høyesterett lot i grunn denne domstolen bestemme alt.
 
 111
 00:11:09,859 --> 00:11:16,473
-
+PTO ($SJEKK) pleide faktisk å avvise patenter på programvare,
+som i tidlig 1990-tallet, og de tillot dem ikke.
 
 112
 00:11:16,723 --> 00:11:20,223
-
+Og søkerne ville så anke disse
+avvisningene til Federal Circuit. ($SJEKK)
 
 113
 00:11:43,280 --> 00:11:46,798
-
+I verdenen til maskiner så viser du patentkontoret
+denne maskinen,
 
 114
 00:11:47,048 --> 00:11:51,697

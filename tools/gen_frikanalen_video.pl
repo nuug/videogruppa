@@ -197,6 +197,7 @@ sub create_endposter_png {
       "camera" => "Kamera",
       "sound" => "Lydoppsett",
       "videomixer" => "Videomiks",
+      "teksting" => "Teksting",
       );
   my $line_distance = 52;
   my $text_size = 40;
@@ -204,7 +205,7 @@ sub create_endposter_png {
   my $left_margin = 450;
   my $cmd_body = "";
   my @endnotes;
-  my @endnote_tags = ("introduction","organizer", "venue","camera","sound","videomixer","editor" );
+  my @endnote_tags = ("introduction","organizer", "venue","camera","sound","videomixer","editor","teksting" );
   foreach my $n ( @endnote_tags ) {
     if ($meta->{$n} ) {
 

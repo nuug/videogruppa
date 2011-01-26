@@ -33,7 +33,7 @@ my %opts;
 my $intro_length = 10;
 my $pid = $$;
 
-getopts('di:m:o:b:s:', \%opts);
+getopts('di:m:o:b:s:S:', \%opts);
 my $debug = $opts{d} || 0;
 my $workdir = "./fk-temp-$pid";
 #my $startposter = "$workdir/startposter.png";
@@ -91,9 +91,13 @@ if ( $opts{'i'} ) {
   usage();
   exit 1;
 }
+my $subdelay = "";
 
 if ( $opts{'s'} ) {
   $srtfile = getsrtfile();
+  if ( $opts{'S'} ) {
+   $subdelay = "-subdelay $opts{'S'}";
+  } 
 }
 
 
@@ -254,7 +258,7 @@ sub gen_video_body {
       $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
     }
     if ( $srtfile ) {
-      $cmd .= " -sub $srtfile -utf8 ";
+      $cmd .= " -sub $srtfile -utf8 $subdelay";
     }
     $cmd .= "-o $mod_dv $source ";
     if ( !runcmd($cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }

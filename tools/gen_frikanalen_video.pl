@@ -258,7 +258,7 @@ sub gen_video_body {
       $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
     }
     if ( $srtfile ) {
-      $cmd .= " -sub $srtfile -utf8 $subdelay";
+      $cmd .= " -sub $srtfile -utf8 $subdelay ";
     }
     $cmd .= "-o $mod_dv $source ";
     if ( !runcmd($cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }

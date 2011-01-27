@@ -1,0 +1,1732 @@
+﻿1
+00:00:00,000 --> 00:00:03,000
+Om ikke annet, så har vi i det minste oppdaget
+
+2
+00:00:03,000 --> 00:00:05,000
+hva vi lar foredragsholderne våre gå gjennom:
+
+3
+00:00:05,000 --> 00:00:08,000
+svette håndflater, søvnløse netter,
+
+4
+00:00:08,000 --> 00:00:11,000
+en fullstendig unaturlig frykt for klokker.
+
+5
+00:00:11,000 --> 00:00:14,000
+Jeg mener, det er ganske brutalt.
+
+6
+00:00:14,000 --> 00:00:17,000
+Og jeg er litt nervøs for dette.
+
+7
+00:00:18,000 --> 00:00:21,000
+Det er ni billioner mennesker på vei.
+
+8
+00:00:21,000 --> 00:00:23,000
+Selv de mest optimistiske drømmer
+
+9
+00:00:23,000 --> 00:00:26,000
+kan ta skade av forestillingen
+
+10
+00:00:26,000 --> 00:00:29,000
+av folk som plyndrer planeten.
+
+11
+00:00:29,000 --> 00:00:32,000
+Men i det siste har jeg blitt fascinert
+
+12
+00:00:32,000 --> 00:00:35,000
+av en annen måte å se på store folkemengder på,
+
+13
+00:00:35,000 --> 00:00:37,000
+for det er omstendigheter
+
+14
+00:00:37,000 --> 00:00:39,000
+hvor de kan gjøre noe skikkelig stilig.
+
+15
+00:00:39,000 --> 00:00:41,000
+Det er et fenomen som jeg tror
+
+16
+00:00:41,000 --> 00:00:44,000
+alle organisasjoner eller individer kan dra nytte av.
+
+17
+00:00:44,000 --> 00:00:47,000
+Det har iallefall påvirket måten vi ser på TEDs framtid,
+
+18
+00:00:47,000 --> 00:00:50,000
+og kanskje verdens fremtid generelt.
+
+19
+00:00:50,000 --> 00:00:52,000
+Så, la oss utforske.
+
+20
+00:00:52,000 --> 00:00:54,000
+Historien begynner med en enkelt person,
+
+21
+00:00:54,000 --> 00:00:57,000
+et barn, som oppførte seg litt rart.
+
+22
+00:00:58,000 --> 00:01:01,000
+Dette barnet er kjent på nettet som Lil Demon.
+
+23
+00:01:01,000 --> 00:01:03,000
+Han gjør triks her, dansetriks,
+
+24
+00:01:03,000 --> 00:01:06,000
+som sannsynligvis ingen seksåring i historien noensinne har gjort før.
+
+25
+00:01:06,000 --> 00:01:08,000
+Hvordan lærte han dem?
+
+26
+00:01:08,000 --> 00:01:11,000
+Og hva drev ham til å bruke de hundrevis av timene på å øve
+
+27
+00:01:11,000 --> 00:01:13,000
+som dette måtte ha krevd?
+
+28
+00:01:13,000 --> 00:01:15,000
+Her er en ledetråd.
+
+29
+00:01:15,000 --> 00:01:18,000
+(Video) Lil Demon: ♫ Gjør det bedre. Oh. Oh. ♫
+
+30
+00:01:18,000 --> 00:01:21,000
+♫ Gjør det bedre. Oh. Oh. ♫
+
+31
+00:01:21,000 --> 00:01:24,000
+Chris Anderson: Dette var sendt til meg av denne mannen,
+
+32
+00:01:24,000 --> 00:01:26,000
+en filmskaper ved navn Jonathan Chu,
+
+33
+00:01:26,000 --> 00:01:28,000
+som fortalte meg at dette var øyeblikket han innså
+
+34
+00:01:28,000 --> 00:01:31,000
+at internett påvirket dans til å utvikle seg.
+
+35
+00:01:31,000 --> 00:01:34,000
+Det er hva han fortalte på TED i februar.
+
+36
+00:01:35,000 --> 00:01:37,000
+I korte trekk,
+
+37
+00:01:37,000 --> 00:01:39,000
+at dansere utfordret hverandre på nettet, til å gjøre det bedre.
+
+38
+00:01:39,000 --> 00:01:42,000
+Fantastiske nye dansetrinn ble utviklet,
+
+39
+00:01:42,000 --> 00:01:44,000
+og selv seksåringer kastet seg inn i dansen.
+
+40
+00:01:44,000 --> 00:01:46,000
+Det føltes som en revolusjon.
+
+41
+00:01:46,000 --> 00:01:49,000
+Så Jon fikk en genial idé:
+
+42
+00:01:49,000 --> 00:01:51,000
+Han dro ut og rekrutterte kremen av de beste danserne
+
+43
+00:01:51,000 --> 00:01:53,000
+fra YouTube
+
+44
+00:01:53,000 --> 00:01:56,000
+til å lage denne dansetroppen --
+
+45
+00:01:56,000 --> 00:01:59,000
+Ligaen av Ekstraordinære Dansere, LXD.
+
+46
+00:01:59,000 --> 00:02:01,000
+Jeg mener, disse ungene var nett-lært,
+
+47
+00:02:01,000 --> 00:02:04,000
+men de var så så gode at de fikk opptre på Oscar gallaen i år.
+
+48
+00:02:05,000 --> 00:02:07,000
+Og her på TED i februar,
+
+49
+00:02:07,000 --> 00:02:10,000
+hvor deres lidenskap og glans tok fra oss pusten.
+
+50
+00:02:11,000 --> 00:02:13,000
+Så, denne historien
+
+51
+00:02:13,000 --> 00:02:15,000
+om dansens evolusjon
+
+52
+00:02:15,000 --> 00:02:17,000
+virker pussig nok litt kjent.
+
+53
+00:02:17,000 --> 00:02:20,000
+En stund etter at TEDTalks virkelig begynte å bli populære,
+
+54
+00:02:20,000 --> 00:02:22,000
+la vi merke til at foredragsholderne
+
+55
+00:02:22,000 --> 00:02:25,000
+begynte å bruke betydelig mer tid på forberedelser.
+
+56
+00:02:25,000 --> 00:02:28,000
+Det har resultert i utrolige nye foredrag som disse to.
+
+57
+00:02:28,000 --> 00:02:30,000
+Måneder med forberedelser
+
+58
+00:02:30,000 --> 00:02:32,000
+komprimert til 18 minutter,
+
+59
+00:02:32,000 --> 00:02:35,000
+med en kompromissløs standardheving for neste generasjon foredragsholdere,
+
+60
+00:02:35,000 --> 00:02:37,000
+med resultater som vi har sett denne uka.
+
+61
+00:02:37,000 --> 00:02:40,000
+Det er ikke slik at J.J. og Jill
+
+62
+00:02:40,000 --> 00:02:42,000
+faktisk avsluttet sine foredrag med å si: "Gjør det bedre",
+
+63
+00:02:42,000 --> 00:02:44,000
+men de kunne like gjerne gjort det.
+
+64
+00:02:44,000 --> 00:02:47,000
+Så, i begge disse tilfellene,
+
+65
+00:02:47,000 --> 00:02:49,000
+har du den sykliske forbedringen,
+
+66
+00:02:49,000 --> 00:02:51,000
+tilsynelatende drevet
+
+67
+00:02:51,000 --> 00:02:53,000
+av folk som ser på video på nettet.
+
+68
+00:02:53,000 --> 00:02:55,000
+Hva er det som foregår?
+
+69
+00:02:55,000 --> 00:02:58,000
+Vel, jeg tror det er siste iterasjon av et fenomen vi kan kalle
+
+70
+00:02:58,000 --> 00:03:01,000
+"publikums-aksellerert innovasjon".
+
+71
+00:03:02,000 --> 00:03:05,000
+Og det er bare tre ting man trenger for å få dette i gang.
+
+72
+00:03:05,000 --> 00:03:07,000
+Du kan tenke på dem
+
+73
+00:03:07,000 --> 00:03:09,000
+som tre målere på et gigantisk hjul.
+
+74
+00:03:09,000 --> 00:03:12,000
+Du skrur opp målerne, og hjulet begynner å snurre.
+
+75
+00:03:12,000 --> 00:03:15,000
+Og det første du trenger er ... et publikum,
+
+76
+00:03:15,000 --> 00:03:18,000
+en gruppe mennesker som deler en felles interesse.
+
+77
+00:03:18,000 --> 00:03:20,000
+Desto større publikum,
+
+78
+00:03:20,000 --> 00:03:22,000
+desto flere potensielle innovatører er det der.
+
+79
+00:03:22,000 --> 00:03:24,000
+Det er viktig, men faktisk har de fleste folkene i mengden
+
+80
+00:03:24,000 --> 00:03:26,000
+andre roller.
+
+81
+00:03:26,000 --> 00:03:28,000
+De skaper økosystemet
+
+82
+00:03:28,000 --> 00:03:31,000
+som igjen fostrer innovasjon.
+
+83
+00:03:31,000 --> 00:03:33,000
+Den andre tingen du trenger er lys.
+
+84
+00:03:33,000 --> 00:03:35,000
+Du må ha klar og åpen sikt
+
+85
+00:03:35,000 --> 00:03:37,000
+av hva de beste folkene i mengden er istand til å utrette,
+
+86
+00:03:37,000 --> 00:03:39,000
+for det er måten du vil lære
+
+87
+00:03:39,000 --> 00:03:42,000
+hvordan du kan muliggjøre deltagelse.
+
+88
+00:03:42,000 --> 00:03:45,000
+Og den tredje tingen du må ha er lidenskap.
+
+89
+00:03:45,000 --> 00:03:47,000
+Innovasjon er hardt arbeid.
+
+90
+00:03:47,000 --> 00:03:50,000
+Det er basert på hundrevis av timer med forskning, med øving.
+
+91
+00:03:50,000 --> 00:03:53,000
+Uten lidenskap vil det aldri skje.
+
+92
+00:03:53,000 --> 00:03:55,000
+Her er et eksempel -- fra før internett --
+
+93
+00:03:55,000 --> 00:03:57,000
+av denne maskinen i aksjon.
+
+94
+00:03:57,000 --> 00:03:59,000
+Dansere på et gatehjørne --
+
+95
+00:03:59,000 --> 00:04:01,000
+det er en folkemengde, en liten en,
+
+96
+00:04:01,000 --> 00:04:04,000
+men de kan alle se hva de andre gjør.
+
+97
+00:04:04,000 --> 00:04:06,000
+Og lidenskapen kommer, vil jeg tro,
+
+98
+00:04:06,000 --> 00:04:08,000
+fra sosial status, ikke sant?
+
+99
+00:04:08,000 --> 00:04:11,000
+Den beste danseren kan gå med hevet hode, og får den beste kjæresten.
+
+100
+00:04:11,000 --> 00:04:14,000
+Det vil sannsynligvis komme innovasjon ut av dette.
+
+101
+00:04:14,000 --> 00:04:16,000
+Men på nettet,
+
+102
+00:04:16,000 --> 00:04:18,000
+er alle tre målerne på full styrke.
+
+103
+00:04:18,000 --> 00:04:20,000
+Dansefellesskapet er nå globalt.
+
+104
+00:04:20,000 --> 00:04:22,000
+Millioner av folk er knyttet sammen.
+
+105
+00:04:22,000 --> 00:04:24,000
+Og utrolig nok
+
+106
+00:04:24,000 --> 00:04:27,000
+kan du fortsatt se hva de beste får til,
+
+107
+00:04:27,000 --> 00:04:30,000
+for publikum retter søkelyset mot dem,
+
+108
+00:04:30,000 --> 00:04:33,000
+enten direkte, gjennom kommentarer og rangeringer,
+
+109
+00:04:33,000 --> 00:04:35,000
+e-post, Facebook, Twitter,
+
+110
+00:04:35,000 --> 00:04:37,000
+eller indirekte,
+
+111
+00:04:37,000 --> 00:04:39,000
+gjennom antall visninger,
+
+112
+00:04:39,000 --> 00:04:41,000
+gjennom linker som peker Google til dem.
+
+113
+00:04:41,000 --> 00:04:43,000
+Så, det er lett å finne det bra materialet,
+
+114
+00:04:43,000 --> 00:04:45,000
+og når man har funnet det, kan man se på det i nærbilde gjentatte ganger
+
+115
+00:04:45,000 --> 00:04:48,000
+og lese hva hundrevis av folk har skrevet om det.
+
+116
+00:04:48,000 --> 00:04:50,000
+Det er et stort søkelys.
+
+117
+00:04:50,000 --> 00:04:52,000
+Men lidenskapen
+
+118
+00:04:52,000 --> 00:04:55,000
+er virkelig på full guffe.
+
+119
+00:04:56,000 --> 00:04:59,000
+Jeg mener, du er kanskje bare en unge med et webkamera,
+
+120
+00:04:59,000 --> 00:05:02,000
+men om du kan gjøre noe som virkelig tar av,
+
+121
+00:05:02,000 --> 00:05:04,000
+blir du sett av det ekvivalente
+
+122
+00:05:04,000 --> 00:05:07,000
+til sportsstadioner fulle av folk.
+
+123
+00:05:07,000 --> 00:05:10,000
+Hundrevis av ukjente vil skrive entusiastisk om deg.
+
+124
+00:05:10,000 --> 00:05:13,000
+Og selv om det ikke er så godt formulert -- og det er det ikke --
+
+125
+00:05:13,000 --> 00:05:16,000
+så kan det fortsatt lyse opp dagen din.
+
+126
+00:05:17,000 --> 00:05:19,000
+Så, denne muligheten
+
+127
+00:05:19,000 --> 00:05:22,000
+for en ny type global gjenkjennelse,
+
+128
+00:05:22,000 --> 00:05:25,000
+tror jeg er en driver for store mengder innsats.
+
+129
+00:05:26,000 --> 00:05:29,000
+Og det er viktig å merke seg at det ikke bare er stjernene som drar nytte av dette,
+
+130
+00:05:29,000 --> 00:05:32,000
+for du kan se de beste, og alle kan lære.
+
+131
+00:05:32,000 --> 00:05:35,000
+I tillegg er systemet selvdrevet.
+
+132
+00:05:35,000 --> 00:05:38,000
+Det er publikum som retter søkelyset og driver lidenskapen,
+
+133
+00:05:38,000 --> 00:05:41,000
+men lyset og lidenskapen er en dødelig kombinasjon
+
+134
+00:05:41,000 --> 00:05:44,000
+som tiltrekker nye folk til publikum.
+
+135
+00:05:44,000 --> 00:05:46,000
+Så dette er en modell
+
+136
+00:05:46,000 --> 00:05:48,000
+som stort sett enhver organisasjon kan bruke
+
+137
+00:05:48,000 --> 00:05:50,000
+til å forsøke å øke omsorgen for egen syklus
+
+138
+00:05:50,000 --> 00:05:53,000
+av publikumsaksellerert innovasjon.
+
+139
+00:05:53,000 --> 00:05:56,000
+Inviter publikum, åpne opp for lyset,
+
+140
+00:05:56,000 --> 00:05:58,000
+skru opp lidenskapen.
+
+141
+00:05:58,000 --> 00:06:01,000
+Og den vanskeligste biten er sannsynligvis søkelyset
+
+142
+00:06:01,000 --> 00:06:03,000
+for det betyr at du må åpne opp,
+
+143
+00:06:03,000 --> 00:06:06,000
+du må vise fram tingene dine til verden.
+
+144
+00:06:08,000 --> 00:06:11,000
+Det er ved å gi bort det du tror er din innerste hemmelighet
+
+145
+00:06:11,000 --> 00:06:13,000
+at kanskje millioner av folk
+
+146
+00:06:13,000 --> 00:06:15,000
+får mulighet til å forbedre på det.
+
+147
+00:06:15,000 --> 00:06:17,000
+Og heldigvis er det en type gruppe
+
+148
+00:06:17,000 --> 00:06:20,000
+som ikke kan benytte seg av dette verktøyet.
+
+149
+00:06:20,000 --> 00:06:22,000
+Nettets mørke side
+
+150
+00:06:22,000 --> 00:06:24,000
+er allergisk mot søkelys.
+
+151
+00:06:24,000 --> 00:06:26,000
+Jeg tror ikke vi får se terrorister for eksempel,
+
+152
+00:06:26,000 --> 00:06:28,000
+som publiserer sine planer på nettet og ber verden:
+
+153
+00:06:28,000 --> 00:06:30,000
+"Kan dere være så snille og hjelpe oss få dem til å faktisk
+
+154
+00:06:30,000 --> 00:06:32,000
+virke denne gangen?"
+
+155
+00:06:32,000 --> 00:06:35,000
+Men du kan publisere dine ting på nettet.
+
+156
+00:06:35,000 --> 00:06:37,000
+Og om du får hjulet til å snurre,
+
+157
+00:06:37,000 --> 00:06:39,000
+se opp.
+
+158
+00:06:39,000 --> 00:06:41,000
+Så, på TED
+
+159
+00:06:41,000 --> 00:06:44,000
+har vi blitt litt hekta på denne idéen om åpenhet.
+
+160
+00:06:44,000 --> 00:06:47,000
+Min kollega, June Cohen, har faktisk omtalt det som "radikal åpenhet",
+
+161
+00:06:47,000 --> 00:06:50,000
+for det virker for oss hver gang.
+
+162
+00:06:50,000 --> 00:06:52,000
+Vi åpnet opp foredragene våre til verden,
+
+163
+00:06:52,000 --> 00:06:54,000
+og plutselig var det millioner av folk der ute
+
+164
+00:06:54,000 --> 00:06:56,000
+som hjalp til å spre budskapet til foredragsholderne våre,
+
+165
+00:06:56,000 --> 00:06:58,000
+og gjør det dermed enklere for oss
+
+166
+00:06:58,000 --> 00:07:01,000
+å rekruttere og motivere neste generasjon foredragsholdere.
+
+167
+00:07:01,000 --> 00:07:03,000
+Ved å åpne opp oversettelsesprogrammet vårt,
+
+168
+00:07:03,000 --> 00:07:05,000
+har tusenvis av flotte frivillige --
+
+169
+00:07:05,000 --> 00:07:08,000
+noen av dem ser på oss på nettet akkurat nå, og takk! --
+
+170
+00:07:08,000 --> 00:07:10,000
+oversatt våre foredrag
+
+171
+00:07:10,000 --> 00:07:12,000
+til mer enn 70 språk,
+
+172
+00:07:12,000 --> 00:07:15,000
+og dermed tredoblet vår publikumsmasse i ikke-engelskspråklige land.
+
+173
+00:07:15,000 --> 00:07:18,000
+Ved å gi bort vårt TEDx merke,
+
+174
+00:07:18,000 --> 00:07:21,000
+har vi plutselig fått over tusen
+
+175
+00:07:21,000 --> 00:07:24,000
+direkte eksperimenter i kunsten å spre idéer.
+
+176
+00:07:24,000 --> 00:07:26,000
+Og disse organisatørene,
+
+177
+00:07:26,000 --> 00:07:29,000
+de ser hverandre, og de lærer fra hverandre.
+
+178
+00:07:29,000 --> 00:07:31,000
+Vi lærer av dem.
+
+179
+00:07:31,000 --> 00:07:33,000
+Vi får fantastiske foredrag tilbake fra dem.
+
+180
+00:07:33,000 --> 00:07:35,000
+Hjulet snurrer.
+
+181
+00:07:35,000 --> 00:07:37,000
+OK, gå tilbake et minutt.
+
+182
+00:07:37,000 --> 00:07:40,000
+Jeg mener, det er ikke nyheter når jeg forteller dere
+
+183
+00:07:40,000 --> 00:07:42,000
+at innovasjon skapes av grupper.
+
+184
+00:07:42,000 --> 00:07:44,000
+Vi har hørt denne uken --
+
+185
+00:07:44,000 --> 00:07:46,000
+at denne romantiske forestillingen om det ensomme geniet
+
+186
+00:07:46,000 --> 00:07:49,000
+med "Eureka!" øyeblikket sitt som forandrer verden
+
+187
+00:07:49,000 --> 00:07:51,000
+er misvisende.
+
+188
+00:07:51,000 --> 00:07:54,000
+Han sa det til og med selv, og han burde vite best.
+
+189
+00:07:54,000 --> 00:07:56,000
+Vi er en sosial rase.
+
+190
+00:07:56,000 --> 00:07:58,000
+Vi inspireres av hverandre.
+
+191
+00:07:58,000 --> 00:08:00,000
+Det er heller ikke nyheter
+
+192
+00:08:00,000 --> 00:08:03,000
+å si at internett har aksellerert innovasjon.
+
+193
+00:08:03,000 --> 00:08:05,000
+De siste 15 årene,
+
+194
+00:08:05,000 --> 00:08:07,000
+har mektige fellesskap knyttet bånd på nettet,
+
+195
+00:08:07,000 --> 00:08:09,000
+og inspirert hverandre.
+
+196
+00:08:09,000 --> 00:08:11,000
+Om du ser på programmerere,
+
+197
+00:08:11,000 --> 00:08:14,000
+dere vet, den åpne kildekodebevegelsen
+
+198
+00:08:14,000 --> 00:08:17,000
+er en fantastisk versjon av publikumsaksellerert innovasjon.
+
+199
+00:08:17,000 --> 00:08:19,000
+Men kjernen er
+
+200
+00:08:19,000 --> 00:08:22,000
+at årsaken til at disse gruppene har kunnet knytte bånd
+
+201
+00:08:22,000 --> 00:08:24,000
+skyldes at deres produkt er av typen
+
+202
+00:08:24,000 --> 00:08:27,000
+som lett kan deles digitalt --
+
+203
+00:08:27,000 --> 00:08:30,000
+et bilde, en musikkfil,
+
+204
+00:08:30,000 --> 00:08:32,000
+programvare.
+
+205
+00:08:33,000 --> 00:08:35,000
+Og det er derfor det jeg er så spent over
+
+206
+00:08:35,000 --> 00:08:38,000
+og det jeg tror er underrapportert
+
+207
+00:08:38,000 --> 00:08:40,000
+er betydningen av økningen
+
+208
+00:08:40,000 --> 00:08:42,000
+av video på nettet.
+
+209
+00:08:42,000 --> 00:08:45,000
+Dette er teknologien
+
+210
+00:08:45,000 --> 00:08:48,000
+som vil tillate resten av verdens talenter å kunne deles elektronisk,
+
+211
+00:08:48,000 --> 00:08:50,000
+og dermed starte en hel ny syklus
+
+212
+00:08:50,000 --> 00:08:53,000
+av publikumsaksellerert innovasjon.
+
+213
+00:08:53,000 --> 00:08:55,000
+De første årene var internett
+
+214
+00:08:55,000 --> 00:08:57,000
+stort sett uten video,
+
+215
+00:08:57,000 --> 00:09:00,000
+fordi videofiler er enorme, og internett taklet dem ikke.
+
+216
+00:09:00,000 --> 00:09:02,000
+Men de siste 10 årene,
+
+217
+00:09:02,000 --> 00:09:05,000
+har båndbredde eksplodert og hundredoblet seg.
+
+218
+00:09:05,000 --> 00:09:07,000
+Plutselig er vi her.
+
+219
+00:09:07,000 --> 00:09:10,000
+Menneskeheten ser på 80 millioner timer med YouTube hver dag.
+
+220
+00:09:10,000 --> 00:09:13,000
+Cisco estimerer faktisk at innen fire år,
+
+221
+00:09:13,000 --> 00:09:16,000
+vil mer enn 90% av internetts data være video.
+
+222
+00:09:17,000 --> 00:09:19,000
+Om det bare er valper, porno og piratkopieringer,
+
+223
+00:09:19,000 --> 00:09:21,000
+er vi fortapt.
+
+224
+00:09:21,000 --> 00:09:23,000
+Jeg tror ikke det vil være det.
+
+225
+00:09:23,000 --> 00:09:26,000
+Video er høy-båndbredde for en grunn.
+
+226
+00:09:26,000 --> 00:09:29,000
+Det inneholder enorme datamengder,
+
+227
+00:09:29,000 --> 00:09:32,000
+og våre hjerner er spesialtilpasset til å forstå det.
+
+228
+00:09:32,000 --> 00:09:35,000
+Her, la meg introdusere dere til Sam Haber.
+
+229
+00:09:35,000 --> 00:09:37,000
+Han er en enhjulssyklist.
+
+230
+00:09:37,000 --> 00:09:39,000
+Før YouTube,
+
+231
+00:09:39,000 --> 00:09:41,000
+fantes det ikke noen måte for ham å oppdage
+
+232
+00:09:41,000 --> 00:09:43,000
+det virkelige potensialet i sporten sin,
+
+233
+00:09:43,000 --> 00:09:46,000
+for det går ikke å kommunisere slikt med ord, ikke sant?
+
+234
+00:09:46,000 --> 00:09:49,000
+Men ved å se på et videoklipp lastet opp av fremmede,
+
+235
+00:09:49,000 --> 00:09:52,000
+åpner det seg en verden av muligheter for ham.
+
+236
+00:09:52,000 --> 00:09:55,000
+Plutselig begynner han å etterligne og så å skape.
+
+237
+00:09:55,000 --> 00:09:58,000
+Og et globalt fellesskap av etthjulssyklister oppdager hverandre på nettet,
+
+238
+00:09:58,000 --> 00:10:00,000
+og inspirerer hverandre til nye høyder.
+
+239
+00:10:00,000 --> 00:10:03,000
+Og det er tusenvis av andre eksempler på at dette skjer --
+
+240
+00:10:03,000 --> 00:10:05,000
+av video-drevet utvikling av ferdigheter,
+
+241
+00:10:05,000 --> 00:10:08,000
+fra det fysiske til det kunstneriske.
+
+242
+00:10:08,000 --> 00:10:10,000
+Og jeg må fortelle dere,
+
+243
+00:10:10,000 --> 00:10:12,000
+som en tidligere utgiver av hobby-blader,
+
+244
+00:10:12,000 --> 00:10:14,000
+synes jeg det er vakkert på en rar måte.
+
+245
+00:10:14,000 --> 00:10:17,000
+Jeg mener, det er mye lidenskap her på skjermen.
+
+246
+00:10:17,000 --> 00:10:20,000
+Men om Rube Goldberg maskiner
+
+247
+00:10:20,000 --> 00:10:23,000
+og video poesi ikke akkurat er noe for deg,
+
+248
+00:10:23,000 --> 00:10:25,000
+hva med dette?
+
+249
+00:10:26,000 --> 00:10:28,000
+Jove er en nettside
+
+250
+00:10:28,000 --> 00:10:30,000
+som ble grunnlagt for å oppmuntre vitenskapsfolk
+
+251
+00:10:30,000 --> 00:10:32,000
+til å publisere sine kvalitetssikrede forskningsresultater
+
+252
+00:10:32,000 --> 00:10:34,000
+på video.
+
+253
+00:10:34,000 --> 00:10:37,000
+Det er et problem med tradisjonelle forskningspapirer.
+
+254
+00:10:37,000 --> 00:10:40,000
+Det kan ta månedsvis for en forsker i et annet laboratorium
+
+255
+00:10:40,000 --> 00:10:42,000
+å finne ut hvordan man kan gjenskape eksperimentene
+
+256
+00:10:42,000 --> 00:10:44,000
+som er beskrevet skriftlig.
+
+257
+00:10:44,000 --> 00:10:46,000
+Her er en slik frustrert forsker,
+
+258
+00:10:46,000 --> 00:10:48,000
+Moshe Pritsker, grunnleggeren av Jove.
+
+259
+00:10:48,000 --> 00:10:50,000
+Han fortalte meg at verden kaster bort
+
+260
+00:10:50,000 --> 00:10:52,000
+billioner av dollar på dette.
+
+261
+00:10:52,000 --> 00:10:54,000
+Men se på denne videoen.
+
+262
+00:10:54,000 --> 00:10:56,000
+Jeg mener, se: hvis du kan vise
+
+263
+00:10:56,000 --> 00:10:58,000
+istedenfor bare å beskrive,
+
+264
+00:10:58,000 --> 00:11:00,000
+så forsvinner hele problemet.
+
+265
+00:11:00,000 --> 00:11:02,000
+Så det er ikke så feil å si
+
+266
+00:11:02,000 --> 00:11:04,000
+at en eller annen gang
+
+267
+00:11:04,000 --> 00:11:07,000
+vil video på nettet dramatisk aksellerere forskning.
+
+268
+00:11:08,000 --> 00:11:10,000
+Her er et annet eksempel
+
+269
+00:11:10,000 --> 00:11:12,000
+som ligger våre hjerter nær her hos TED,
+
+270
+00:11:12,000 --> 00:11:15,000
+hvor video gjør et sterkere inntrykk enn skriftlig informasjon --
+
+271
+00:11:15,000 --> 00:11:17,000
+delingen av en idé.
+
+272
+00:11:19,000 --> 00:11:22,000
+Hvorfor liker folk å se på TED foredrag?
+
+273
+00:11:22,000 --> 00:11:25,000
+Alle disse idéene er allerede tilgjengelig skriftlig.
+
+274
+00:11:25,000 --> 00:11:27,000
+Det er faktisk raskere å lese enn å se.
+
+275
+00:11:27,000 --> 00:11:29,000
+Hvorfor gidder folk?
+
+276
+00:11:29,000 --> 00:11:32,000
+Vel, det er litt pek-og-forklar.
+
+277
+00:11:32,000 --> 00:11:35,000
+Men selv uten skjermen
+
+278
+00:11:35,000 --> 00:11:38,000
+er det mye mer enn bare ord som formidles.
+
+279
+00:11:38,000 --> 00:11:41,000
+Og i den ikke-verbale delen, er det noen skikkelige gullkorn.
+
+280
+00:11:41,000 --> 00:11:44,000
+Gjemt et sted i den fysiske opptreden,
+
+281
+00:11:44,000 --> 00:11:47,000
+tonefallet, ansiktsuttrykket,
+
+282
+00:11:47,000 --> 00:11:49,000
+øyekontakten,
+
+283
+00:11:49,000 --> 00:11:51,000
+lidenskapen,
+
+284
+00:11:51,000 --> 00:11:54,000
+den litt rare britiske kroppsholdningen,
+
+285
+00:11:54,000 --> 00:11:57,000
+publikums reaksjoner,
+
+286
+00:11:57,000 --> 00:11:59,000
+det er hundrevis av ubevisste signaler
+
+287
+00:11:59,000 --> 00:12:02,000
+som er med på å bestemme hvor godt du forstår,
+
+288
+00:12:02,000 --> 00:12:04,000
+og om du blir inspirert --
+
+289
+00:12:04,000 --> 00:12:06,000
+søkelys, om du vil,
+
+290
+00:12:06,000 --> 00:12:08,000
+og lidenskap.
+
+291
+00:12:08,000 --> 00:12:10,000
+Utrolig nok kan alt dette formidles
+
+292
+00:12:10,000 --> 00:12:13,000
+på bare noen få centimeter med skjerm.
+
+293
+00:12:13,000 --> 00:12:15,000
+Lesing og skriving er faktisk
+
+294
+00:12:15,000 --> 00:12:17,000
+relativt nye oppdagelser.
+
+295
+00:12:17,000 --> 00:12:19,000
+Ansikt til ansikt kommunikasjon har blitt raffinert
+
+296
+00:12:19,000 --> 00:12:21,000
+gjennom millioner av år med utvikling.
+
+297
+00:12:21,000 --> 00:12:24,000
+Det er det som har gjort det til den mystiske og gripende opplevelsen det er.
+
+298
+00:12:24,000 --> 00:12:26,000
+Noen snakker,
+
+299
+00:12:26,000 --> 00:12:28,000
+det er resonans i alle disse mottagende hjernene,
+
+300
+00:12:28,000 --> 00:12:30,000
+gruppen opptrer samlet.
+
+301
+00:12:30,000 --> 00:12:32,000
+Jeg mener, dette er det bindende materialet
+
+302
+00:12:32,000 --> 00:12:34,000
+for den menneskelige superorganismen i aksjon.
+
+303
+00:12:34,000 --> 00:12:36,000
+Det har sikkert drevet vår kultur i årtusener.
+
+304
+00:12:36,000 --> 00:12:38,000
+500 år siden møtte det
+
+305
+00:12:38,000 --> 00:12:40,000
+en konkurrent med en dødelig fordel.
+
+306
+00:12:40,000 --> 00:12:42,000
+Det er rett her borte.
+
+307
+00:12:42,000 --> 00:12:45,000
+Trykkerikunsten.
+
+308
+00:12:45,000 --> 00:12:47,000
+Verdens ambisiøse innovatører og påvirkere
+
+309
+00:12:47,000 --> 00:12:50,000
+kunne nå spre sine idéer for alle vinder,
+
+310
+00:12:50,000 --> 00:12:52,000
+og talekunsten 
+
+311
+00:12:52,000 --> 00:12:54,000
+råtnet på rot.
+
+312
+00:12:54,000 --> 00:12:57,000
+Men nå, på et øyeblikk,
+
+313
+00:12:57,000 --> 00:12:59,000
+har spillet snudd igjen.
+
+314
+00:12:59,000 --> 00:13:01,000
+Det er ikke å overdrive å si
+
+315
+00:13:01,000 --> 00:13:04,000
+at hva Gutenberg betydde for det skrevne ord,
+
+316
+00:13:04,000 --> 00:13:07,000
+kan nå video på nettet gjøre det samme for ansikt til ansikt kommunikasjon.
+
+317
+00:13:07,000 --> 00:13:10,000
+Så, det urmediet
+
+318
+00:13:10,000 --> 00:13:13,000
+som hjernen vår er spesialtilpasset for
+
+319
+00:13:13,000 --> 00:13:16,000
+ble nettopp globalt.
+
+320
+00:13:16,000 --> 00:13:18,000
+Dette er stort.
+
+321
+00:13:18,000 --> 00:13:21,000
+Vi må kanskje gjenoppfinne en fordums kunstform.
+
+322
+00:13:21,000 --> 00:13:24,000
+Jeg mener, i dag kan én person som snakker
+
+323
+00:13:24,000 --> 00:13:27,000
+bli sett av millioner,
+
+324
+00:13:27,000 --> 00:13:29,000
+rette søkelys på potente idéer,
+
+325
+00:13:29,000 --> 00:13:31,000
+skape intens lidenskap
+
+326
+00:13:31,000 --> 00:13:33,000
+for læring og for svar --
+
+327
+00:13:33,000 --> 00:13:36,000
+og i dette tilfellet, intens lidenskap til å le.
+
+328
+00:13:37,000 --> 00:13:40,000
+For første gang i menneskehetens historie,
+
+329
+00:13:40,000 --> 00:13:42,000
+må ikke talentfulle studenter
+
+330
+00:13:42,000 --> 00:13:45,000
+få potensialet sitt og drømmene sine
+
+331
+00:13:45,000 --> 00:13:48,000
+skrevet ut av historien av dårlige lærere.
+
+332
+00:13:48,000 --> 00:13:51,000
+De kan sitte en halv meter foran verdens beste.
+
+333
+00:13:52,000 --> 00:13:55,000
+TED er bare en liten del av dette.
+
+334
+00:13:55,000 --> 00:13:58,000
+Jeg mener, verdens universiteter åpner opp sine pensum.
+
+335
+00:13:58,000 --> 00:14:01,000
+Tusenvis av individer og organisasjoner
+
+336
+00:14:01,000 --> 00:14:03,000
+deler sin kunnskap og data på nettet.
+
+337
+00:14:03,000 --> 00:14:05,000
+Tusenvis av folk finner nye måter
+
+338
+00:14:05,000 --> 00:14:07,000
+å lære, og mer viktig,
+
+339
+00:14:07,000 --> 00:14:10,000
+å svare, og syklusen er dermed fullendt.
+
+340
+00:14:10,000 --> 00:14:13,000
+Etter som vi har tenkt på dette,
+
+341
+00:14:13,000 --> 00:14:16,000
+har det blitt klart for oss
+
+342
+00:14:16,000 --> 00:14:19,000
+hva neste steg av TEDs utvikling må bli.
+
+343
+00:14:19,000 --> 00:14:22,000
+TED foredrag kan ikke være en enveisprosess, en til mange.
+
+344
+00:14:22,000 --> 00:14:25,000
+Vår framtid er mange til mange.
+
+345
+00:14:25,000 --> 00:14:27,000
+Så vi drømmer om måter
+
+346
+00:14:27,000 --> 00:14:30,000
+å gjøre det enklere for dere, det globale TED fellesskapet,
+
+347
+00:14:30,000 --> 00:14:32,000
+å svare foredragsholdere,
+
+348
+00:14:32,000 --> 00:14:34,000
+å bidra med egne idéer,
+
+349
+00:14:34,000 --> 00:14:37,000
+kanskje til og med egne TED foredrag,
+
+350
+00:14:37,000 --> 00:14:40,000
+og hjelpe til med å rette søkelyset på det beste som er tilgjengelig.
+
+351
+00:14:40,000 --> 00:14:42,000
+For om vi kan boble opp det aller beste
+
+352
+00:14:42,000 --> 00:14:44,000
+fra en betydelig større dam,
+
+353
+00:14:44,000 --> 00:14:46,000
+så vil dette hjulet snurre.
+
+354
+00:14:46,000 --> 00:14:49,000
+Nå, er det mulig å forestille seg at
+
+355
+00:14:49,000 --> 00:14:51,000
+en lignende prosess som dette
+
+356
+00:14:51,000 --> 00:14:54,000
+kan skje med global undervisning overalt?
+
+357
+00:14:54,000 --> 00:14:56,000
+Jeg mener, må det være en smertefull,
+
+358
+00:14:56,000 --> 00:14:58,000
+ovenifra og ned prosess?
+
+359
+00:14:58,000 --> 00:15:01,000
+Hvorfor ikke en selvdreven syklus
+
+360
+00:15:01,000 --> 00:15:03,000
+som alle kan ta del i?
+
+361
+00:15:03,000 --> 00:15:06,000
+Det er tiden for deltagelse, ikke sant?
+
+362
+00:15:06,000 --> 00:15:08,000
+Skoler kan ikke være siloer.
+
+363
+00:15:08,000 --> 00:15:11,000
+Vi kan ikke stoppe å lære i en alder av 21.
+
+364
+00:15:12,000 --> 00:15:15,000
+Hva om, i det kommende publikum på ni billioner ...
+
+365
+00:15:16,000 --> 00:15:19,000
+hva om det publikum kunne lære å bli
+
+366
+00:15:19,000 --> 00:15:21,000
+netto bidragsytere,
+
+367
+00:15:21,000 --> 00:15:24,000
+istedenfor netto plyndrere?
+
+368
+00:15:24,000 --> 00:15:26,000
+Det forandrer alt, ikke sant?
+
+369
+00:15:26,000 --> 00:15:29,000
+Jeg mener, det ville krevd flere lærere enn vi noen gang har hatt.
+
+370
+00:15:29,000 --> 00:15:31,000
+Men de gode nyhetene er at de er der ute.
+
+371
+00:15:31,000 --> 00:15:33,000
+De er blant publikum,
+
+372
+00:15:33,000 --> 00:15:35,000
+og publikum retter søkelyset
+
+373
+00:15:35,000 --> 00:15:37,000
+så vi kan se dem for første gang,
+
+374
+00:15:37,000 --> 00:15:40,000
+ikke som en usammenhengende masse av ukjente,
+
+375
+00:15:40,000 --> 00:15:43,000
+men som individer vi kan lære av.
+
+376
+00:15:45,000 --> 00:15:47,000
+Hvem er læreren?
+
+377
+00:15:47,000 --> 00:15:49,000
+Du er læreren.
+
+378
+00:15:51,000 --> 00:15:53,000
+Du er en del av publikum
+
+379
+00:15:53,000 --> 00:15:55,000
+som er i ferd med å starte
+
+380
+00:15:55,000 --> 00:15:58,000
+den største læringssyklusen i menneskehetens historie,
+
+381
+00:15:58,000 --> 00:16:01,000
+en syklus istand til å bringe oss alle
+
+382
+00:16:01,000 --> 00:16:04,000
+til et smartere, klokere og vakrere sted.
+
+383
+00:16:07,000 --> 00:16:09,000
+Her er en gruppe unger i en landsby i Pakistan
+
+384
+00:16:09,000 --> 00:16:11,000
+nær der jeg vokste opp.
+
+385
+00:16:11,000 --> 00:16:13,000
+Innen fem år vil hver og en av disse ungene ha tilgang
+
+386
+00:16:13,000 --> 00:16:16,000
+til en mobiltelefon med mulighet for skikkelig nettvideo
+
+387
+00:16:16,000 --> 00:16:19,000
+og i stand til å laste opp video til nettet.
+
+388
+00:16:19,000 --> 00:16:21,000
+Jeg mener, det er galskap å tenke på at denne jenta,
+
+389
+00:16:21,000 --> 00:16:23,000
+i bakgrunnen, til høyre, om 15 år,
+
+390
+00:16:23,000 --> 00:16:26,000
+kanskje deler idéen som bevarer verden vakker
+
+391
+00:16:26,000 --> 00:16:28,000
+for dine barnebarn?
+
+392
+00:16:28,000 --> 00:16:31,000
+Det er ikke galskap, det skjer faktisk akkurat nå.
+
+393
+00:16:31,000 --> 00:16:34,000
+Jeg vil gjerne introdusere dere for en god venn av TED
+
+394
+00:16:34,000 --> 00:16:37,000
+som tilfeldigvis lever i Afrikas største slumby.
+
+395
+00:16:37,000 --> 00:16:40,000
+(Video) Christopher Makau: Hei. Mitt navn er Christopher Makau.
+
+396
+00:16:40,000 --> 00:16:43,000
+Jeg er en av organisatørene bak TEDxKibera.
+
+397
+00:16:43,000 --> 00:16:46,000
+Det er så mange bra ting som skjer her i Kibera.
+
+398
+00:16:46,000 --> 00:16:48,000
+Det er en selvhjelpsgruppe.
+
+399
+00:16:48,000 --> 00:16:51,000
+De forvandlet en søppelhaug til en hage.
+
+400
+00:16:51,000 --> 00:16:54,000
+Den samme plassen var kriminelt belastet
+
+401
+00:16:54,000 --> 00:16:56,000
+og folk ble ranet der.
+
+402
+00:16:56,000 --> 00:16:58,000
+De brukte den samme søpla
+
+403
+00:16:58,000 --> 00:17:00,000
+til å lage grønn gjødsel.
+
+404
+00:17:00,000 --> 00:17:02,000
+Den samme søppelhaugen
+
+405
+00:17:02,000 --> 00:17:05,000
+brødfør nå mer enn 30 familier.
+
+406
+00:17:05,000 --> 00:17:07,000
+Vi har vår egen filmskole.
+
+407
+00:17:07,000 --> 00:17:09,000
+De bruker Flip kameraer
+
+408
+00:17:09,000 --> 00:17:11,000
+til å ta opp, redigere,
+
+409
+00:17:11,000 --> 00:17:13,000
+og rapportere til deres egen kanal,
+
+410
+00:17:13,000 --> 00:17:15,000
+Kibera TV.
+
+411
+00:17:15,000 --> 00:17:17,000
+På grunn av plassmangel
+
+412
+00:17:17,000 --> 00:17:19,000
+gror vi grønnsaker i sekker
+
+413
+00:17:19,000 --> 00:17:22,000
+og vi har klart å redusere levekostnadene.
+
+414
+00:17:22,000 --> 00:17:25,000
+Forandring skjer når vi ser ting i et nytt lys.
+
+415
+00:17:25,000 --> 00:17:28,000
+I dag, ser jeg på Kibera i et nytt lys.
+
+416
+00:17:28,000 --> 00:17:31,000
+Min beskjed til TED Global
+
+417
+00:17:31,000 --> 00:17:33,000
+og hele verden, er:
+
+418
+00:17:33,000 --> 00:17:35,000
+Kibera er grobunn
+
+419
+00:17:35,000 --> 00:17:38,000
+for innovasjon og idéer.
+
+420
+00:17:39,000 --> 00:17:45,000
+(Applause)
+
+421
+00:17:45,000 --> 00:17:47,000
+Chris Anderson: Vet du hva?
+
+422
+00:17:48,000 --> 00:17:51,000
+Jeg vedder på at Chris alltid har vært en inspirasjonskilde.
+
+423
+00:17:51,000 --> 00:17:54,000
+Det som er nytt -- og det er stort --
+
+424
+00:17:54,000 --> 00:17:57,000
+er at, for første gang, så ser vi ham,
+
+425
+00:17:57,000 --> 00:17:59,000
+og han kan se oss.
+
+426
+00:17:59,000 --> 00:18:01,000
+Akkurat nå, Chris og Kevin
+
+427
+00:18:01,000 --> 00:18:03,000
+og Dennis og Dickson og vennene deres
+
+428
+00:18:03,000 --> 00:18:06,000
+ser på oss, i Nairobi, akkurat nå.
+
+429
+00:18:06,000 --> 00:18:08,000
+Folkens,
+
+430
+00:18:08,000 --> 00:18:10,000
+vi har lært fra dere i dag.
+
+431
+00:18:10,000 --> 00:18:12,000
+Takk.
+
+432
+00:18:12,000 --> 00:18:14,000
+Og takk til dere.
+
+433
+00:18:14,000 --> 00:18:31,000
+(Applaus)
+

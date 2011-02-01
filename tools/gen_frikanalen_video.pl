@@ -95,6 +95,10 @@ my $subdelay = "";
 
 if ( $opts{'s'} ) {
   $srtfile = getsrtfile();
+  if ( ! -f $srtfile ) { 
+   print "$srtfile does not exist\n";
+   exit 1 ;
+  }
   if ( $opts{'S'} ) {
    $subdelay = "-subdelay $opts{'S'}";
   } 

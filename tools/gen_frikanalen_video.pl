@@ -262,7 +262,7 @@ sub gen_video_body {
       $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
     }
     if ( $srtfile ) {
-      $cmd .= " -sub $srtfile -utf8 $subdelay ";
+      $cmd .= " -sub $srtfile -utf8 $subdelay -sub-bg-alpha 70 -sub-bg-color 0 -subfont-text-scale 4 -subpos 10 -subwidth 90  ";
     }
     $cmd .= "-o $mod_dv $source ";
     if ( !runcmd($cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }

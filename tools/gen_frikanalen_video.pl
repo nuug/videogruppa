@@ -257,7 +257,7 @@ sub gen_video_body {
   if ( $meta->{'aspect'} eq "4:3" || $opts{'s'} ) {
     my $cmd ;
     $mod_dv = "$workdir/mod.dv";
-    $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140:vpass=1 ";
+    $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140 ";
     if ( $meta->{'aspect'} eq "4:3" ) {
       $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
     }

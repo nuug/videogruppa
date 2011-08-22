@@ -69,6 +69,15 @@ if ($playlist) {
 } else {
 
    print "Content-type: text/html; charset=UTF-8\n\n";
+   my $html_video_start;
+   my $html_video_end;
+   if ($ENV{'HTTP_USER_AGENT'} =~ m/Opera/i  || $ENV{'HTTP_USER_AGENT'} =~ m/firefox/i) {
+     $html_video_start = '<video id="video" controls="true" autoplay="false">';
+     $html_video_start .= "<source src=\"$videoid.ogv\" width=\"640\" height=\"360\">";
+     $html_video_start .= '<object id="video" data="video.m3u" type="audio/x-mpegurl" border="1" width="640" height="360" >';
+     $html_video_end = '</object>';
+     $html_video_end .= '</video>';
+   }
    print <<"EOF";
    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
    <html>
@@ -99,6 +108,7 @@ if ($playlist) {
         <h1>$title</h1>
         <p>$description</p>
         <p><b>Organisasjon:</b> <a href="frontpage.cgi?organization=$org_escaped">$organization</a></p>
+	$html_video_start
         <applet code="com.fluendo.player.Cortado.class"
         archive="http://www.nuug.no/pub/video/frikanalen/bin/cortado-unsigned-20100814.jar"
         width="640" height="360">
@@ -110,6 +120,7 @@ if ($playlist) {
         <param name="keepaspect" value="true"/>
        <img src="$imageuri" width="640" height="320" border="0" alt="preview">
         </applet>
+	$html_video_end
         <p><table cellpadding=5>
         <tr><td>Lengde:</td><td> $lengde </td></tr>
         <tr><td>Dato:</td><td> $date </td></tr>

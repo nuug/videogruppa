@@ -33,7 +33,7 @@ getframe "$url" "$tmpdir/first.jpeg"
 sleep $delay
 getframe "$url" "$tmpdir/second.jpeg"
 
-if findimagedupes $tmpdir/first.jpeg $tmpdir/second.jpeg | grep second.jpeg ; then
+if findimagedupes $tmpdir/first.jpeg $tmpdir/second.jpeg | grep -q second.jpeg ; then
     rm $tmpdir/first.jpeg $tmpdir/second.jpeg
     echo "CRITICAL: Two images taken $delay seconds apart were (almost) identical"
     exit 2

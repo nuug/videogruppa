@@ -19,9 +19,11 @@ sleep $delay
 getframe "$url" "second.jpeg"
 
 if findimagedupes first.jpeg second.jpeg | grep second.jpeg ; then
+    rm first.jpeg second.jpeg
     echo "CRITICAL: Two images taken $delay seconds apart were (almost) identical"
     exit 2
 else
+    rm first.jpeg second.jpeg
     echo "OK: Two images taken $delay seconds apart differ"
     exit 0
 fi

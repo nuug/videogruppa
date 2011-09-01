@@ -6,6 +6,10 @@
 # as we want to check a live stream and not a simple download,
 # rewritten to drop the temp file, and changed to check size against a
 # minimum instead of a fixed size.
+#
+# NOTE: This test did not work with the IPTV stream from Frikanalen,
+# as the size differeence between a hanging video stream and a working
+# one was minimal.
 
 use warnings;
 use strict;

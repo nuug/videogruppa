@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Nagios test to detect a hanging video stream.
+# Fetch two images from the Video stream and make sure they differ.
+# Report error if they stay the same.
+
+url="http://88.87.32.13:8080/"
+delay=35 # seconds
+
+getframe() {
+    url="$1"
+    filename="$2"
+    mplayer -ss 0:00 -frames 1 -vo jpeg -nosound $url > /dev/null 2>&1
+    mv 00000001.jpg $filename
+}
+
+getframe "$url" "first.jpeg"
+sleep $delay
+getframe "$url" "second.jpeg"
+
+if findimagedupes first.jpeg second.jpeg | grep second.jpeg ; then
+    echo "CRITICAL: Two images taken $delay seconds apart were (almost) identical"
+    exit 2
+else
+    echo "OK: Two images taken $delay seconds apart differ"
+    exit 0
+fi

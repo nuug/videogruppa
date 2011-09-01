@@ -3,17 +3,31 @@
 # Nagios test to detect a hanging video stream.
 # Fetch two images from the Video stream and make sure they differ.
 # Report error if they stay the same.
+#
+# Remember: apt-get install findimagedupes mplayer
 
 url="http://88.87.32.13:8080/"
 delay=35 # seconds
-tmpdir=.
+tmpdir=/tmp
 
 getframe() {
-    url="$1"
-    filename="$2"
-    mplayer -ss 0:00 -frames 1 -vo jpeg -nosound $url > /dev/null 2>&1
-    mv 00000001.jpg $filename
+    (
+	cd $tmpdir # Make sure temp file is stored in temp directory
+	url="$1"
+	filename="$2"
+	mplayer -ss 0:00 -frames 1 -vo jpeg -nosound $url > /dev/null 2>&1
+	mv 00000001.jpg $filename
+    )
 }
+
+for bin in mplayer findimagedupes ; do
+    if type $bin >/dev/null 2>&1 ; then
+	:
+    else
+	echo "WARNING: Unable to find $bin binary."
+	exit 1
+    fi
+done
 
 getframe "$url" "$tmpdir/first.jpeg"
 sleep $delay

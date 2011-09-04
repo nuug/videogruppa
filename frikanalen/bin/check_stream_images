@@ -38,8 +38,9 @@ else
     url="$1"
 fi
 
-first="$tmpdir/first-$$.jpeg"
-second="$tmpdir/second-$$.jpeg"
+timestamp=$(date +%Y%m%dT%H:%M:%S)
+first="$tmpdir/first-$timestamp-$$.jpeg"
+second="$tmpdir/second-$timestamp-$$.jpeg"
 
 getframe "$url" "$first"
 sleep $delay

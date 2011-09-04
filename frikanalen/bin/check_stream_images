@@ -6,7 +6,6 @@
 #
 # Remember: apt-get install findimagedupes mplayer
 
-url="http://88.87.32.13:8080/"
 delay=35 # seconds
 tmpdir=/tmp
 
@@ -28,6 +27,16 @@ for bin in mplayer findimagedupes ; do
 	exit 1
     fi
 done
+
+if [ ! "$1" ] ; then
+    cat <<EOF
+Usage: check_stream_images <url>
+Example: check_xstream_images http://voip.nuug.no:8000/frikanalen.ogv
+EOF
+    exit 1
+else
+    url="$1"
+fi
 
 getframe "$url" "$tmpdir/first.jpeg"
 sleep $delay

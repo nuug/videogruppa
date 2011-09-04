@@ -38,16 +38,19 @@ else
     url="$1"
 fi
 
-getframe "$url" "$tmpdir/first.jpeg"
-sleep $delay
-getframe "$url" "$tmpdir/second.jpeg"
+first="$tmpdir/first-$$.jpeg"
+second="$tmpdir/second-$$.jpeg"
 
-if findimagedupes $tmpdir/first.jpeg $tmpdir/second.jpeg | grep -q second.jpeg ; then
-    rm $tmpdir/first.jpeg $tmpdir/second.jpeg
+getframe "$url" "$first"
+sleep $delay
+getframe "$url" "$second"
+
+if findimagedupes $first $second | grep -q second.jpeg ; then
+    rm $first $second
     echo "CRITICAL: Two images taken $delay seconds apart were (almost) identical"
     exit 2
 else
-    rm $tmpdir/first.jpeg $tmpdir/second.jpeg
+    rm $first $second
     echo "OK: Two images taken $delay seconds apart differ"
     exit 0
 fi

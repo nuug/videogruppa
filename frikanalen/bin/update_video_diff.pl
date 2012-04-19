@@ -9,7 +9,7 @@
 #
 # http://wiki.nuug.no/grupper/video/pubfrikanalen
 
-use Data::Dumper;
+#use Data::Dumper;
 use XML::Simple;
 my $localvideo_dir = '/data/video/frikanalen';
 my $localthumbs_dir = '/data/video/frikanalen/thumbs';
@@ -18,6 +18,7 @@ my $meta = XMLin("$localvideo_dir/meta.xml");
 # Make sure convert is in the path
 $ENV{PATH} = $ENV{PATH} . ":/usr/local/bin";
 
+print " Local videos $#localvideos\n";
 &get_new_vids;
 
 ###### Functions #######
@@ -33,7 +34,7 @@ sub get_new_vids {
     unless ( -f "$localvideo_dir/$file_id.ogv") {
       print "Fetching video $file_id \n" if $ARGV[0] eq "debug";
       if  ($meta->{$metaid}->{'VideoOgvUri'} =~ /^http:/) {
-        &get_http_vid($meta->{$metaid}->{'VideoOgvUri'},$file_id);
+        get_scp_vid($meta->{$metaid}->{'VideoOgvUri'},$file_id);
       }
     } else {
       print "$file_id is here\n" if  $ARGV[0] eq "debug";
@@ -71,3 +72,18 @@ sub get_mms_vid {
     $r =  `mplayer -dumpstream -dumpfile "$localvideo_dir/$file_id.wmv" $url > /dev/null 2>&1`;
   }
 }
+
+# Ny metode for å komme rundt ikke-fungerende ur'er mot frontent.frikanalen.tv
+# Jarle 2012-04-19 
+
+sub get_scp_vid {
+ my $url = shift;
+ my $file_id = shift;
+ $url =~ /^http:\/\/frontend\.frikanalen\.tv\/media\/(.+)$/;
+ my $src_path = $1;
+ my $ssh_loc = 'jarle@borch.frikanalen.no:/mnt/media/';
+ my $ssh_id_file = '/home/jarle/.ssh/id_tx_fk';
+ print "Getting $file_id.ogv\n";
+ `/usr/bin/scp -q -i $ssh_id_file $ssh_loc$src_path $localvideo_dir/$file_id.ogv`; 
+}
+

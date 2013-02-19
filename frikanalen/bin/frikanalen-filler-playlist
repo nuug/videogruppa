@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+#
+# Extract public videos, remove those requiring tono fee and long
+# religious videos.  Used to create a evening playout playlist.
+
+use strict;
+use warnings;
+use vars qw(%opts);
+use Data::Dumper;
+use JSON;
+use LWP::Simple;
+
+my $starturl = "http://beta.frikanalen.tv/ws/videos/";
+my @videos = get_relevant_videos($starturl);
+print sort join("\n", @videos), "\n";
+exit(0);
+
+sub get_relevant_videos {
+    my $url = shift;
+    my $jsonstr = get($url);
+    my $json = decode_json( $jsonstr );
+    my @videos;
+    unless ($json->{'results'}) {
+        return;
+    }
+    foreach my $video (@{$json->{'results'}}) {
+        my $durationsec = parse_duration($video->{duration});
+        # Skip religious stuff that is longer than 10 minutes
+        next if (grep(m%Religion/livssyn%, @{$video->{'categories'}})
+                 && $durationsec >= 10 * 60);
+        # Skip stuff triggering TONO fee
+        next if ($video->{'has_tono_records'});
+
+#        print Dumper($video);
+        # navn, lengde, id, kategori
+        my $entry = join(";",
+                         $video->{id},
+                         $durationsec,
+                         $video->{name},
+                         $video->{organization} || '',
+                         join(":", @{$video->{'categories'}}));
+        push(@videos, $entry);
+    }
+    if (defined $json->{'next'}) {
+        push(@videos, get_relevant_videos($json->{'next'}));
+    }
+    return @videos;
+}
+
+# Convert "04:05.12" to 4 * 60 + 5.12
+sub parse_duration {
+    my $durationstr = shift;
+    my @parts = split(/:/, $durationstr);
+    my $duration = 0;
+    while (my $part = shift @parts) {
+        $duration *= 60;
+        $duration += int($part);
+    }
+#    print "$durationstr = $duration\n";
+    return $duration;
+}

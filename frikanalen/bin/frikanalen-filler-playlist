@@ -32,7 +32,6 @@ sub get_relevant_videos {
         next if ($video->{'has_tono_records'});
 
 #        print Dumper($video);
-        # navn, lengde, id, kategori
         my $entry = join(";",
                          $video->{id},
                          $durationsec,

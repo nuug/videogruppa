@@ -7,49 +7,44 @@ use Data::Dumper;
 
 use Getopt::Std;
 
-# SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
-use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
+use JSON;
+use LWP::Simple;
 
-sub get_tono_stats {
-    my $soap = new SOAP::Lite
-        -> uri('http://localhost/CommunitySiteService')
-        -> proxy('http://communitysite1.frikanalen.tv/CommunitySiteFacade/CommunitySiteService.asmx');
-
-    my $obj = $soap->SearchVideos(
-        SOAP::Data->name('searcher' => {
-            'PredefinedSearchType' => 'Default',
-            'Take' => 10000,
-                         }
-        )
-        );
-    if ($obj->fault) {
-        print join ', ',
-              $obj->faultcode,
-              $obj->faultstring;
-        return;
-    }
-
-    my $res = $obj->result;
-#    print Dumper($res);
-    unless ($res->{'Data'}) {
+sub get_tono_stats_page {
+    my $url = shift;
+    my $jsonstr = get($url);
+    my $json = decode_json( $jsonstr );
+    print Dumper($json);
+    unless ($json->{'results'}) {
         return;
     }
     my $tono = 0;
     my $notono = 0;
-    foreach my $video (@{$res->{'Data'}->{'Video'}}) {
-        if ("true" eq $video->{'HasTonoRecords'}) {
+    foreach my $video (@{$json->{'results'}}) {
+        if (exists $video->{'has_tono_records'}
+            && $video->{'has_tono_records'}) {
             $tono++;
-            $orgs{$video->{'Organization'}}{tono}++;
-            push(@{$orgs{$video->{'Organization'}}{tonoids}},
-                 $video->{MetaDataVideoId});
+            $orgs{$video->{'organization'}}{tono}++;
+            push(@{$orgs{$video->{'organization'}}{tonoids}},
+                 $video->{id});
 #            print Dumper($video);
 #            exit 0;
         } else {
             $notono++;
-            $orgs{$video->{'Organization'} || ""}{notono}++;
+            $orgs{$video->{'organization'} || ""}{notono}++;
         }
     }
+    if (defined $json->{'next'}) {
+        my ($newtono, $newnotono) = get_tono_stats_page($json->{'next'});
+        $tono += $newtono;
+        $notono += $newnotono;
+    }
     return ($tono, $notono);
+}
+
+sub get_tono_stats {
+    my $url = 'http://beta.frikanalen.tv/ws/videos/';
+    return get_tono_stats_page($url);
 }
 sub print_tono_stats {
     my ($with, $without) = get_tono_stats();
@@ -60,7 +55,8 @@ sub print_tono_stats {
     for my $org (sort tonoorder keys %orgs) {
         my $tono = $orgs{$org}{tono} || 0;
         my $notono = $orgs{$org}{notono} || 0;
-        my $frac = 100 * $tono / $with;
+        my $frac = 0;
+        $frac = 100 * $tono / $with if $with;
         printf "%4.1f\t%d\t%d\t%s\n", $frac, $tono, $notono, $org;
         print join(" ", "  ", @{$orgs{$org}{tonoids}}), "\n"
             if $opts{'i'} && exists $orgs{$org}{tonoids};

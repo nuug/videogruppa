@@ -1,7 +1,5 @@
 #
-# Support library for script parsing the getfiled/filelog files.
-#
-# $Id: FileLog.pm 18293 2010-09-17 08:39:47Z pre $
+# Support library for script talking to the Frikanalen API
 #
 
 package Frikanalen;
@@ -13,23 +11,20 @@ use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
 our $VERSION = 0.01;
 our @ISA     = qw(Exporter);
 our @EXPORT  = qw(
-                  getEpgUrls
+                  parse_duration
                   );
 
-sub getEpgUrls {
-    my $soap = new SOAP::Lite
-        -> uri('http://tempuri.org')
-        -> proxy('http://communitysite1.frikanalen.tv/CommunitySite/EpgWebService.asmx');
-    my $res;
-    my $obj = $soap->GetEpgUrls;
-    unless ($obj->fault) {
-        return $obj->result->{string};
-    } else {
-#        print Dumper($obj);
-        print $obj->fault->{faultstring}, "\n";
-        return undef;
+# Convert "04:05.12" to 4 * 60 + 5.12
+sub parse_duration {
+    my $durationstr = shift;
+    my @parts = split(/:/, $durationstr);
+    my $duration = 0;
+    while (my $part = shift @parts) {
+        $duration *= 60;
+        $duration += int($part);
     }
+#    print "$durationstr = $duration\n";
+    return $duration;
 }
-
 
 1;

@@ -46,7 +46,6 @@ use GD;
 use POSIX;
 use Event;
 use File::Temp;
-use Frikanalen;
 
 # SOAP:Lite må modifiseres til å gjøre ting på MS måten :-/
 use SOAP::Lite on_action => sub {sprintf '%s/%s', @_}, ;
@@ -158,8 +157,8 @@ EOF
 }
 
 sub ezstream_stop {
-  if ( $ezpid ) { 
-   kill SIGTERM => "$ezpid"; 
+  if ( $ezpid ) {
+   kill SIGTERM => "$ezpid";
    `pkill -P $ezpid ffmpeg`;
   }
   if ( -f $ezcfgname ) { unlink $ezcfgname } ;
@@ -187,7 +186,7 @@ sub tidy {
 
 my @events = ();
 
-my $listref = Frikanalen::getEpgUrls();
+my $listref = getEpgUrls();
 for my $url (@{$listref}) {
 #    print "Loading '$url'\n";
   my $ua = new LWP::UserAgent;
@@ -808,4 +807,18 @@ sub get_video_meta {
   foreach my $video ($res->{'Data'}->{'Video'}) {
     return $video;
   }
+}
+sub getEpgUrls {
+        my $soap = new SOAP::Lite
+            -> uri('http://tempuri.org')
+            -> proxy('http://communitysite1.frikanalen.tv/CommunitySite/EpgWebService.asmx');
+        my $res;
+        my $obj = $soap->GetEpgUrls;
+        unless ($obj->fault) {
+                return $obj->result->{string};
+        } else {
+#        print Dumper($obj);
+                print $obj->fault->{faultstring}, "\n";
+                return undef;
+        }
 }

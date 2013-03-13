@@ -54,7 +54,7 @@ sub get_tono_stats_page {
 }
 
 sub get_tono_stats {
-    my $url = 'http://beta.frikanalen.tv/ws/videos/';
+    my $url = 'http://beta.frikanalen.tv/api/videos/';
     return get_tono_stats_page($url);
 }
 sub print_tono_stats {

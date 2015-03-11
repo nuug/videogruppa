@@ -134,7 +134,9 @@ sub read_meta {
   while (<M>) {
     chomp;
     my @l = split("=",$_);
-    $ret->{$l[0]} = $l[1];
+    if (defined $l[1]) {
+       $ret->{$l[0]} = $l[1];
+    }
   }
   close M;
   return $ret;
@@ -154,7 +156,7 @@ sub break_title {
   my $cols = 30;
   my $count = 0 ;
   my $ln = 0;
-  my @lines;
+  my @lines = ('', '', '', '');
   my @words = split(" ",$title);
   foreach my $word (@words) {
     $count += count_words_n_space($word);

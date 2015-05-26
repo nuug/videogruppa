@@ -1,8 +1,24 @@
 #!/usr/bin/perl
+#
+# Script for adding start/end poster and convert to frikanalen
+# acceptable avi format anamporphic PAL with pillarboxing
+#
+# DV PAL Anamophic i en AVI-fil eller på en DV/DVCam-tape (25 Mbit DV,
+# 25 fps, interlaced, lower field first, 720x576
+#
+# See also
+# http://www.frikanalen.tv/lage-tv/mange-spør-om-formater-og-logistikk
+# http://kevinlocke.name/bits/2012/08/25/letterboxing-with-ffmpeg-avconv-for-mobile/
+# (export INPUT_FILE=Nina_Paley_tribute-to-EFF.m4v OUTPUT_FILE=Nina_Paley_tribute-to-EFF.avi MAX_WIDTH=720 MAX_HEIGHT=576; avconv     -i "$INPUT_FILE"     -map 0     -vf "scale=iw*sar*min($MAX_WIDTH/(iw*sar)\,$MAX_HEIGHT/ih):ih*min($MAX_WIDTH/(iw*sar)\,$MAX_HEIGHT/ih),pad=$MAX_WIDTH:$MAX_HEIGHT:(ow-iw)/2:(oh-ih)/2"     -c:v libx264     -vprofile baseline -level 30     -c:a libvo_aacenc     "$OUTPUT_FILE")
 
-# Script for adding start/end poster and convert to frikanalen acceptable avi format anamporphic PAL with pillarboxing
 # Script is work in progress 2010-09-04 /JB
-# standard backggrund for NUUG is in ./lib/graphic/tv-bg.png (relative to script location in svn-tree)
+# standard backggrund for NUUG is in ./lib/graphic/tv-bg.png (relative
+# to script location in svn-tree)
+#
+# ffmpeg tip for videos with wrong field order
+# http://ffmpeg.org/ffmpeg-all.html#yadif-1
+# -vf yadif=parity=tff or bff (top field first or bottom field first)
+#
 # metafile format is like this:
 #
 #title=Radioamatørenes sporingssystem
@@ -19,15 +35,20 @@
 #videomixer=Ole Kristian Lien
 #sound=?
 #spokenlanguage=no
+#clipin=1:20
+#clipout=1:20:20
 #
-# PS: IF this script is used on an sshfs mounted filesystem, the option sshfs -o workaround=rename must be used . 
-# If not, normalize-audio will just silently fail and no audio normalization will take place. 
+# PS: If this script is used on an sshfs mounted filesystem, the
+# option sshfs -o workaround=rename must be used .  If not,
+# normalize-audio will just silently fail and no audio normalization
+# will take place.
 
 use strict;
 use warnings;
 
 use Data::Dumper;
 use Getopt::Std;
+use File::Spec;
 
 my %opts;
 my $intro_length = 10;
@@ -36,12 +57,11 @@ my $pid = $$;
 getopts('di:m:o:b:s:S:', \%opts);
 my $debug = $opts{d} || 0;
 my $workdir = "./fk-temp-$pid";
-#my $startposter = "$workdir/startposter.png";
 my $startposter = "$workdir/startposter.jpg";
-#my $endposter = "$workdir/endposter.png";
 my $endposter = "$workdir/endposter.jpg";
 my $startposter_dv = "$workdir/startposter.dv";
 my $endposter_dv = "$workdir/endposter.dv";
+my $outxml = "$workdir/playout.xml";
 my $metafile;
 my $srcfile;
 my $srtfile;
@@ -50,6 +70,9 @@ my $outputfile;
 my $normalize_cmd = "/usr/bin/normalize-audio";
 # http://normalize.nongnu.org/
 my $soundlevel_dbfs = '-18dBFS';
+
+my $MAX_WIDTH = 720;
+my $MAX_HEIGHT = 576;
 
 #foreach (keys %opts ) { print "$_\n"; };
 if ( $opts{'m'} ) {
@@ -69,8 +92,6 @@ if ( $opts{'b'} ) {
 }
 
 
-`mkdir -p $workdir`;
-
 if ( $ARGV[0] && $ARGV[0] eq 'front' ) {
   create_startposter_png($startposter,$bgfile);
   print "Frontpage in $startposter\n";
@@ -86,7 +107,9 @@ if ( $opts{'o'} ) {
 }
 
 if ( $opts{'i'} ) {
-  $srcfile = $opts{'i'} ;
+  # Convert to absolute path to make sure file names with colon in them are
+  # not interpreted as URLs.
+  $srcfile = File::Spec->rel2abs($opts{'i'});
 } else {
   usage();
   exit 1;
@@ -95,31 +118,86 @@ my $subdelay = "";
 
 if ( $opts{'s'} ) {
   $srtfile = getsrtfile();
-  if ( ! -f $srtfile ) { 
+  if ( ! -f $srtfile ) {
    print "$srtfile does not exist\n";
    exit 1 ;
   }
   if ( $opts{'S'} ) {
    $subdelay = "-subdelay $opts{'S'}";
-  } 
+  }
 }
 
 
 
+`mkdir -p $workdir`;
 
 create_startposter_png($startposter,$bgfile);
 create_endposter_png($endposter,$bgfile);
-gen_dv_from_png($startposter,$intro_length,$startposter_dv);
-gen_dv_from_png($endposter,$intro_length,$endposter_dv);
-my $normalized_video_body = gen_video_body($srcfile);
-glue_dv($opts{'o'},$startposter_dv,$normalized_video_body,$endposter_dv);
+my $outfile = File::Spec->rel2abs($opts{'o'});
+
+my $framerate = 25; # frames per second
+my $durationframes = $intro_length * $framerate;
+my @cmd = ("melt");
+
+# Define output profile
+push(@cmd, "-profile", "dv_pal_wide");
+
+# Do audio normalization (also require xml consumer and second run)
+push(@cmd, "-filter", "sox:analysis");
+
+# Add intro page for a few seconds.
+push(@cmd, $startposter, "out=$durationframes");
+
+# Then the video itself
+push(@cmd, "$srcfile");
+
+push(@cmd, "in=" . duration2sec($meta->{'clipin'}) * $framerate)
+     if (exists $meta->{'clipin'});
+push(@cmd, "out=" . duration2sec($meta->{'clipout'}) * $framerate)
+     if (exists $meta->{'clipout'});
+
+# Next, the out image
+push(@cmd, $endposter, "out=$durationframes");
+
+# Finally the XML consumer to handle the audio normalization
+push(@cmd, "-consumer", "xml:$outxml", "video_off=1", "all=1");
+
+# FIXME missing subtitle handling
+runcmd(@cmd);
+
+# The outfile must be a .dv file for melt to pick good defaults.  If
+# it is .avi, the video quality is very bad.
+runcmd("melt", $outxml,
+       "-consumer", "avformat:$outfile",
+       # http://www.mltframework.org/bin/view/MLT/ConsumerAvformat#field_order
+       # http://www.frikanalen.tv/lage-tv/mange-spør-om-formater-og-logistikk
+       # lower field first
+#       "field_order=tb",
+    );
+
+if ( -d $workdir ) {
+    `rm -rf $workdir`;
+}
 
 #### Functions #########
 
 sub usage {
-  print"Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s /dir/where/srtfiles/are ] \n\n";
-  print "If -s is given the script expects a file named <basename_of_raw_file>.srt \n";
-  print "located in the path given as arg to -s option\n\n";
+    print <<EOF;
+Usage: $0 -i inputfile.dv -m metafile -o outputfile.avi -b backgroundfile.png [-s /dir/where/srtfiles/are ]
+
+If -s is given the script expects a file named <basename_of_raw_file>.srt
+located in the path given as arg to -s option
+EOF
+}
+
+sub duration2sec {
+    my $str = shift;
+    my $duration = 0.0;
+    for my $part (split(/:/, $str)) {
+        $duration *= 60.0;
+        $duration += $part;
+    }
+    return $duration;
 }
 
 sub read_meta {
@@ -128,7 +206,7 @@ sub read_meta {
   # Set some default values
   $ret->{'url'} = 'http://www.nuug.no/';
   $ret->{'email'} = 'sekretariat@nuug.no';
-  $ret->{'editor'} = 'Jarle Bjørgeengen';
+#  $ret->{'editor'} = 'Petter Reinholdtsen';
 
   open M, "$metafile" or die "Cannot open $metafile for read :$!";
   while (<M>) {
@@ -152,7 +230,7 @@ sub count_words_n_space {
 
 sub break_title {
   my $title = shift;
-  print $title;
+#  print $title;
   my $cols = 30;
   my $count = 0 ;
   my $ln = 0;
@@ -163,7 +241,7 @@ sub break_title {
     if ($count < $cols ) {
       $lines[$ln] .= "$word ";
     } else {
-      print "$lines[$ln]\n";
+#      print "$lines[$ln]\n";
       $count = 0;
       $ln++;
       $count += count_words_n_space($word);
@@ -201,7 +279,7 @@ sub create_endposter_png {
 # $cmd_body .= " -draw "text $left_margin,$pos \'$n: $meta->{$n}\'"
   my %keyword_map = (
       "introduction" => "Introdusert av",
-      "editor" => "Redaktør",
+#      "editor" => "Redaktør",
       "venue" => "Lokaler",
       "organizer" => "Organisert av",
       "camera" => "Kamera",
@@ -242,74 +320,6 @@ sub create_endposter_png {
        "-draw", "\"text 52,826 \'$meta->{'email'}\'\"",
        "-draw", "\"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name");
   if ( !runcmd(@cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-}
-
-sub gen_dv_from_png {
-
-  my $png_file = shift;
-  my $length = shift;
-  my $outputvid = shift;
-  my $f = "ffmpeg -loop_input -t $length  -i $png_file  -f image2 -f s16le -i /dev/zero -target pal-dv -padleft 150 -padright 150 -s 420x576 -y $outputvid";
-  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-}
-
-sub gen_video_body {
-  my $source = shift;
-  my $mod_dv;
-  if ( $meta->{'aspect'} eq "4:3" || $opts{'s'} ) {
-    my $cmd ;
-    $mod_dv = "$workdir/mod.dv";
-    $cmd = "mencoder -oac pcm -of lavf -ovc lavc -lavcopts vcodec=dvvideo:vhq:vqmin=2:vqmax=2:vme=1:keyint=25:vbitrate=2140 ";
-    if ( $meta->{'aspect'} eq "4:3" ) {
-      $cmd .= "-vf-add expand=1000::::: -vf-add scale=720:576 ";
-    }
-    if ( $srtfile ) {
-      $cmd .= " -sub $srtfile -utf8 $subdelay -sub-bg-alpha 80 -sub-bg-color 50 -subfont-text-scale 3 -subpos 90 -subwidth 90  ";
-    }
-    $cmd .= "-o $mod_dv $source ";
-    if ( !runcmd($cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-    $source = $mod_dv;
-  }
-  my $dest = normalize_sound($source);
-  return $dest;
-}
-
-sub normalize_sound {
-  my $dvfile = shift;
-  my $new_dvfile = "$workdir/normalized-body.dv";
-  my $f = "ffmpeg -i $dvfile  -ac 2 -vn -f wav -y $workdir/sound.wav";
-  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-  $f = "$normalize_cmd -a $soundlevel_dbfs   $workdir/sound.wav";
-  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-  $f = "ffmpeg -i $workdir/sound.wav -ac 2 -acodec copy  -i $dvfile -vcodec copy  -map 1:0 -map 0.0 -f dv -y $new_dvfile";
-  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-  return $new_dvfile;
-}
-
-
-sub glue_dv {
-  my $outfile = shift;
-  my @infiles = @_;
-  my $cat = 'cat '.join(' ',@infiles)." > $workdir/complete.dv ";
-  if ( !runcmd($cat) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-  my $ffmpeg = "ffmpeg -i $workdir/complete.dv  -aspect 16:9 -acodec pcm_s16le -vcodec dvvideo -y ".$outfile.' -f avi'  ;
-  if ( !runcmd($ffmpeg) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-# my $cmd = 'cat '.join(' ',@infiles).' |  dvgrab -size 0 -stdin -f dv2 -opendml '.$outfile  ;
-#savetemp();
- if ( -d $workdir ) {
-   `rm -rf $workdir`;
- }
-}
-
-
-sub savetemp {
-  my $outfile_base = $opts{'o'};
-  $outfile_base =~ s/.+\.avi$//;
-  print $outfile_base;
-  my $f = "mv \"$workdir/startposter.dv\" \"$outfile_base-starposter.dv\"";
-  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-  $f = "mv \"$workdir/endposter.dv\" \"$outfile_base-endposter.dv\"";
-  if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
 }
 
 sub getsrtfile {

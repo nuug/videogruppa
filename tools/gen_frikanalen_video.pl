@@ -59,16 +59,14 @@ my $debug = $opts{d} || 0;
 my $workdir = "./fk-temp-$pid";
 my $startposter = "$workdir/startposter.jpg";
 my $endposter = "$workdir/endposter.jpg";
-my $startposter_dv = "$workdir/startposter.dv";
-my $endposter_dv = "$workdir/endposter.dv";
-my $outxml = "$workdir/playout.xml";
+my $tmp_dvfile = "$workdir/before-normalize.dv";
 my $metafile;
 my $srcfile;
 my $srtfile;
 my $bgfile;
 my $outputfile;
-my $normalize_cmd = "/usr/bin/normalize-audio";
-# http://normalize.nongnu.org/
+
+# FIXME: should be -23 LUFS, but normalize-audio do not understand that scale
 my $soundlevel_dbfs = '-18dBFS';
 
 my $MAX_WIDTH = 720;
@@ -142,9 +140,6 @@ my @cmd = ("melt");
 # Define output profile
 push(@cmd, "-profile", "dv_pal_wide");
 
-# Do audio normalization (also require xml consumer and second run)
-push(@cmd, "-filter", "sox:analysis");
-
 # Add intro page for a few seconds.
 push(@cmd, $startposter, "out=$durationframes");
 
@@ -159,21 +154,19 @@ push(@cmd, "out=" . duration2sec($meta->{'clipout'}) * $framerate)
 # Next, the out image
 push(@cmd, $endposter, "out=$durationframes");
 
-# Finally the XML consumer to handle the audio normalization
-push(@cmd, "-consumer", "xml:$outxml", "video_off=1", "all=1");
-
-# FIXME missing subtitle handling
-runcmd(@cmd);
-
 # The outfile must be a .dv file for melt to pick good defaults.  If
 # it is .avi, the video quality is very bad.
-runcmd("melt", $outxml,
-       "-consumer", "avformat:$outfile",
-       # http://www.mltframework.org/bin/view/MLT/ConsumerAvformat#field_order
-       # http://www.frikanalen.tv/lage-tv/mange-spør-om-formater-og-logistikk
-       # lower field first
-#       "field_order=tb",
-    );
+push(@cmd, "-consumer", "avformat:$tmp_dvfile"),
+
+# FIXME missing subtitle handling
+runcmd(@cmd
+# http://www.mltframework.org/bin/view/MLT/ConsumerAvformat#field_order
+# http://www.frikanalen.tv/lage-tv/mange-spør-om-formater-og-logistikk
+# lower field first
+#      , "field_order=tb"
+     );
+
+normalize_audio($tmp_dvfile, $outfile);
 
 if ( -d $workdir ) {
     `rm -rf $workdir`;
@@ -320,6 +313,17 @@ sub create_endposter_png {
        "-draw", "\"text 52,826 \'$meta->{'email'}\'\"",
        "-draw", "\"text 750,640 \'$meta->{'place'}, $meta->{'date'}\'\" $name");
   if ( !runcmd(@cmd) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+}
+
+sub normalize_audio {
+    my ($sourcedv, $targetdv) = @_;
+    my $f = "ffmpeg -i $sourcedv -ac 2 -vn -f wav -y $workdir/sound.wav";
+    if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+    $f = "normalize-audio -a $soundlevel_dbfs $workdir/sound.wav";
+    if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+    $f = "ffmpeg -i $sourcedv -i $workdir/sound.wav -map 0.0 -map 1.0 -acodec copy -vcodec copy $targetdv";
+    if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
+    return $targetdv;
 }
 
 sub getsrtfile {

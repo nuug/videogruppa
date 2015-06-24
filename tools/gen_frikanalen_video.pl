@@ -67,7 +67,7 @@ my $bgfile;
 my $outputfile;
 
 # FIXME: should be -23 LUFS, but normalize-audio do not understand that scale
-my $soundlevel_dbfs = '-18dBFS';
+my $soundlevel_dbfs = '-17dBFS';
 
 my $MAX_WIDTH = 720;
 my $MAX_HEIGHT = 576;

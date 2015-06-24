@@ -51,7 +51,7 @@ use Getopt::Std;
 use File::Spec;
 
 my %opts;
-my $intro_length = 10;
+my $intro_length = 7;
 my $pid = $$;
 
 getopts('di:m:o:b:s:S:', \%opts);

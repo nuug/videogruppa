@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# From
+# http://grep.be/blog//en/computer/play/Multi-pass_transcoding_to_WebM_with_normalisation/,
+# rewritten to work with gstreamer 1.0
+# apt-get install gstreamer1.0-tools gstreamer1.0-plugins-good
+
+set -e
+
+if type gst-launch-0.10 > /dev/null 2>&1 ; then
+    glaunch=gst-launch-0.10
+    vtransform=ffmpegcolorspace
+elif type gst-launch-1.0 > /dev/null 2>&1 ; then
+    glaunch=gst-launch-1.0
+    vtransform=videoconvert
+else
+    echo "error: unable to find compatible gst-launch binary"
+    exit 1
+fi
+
+newfile=$(basename $1 .dv).webm
+wavfile=$(basename $1 .dv).wav
+wavfile=$(readlink -f $wavfile)
+normalfile=$(basename $1 .dv)-normal.wav
+normalfile=$(readlink -f $normalfile)
+oldfile=$(readlink -f $1)
+
+echo -e "\033]0;Pass 1: $newfile\007"
+$glaunch webmmux name=mux ! fakesink \
+  uridecodebin uri=file://$oldfile name=demux \
+  demux. ! $vtransform ! deinterlace ! vp8enc multipass-cache-file=/tmp/vp8-multipass multipass-mode=1 threads=2 ! queue ! mux.video_0 \
+  demux. ! progressreport ! audioconvert ! audiorate ! tee name=t ! queue ! vorbisenc ! queue ! mux.audio_0 \
+  t. ! queue ! wavenc ! filesink location=$wavfile
+echo -e "\033]0;Audio normalize: $newfile\007"
+sox --norm $wavfile $normalfile
+echo -e "\033]0;Pass 2: $newfile\007"
+$glaunch webmmux name=mux ! filesink location=$newfile \
+  uridecodebin uri=file://$oldfile name=video \
+  uridecodebin uri=file://$normalfile name=audio \
+  video. ! $vtransform ! deinterlace ! vp8enc multipass-cache-file=/tmp/vp8-multipass multipass-mode=2 threads=2 ! queue ! mux.video_0 \
+  audio. ! progressreport ! audioconvert ! audiorate ! vorbisenc ! queue ! mux.audio_0
+
+rm $wavfile $normalfile

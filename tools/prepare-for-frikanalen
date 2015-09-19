@@ -1,0 +1,37 @@
+#!/bin/sh
+
+meta="$1"
+
+if grep -q '^frikanalen=' "$meta" ; then
+    url=$(grep '^frikanalen=' "$meta"|cut -d= -f2-)
+    echo "Video is already on Frikanalen, $url"
+    exit 1
+fi
+
+basedir=$(dirname $0)
+base=$(dirname $meta)/$(basename $meta .meta)
+
+echo $base $meta
+for f in ${base}* ; do
+   case "$f" in
+     *.avi|*.dv)
+       video="$f"
+   esac
+done
+
+if [ -z "$video" ]; then
+    echo "error: unable to find video for $meta"
+    exit 1
+fi
+
+target=$base-frikanalen.dv
+ogv=$base-frikanalen.ogv
+
+$basedir/gen_frikanalen_video.pl \
+  -i $video \
+  -m $meta \
+  -o $target \
+  -b $basedir/lib/graphic/tv-bg.png
+
+melt $target \
+	-consumer avformat:$ogv

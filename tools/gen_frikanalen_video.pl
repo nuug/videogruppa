@@ -224,7 +224,7 @@ sub count_words_n_space {
 sub break_title {
   my $title = shift;
 #  print $title;
-  my $cols = 30;
+  my $cols = 29;
   my $count = 0 ;
   my $ln = 0;
   my @lines = ('', '', '', '');
@@ -321,7 +321,7 @@ sub normalize_audio {
     if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
     $f = "normalize-audio -a $soundlevel_dbfs $workdir/sound.wav";
     if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
-    $f = "ffmpeg -i $sourcedv -i $workdir/sound.wav -map 0.0 -map 1.0 -acodec copy -vcodec copy $targetdv";
+    $f = "ffmpeg -i $sourcedv -i $workdir/sound.wav -map 0.0 -map 1.0 -acodec copy -vcodec copy -y $targetdv";
     if ( !runcmd($f) ) { die "Failed to execute system command in" . (caller(0))[3] ."\n"; }
     return $targetdv;
 }
